@@ -35,7 +35,11 @@ function Navbar() {
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex-shrink-0 flex items-center">
                     <div className="text-white font-black text-xl flex items-center">
-                      <span className="w-6 h-6 rounded-full bg-blue-500 mr-4"></span>{" "}
+                      <img
+                        className="h-8 w-auto sm:h-10 mr-2"
+                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                        alt=""
+                      />{" "}
                       <a className="pb-1 mr-2" href="#">
                         myBookingPal
                       </a>
