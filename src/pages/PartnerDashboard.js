@@ -7,7 +7,7 @@ const people = [
     title: "Regional Paradigm Technician",
     department: "Optimization",
     role: "Admin",
-    email: "jane.cooper@example.com",
+    email: "jane.cooper12@example.com",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
   },
@@ -16,7 +16,7 @@ const people = [
     title: "Regional Paradigm Technician",
     department: "Optimization",
     role: "Admin",
-    email: "jane.cooper@example.com",
+    email: "jane.cooper2@example.com",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
   },
@@ -25,7 +25,7 @@ const people = [
     title: "Regional Paradigm Technician",
     department: "Optimization",
     role: "Admin",
-    email: "jane.cooper@example.com",
+    email: "jane.cooper3@example.com",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
   },
@@ -43,13 +43,13 @@ export default function PartnerDashboard() {
       </header>
       <div className="bg-gray-50 mt-1">
         {/* Mini Cards */}
-        <div class="container mx-auto px-6 sm:px-12 py-6">
-          <div class="flex flex-wrap -mx-6">
-            <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
-              <div class="flex items-center px-5 py-6 shadow-md border rounded-md bg-white">
-                <div class="p-3 rounded-full bg-indigo-600 bg-opacity-75">
+        <div className="container mx-auto px-6 sm:px-12 py-6">
+          <div className="flex flex-wrap -mx-6">
+            <div className="w-full px-6 sm:w-1/2 xl:w-1/3">
+              <div className="flex items-center px-5 py-6 shadow-md border rounded-md bg-white">
+                <div className="p-3 rounded-full bg-indigo-600 bg-opacity-75">
                   <svg
-                    class="h-8 w-8 text-white"
+                    className="h-8 w-8 text-white"
                     viewBox="0 0 28 30"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -81,18 +81,18 @@ export default function PartnerDashboard() {
                   </svg>
                 </div>
 
-                <div class="mx-5">
-                  <h4 class="text-2xl font-semibold text-gray-700">8,282</h4>
-                  <div class="text-gray-500">New Users</div>
+                <div className="mx-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">8,282</h4>
+                  <div className="text-gray-500">New Users</div>
                 </div>
               </div>
             </div>
 
-            <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
-              <div class="flex items-center px-5 py-6 shadow-md border rounded-md bg-white">
-                <div class="p-3 rounded-full bg-green-600 bg-opacity-75">
+            <div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+              <div className="flex items-center px-5 py-6 shadow-md border rounded-md bg-white">
+                <div className="p-3 rounded-full bg-green-600 bg-opacity-75">
                   <svg
-                    class="h-8 w-8 text-white"
+                    className="h-8 w-8 text-white"
                     viewBox="0 0 28 28"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -112,18 +112,18 @@ export default function PartnerDashboard() {
                   </svg>
                 </div>
 
-                <div class="mx-5">
-                  <h4 class="text-2xl font-semibold text-gray-700">200,521</h4>
-                  <div class="text-gray-500">Total Orders</div>
+                <div className="mx-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">200,521</h4>
+                  <div className="text-gray-500">Total Orders</div>
                 </div>
               </div>
             </div>
 
-            <div class="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
-              <div class="flex items-center px-5 py-6 shadow-md border rounded-md bg-white">
-                <div class="p-3 rounded-full bg-pink-600 bg-opacity-75">
+            <div className="w-full mt-6 px-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+              <div className="flex items-center px-5 py-6 shadow-md border rounded-md bg-white">
+                <div className="p-3 rounded-full bg-pink-600 bg-opacity-75">
                   <svg
-                    class="h-8 w-8 text-white"
+                    className="h-8 w-8 text-white"
                     viewBox="0 0 28 28"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -132,26 +132,26 @@ export default function PartnerDashboard() {
                       d="M6.99998 11.2H21L22.4 23.8H5.59998L6.99998 11.2Z"
                       fill="currentColor"
                       stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinejoin="round"
                     ></path>
                     <path
                       d="M9.79999 8.4C9.79999 6.08041 11.6804 4.2 14 4.2C16.3196 4.2 18.2 6.08041 18.2 8.4V12.6C18.2 14.9197 16.3196 16.8 14 16.8C11.6804 16.8 9.79999 14.9197 9.79999 12.6V8.4Z"
                       stroke="currentColor"
-                      stroke-width="2"
+                      strokeWidth="2"
                     ></path>
                   </svg>
                 </div>
 
-                <div class="mx-5">
-                  <h4 class="text-2xl font-semibold text-gray-700">215,542</h4>
-                  <div class="text-gray-500">Available Products</div>
+                <div className="mx-5">
+                  <h4 className="text-2xl font-semibold text-gray-700">215,542</h4>
+                  <div className="text-gray-500">Available Products</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="mt-8"></div>
+          <div className="mt-8"></div>
 
           {/* table */}
           <div className="flex flex-col">

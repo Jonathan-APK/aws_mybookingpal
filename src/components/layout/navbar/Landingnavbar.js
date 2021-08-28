@@ -11,20 +11,26 @@ function Landingnavbar() {
               src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
               alt=""
             />{" "}
-            <a href="#" className="pb-1">myBookingPal</a>
+            <a href="#" className="pb-1">
+              myBookingPal
+            </a>
           </div>
           <div className="flex items-center">
             <nav className="text-black text-lg hidden lg:flex items-center">
-              <Link to="/partnerregister">
-                <a className="py-2 px-6 flex hover:text-blue-500">
-                  List your facility
-                </a>
+              <Link
+                to="/partnerregister"
+                className="py-2 px-6 flex hover:text-blue-500"
+              >
+                List your facility
               </Link>
-              <Link to="/userregister">
-                <a className="py-2 px-6 flex hover:text-blue-500">Register</a>
+              <Link
+                to="/userregister"
+                className="py-2 px-6 flex hover:text-blue-500"
+              >
+                Register
               </Link>
-              <Link to="/login">
-                <a className="py-2 px-6 flex text-blue-500">Sign in</a>
+              <Link to="/login" className="py-2 px-6 flex text-blue-500">
+                Sign in
               </Link>
             </nav>
             <button className="lg:hidden flex flex-col">

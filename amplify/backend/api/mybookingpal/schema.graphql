@@ -1,0 +1,17 @@
+type User @model {
+  id: ID!
+  email: String!
+  username: String!
+  firstname: String
+  lastname: String
+  contact: String
+  address: String
+  when_created: AWSDateTime!
+  roles: [Role] @connection(keyName: "userRoleIndex", fields: ["id"])
+}
+
+type Role @model @key(name: "userRoleIndex", fields: ["userID"]) {
+  id: ID!
+  userID: ID!
+  roleName: String!
+}

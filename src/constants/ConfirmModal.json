@@ -1,0 +1,14 @@
+{
+  "verifypassword": {
+    "title": "You've successfully signed up!",
+    "content": "We've sent you a link to confirm your email address. Please check your inbox. It could take 10 minutes to show up.",
+    "link": "/login",
+    "button": "Back to sign in"
+  },
+  "passwordhasbeenreset": {
+    "title": "Password has been reset!",
+    "content": "Your password has been reset successfully. You may proceed to sign in.",
+    "link": "/login",
+    "button": "Proceed to sign in"
+  }
+}
