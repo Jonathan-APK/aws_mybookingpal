@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from "./pages/Login";
 import UserRegister from "./pages/UserRegister";
 import PartnerRegister from "./pages/PartnerRegister";
+import UserDashboard from "./pages/UserDashboard";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/partnerregister" exact>
             <PartnerRegister />
+          </Route>
+          <Route path="/userdashboard" exact>
+            <UserDashboard />
           </Route>
         </Switch>
       </BrowserRouter>
