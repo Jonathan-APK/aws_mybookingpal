@@ -101,37 +101,37 @@ function Landing() {
                 d="M176.2 193.23v-80.08a10.73 10.73 0 00-10.73-10.73h0a10.73 10.73 0 00-10.73 10.73v6a10.73 10.73 0 0010.73 10.73h18.52"
                 fill="none"
                 stroke="#fff"
-                stroke-miterlimit="10"
-                stroke-width="2.20521"
+                strokeMiterlimit="10"
+                strokeWidth="2.20521"
               />
               <path
                 d="M192 193.23v-80.08a10.72 10.72 0 0110.72-10.73h0a10.72 10.72 0 0110.73 10.73v6a10.72 10.72 0 01-10.73 10.73h-19.94"
                 fill="none"
                 stroke="#fff"
-                stroke-miterlimit="10"
-                stroke-width="2.20521"
+                strokeMiterlimit="10"
+                strokeWidth="2.20521"
               />
               <path
                 d="M138.5 66.42a60.47 60.47 0 0118.5-15.2"
                 fill="none"
                 stroke="#fff"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="13.1376"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="13.1376"
               />
               <path
                 d="M126.24 116.77a60.41 60.41 0 01-1.24-12.34M245.39 104.43a60.2 60.2 0 01-2.22 16.28"
                 fill="none"
                 stroke="#fff"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="9.03208"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="9.03208"
               />
               <path
                 fill="none"
                 stroke="#262525"
-                stroke-miterlimit="10"
-                stroke-width=".99051"
+                strokeMiterlimit="10"
+                strokeWidth=".99051"
                 d="M0 252.65h362.51M60.25 270.09H161"
               />
               <path
@@ -237,8 +237,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#d1a73e"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M307.06 167.23l-.57-14.08-3.87-5.37"
               />
               <path
@@ -264,8 +264,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#558bbf"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M297.2 127.4l-.48-5.39"
               />
               <path
@@ -283,8 +283,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#558bbf"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M316.89 130.96l-4.3-7.39"
               />
               <path
@@ -372,8 +372,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#33559a"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M50.76 193.74l-4.5 2.46"
               />
               <path
@@ -391,8 +391,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#cd8988"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M54.9 165.72v-6.22"
               />
               <path
@@ -406,8 +406,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#cd8988"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M35.65 167l1.43-.42.27-6.4"
               />
               <path
@@ -421,8 +421,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#d6a485"
-                stroke-miterlimit="10"
-                stroke-width=".48254"
+                strokeMiterlimit="10"
+                strokeWidth=".48254"
                 d="M35.33 170.78l-2.57 1.64"
               />
               <path
@@ -517,8 +517,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#33559a"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M109.2 222.72l-9.39-12.11"
               />
               <path
@@ -564,8 +564,8 @@ function Landing() {
               <path
                 fill="none"
                 stroke="#d1a73e"
-                stroke-miterlimit="10"
-                stroke-width=".75"
+                strokeMiterlimit="10"
+                strokeWidth=".75"
                 d="M108.75 187.82l-2.67 2.47-4.17-5.34M113.75 182.72l-4-4.8"
               />
               <path
