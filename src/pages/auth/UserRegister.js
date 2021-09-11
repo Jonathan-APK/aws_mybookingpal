@@ -60,7 +60,7 @@ function UserRegister() {
             <Link to="/">
               <img
                 className="mx-auto h-12 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                src="/logo_darkblue.svg"
                 alt="Workflow"
               />
             </Link>

@@ -3,11 +3,11 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Manage Facility", href: "#", current: false },
-  { name: "Manage Booking", href: "#", current: false },
+  { name: "Browse Facilities", href: "/facilitieslist", current: false },
+  { name: "Manage Booking", href: "/managebooking", current: false },
   { name: "Calendar", href: "#", current: false },
 ];
 
@@ -15,7 +15,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Navbar() {
+function UserNavbar() {
   
   const history = useHistory();
 
@@ -51,13 +51,13 @@ function Navbar() {
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex-shrink-0 flex items-center">
                     <div className="text-white font-black text-xl flex items-center">
-                      <a className="pb-1 mr-2" href="#">
+                      <Link to="/userdashboard">
                       <img
                         className="h-auto w-auto sm:h-10 mr-2"
                         src="/logo_white.svg"
                         alt=""
                       />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="hidden sm:block sm:ml-6">
@@ -170,4 +170,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default UserNavbar;

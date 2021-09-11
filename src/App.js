@@ -9,6 +9,10 @@ import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import UserDashboard from "./pages/user/UserDashboard";
+import FacilitiesList from "./pages/user/FacilitiesList";
+import ManageBooking from "./pages/user/ManageBooking";
+import FacilityDetails from "./pages/user/FacilityDetails";
 
 Amplify.configure(awsconfig)
 
@@ -55,6 +59,18 @@ function App() {
           </Route>
           <Route path="/resetpassword" exact>
             <ResetPassword />
+          </Route>
+          <Route path="/userdashboard" exact>
+            <UserDashboard />
+          </Route>
+          <Route path="/facilitieslist" exact>
+            <FacilitiesList />
+          </Route>
+          <Route path="/managebooking" exact>
+            <ManageBooking />
+          </Route>
+          <Route path="/facilitydetails" exact>
+            <FacilityDetails />
           </Route>
         </Switch>
       </BrowserRouter>
