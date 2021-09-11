@@ -1,6 +1,7 @@
 import Landing from "./pages/Landing";
 import Error from "./pages/Error";
-import PartnerDashboard from "./pages/PartnerDashboard";
+import PartnerDashboard from "./pages/partner/PartnerDashboard";
+import ManageFacility from "./pages/partner/ManageFacility";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import UserRegister from "./pages/auth/UserRegister";
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path="/dashboard" exact>
             <PartnerDashboard />
+          </Route>
+          <Route path="/managefacility" exact>
+            <ManageFacility />
           </Route>
           <Route path="/login" exact>
             <Login />
