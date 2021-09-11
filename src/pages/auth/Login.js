@@ -17,7 +17,20 @@ function Login() {
       } else {
         const response = await Auth.signIn(email, password);
         console.log("auth response", response);
-        history.push("/dashboard");
+        //Set session details
+        sessionStorage.setItem('username',response.signInUserSession.idToken.payload["cognito:username"]);
+        sessionStorage.setItem('email',response.attributes["email"]);
+        sessionStorage.setItem('userRole',response.attributes["custom:role"]);
+        sessionStorage.setItem('isLogged', true);
+
+        //Redirect user based on user role
+        if (sessionStorage.getItem('userRole') === "normal_user") {
+          history.push("/managefacility");
+        } else if (sessionStorage.getItem('userRole') === "facility_owner") {
+          history.push("/dashboard");
+        } else {
+          history.push("/error");
+        }
       }
     } catch (error) {
       console.log("sign in error", error);
