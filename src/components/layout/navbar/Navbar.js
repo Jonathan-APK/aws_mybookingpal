@@ -5,10 +5,9 @@ import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Manage Facility", href: "#", current: false },
+  { name: "Dashboard", href: "/dashboard", current: true },
+  { name: "Manage Facility", href: "/managefacility", current: false },
   { name: "Manage Booking", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
 ];
 
 function classNames(...classes) {
