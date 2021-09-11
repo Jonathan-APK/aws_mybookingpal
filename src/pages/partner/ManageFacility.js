@@ -23,7 +23,7 @@ const facility = [
       "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=968&q=80",
   },
   {
-    name: "ABC Warehouse",
+    name: "DBC Warehouses",
     location: "Jurong West",
     address: "12 Jurong West, S545055",
     rate: "$50/hr",
@@ -64,7 +64,7 @@ export default function ManageFacility() {
           <div className="flex flex-col">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 mb-5">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                <div class="flow-root mb-2">
+                <div className="flow-root mb-2">
                   <div className="font-bold text-lg text-black float-left mt-2">
                     List of Facilities
                   </div>
@@ -72,15 +72,15 @@ export default function ManageFacility() {
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex" onClick={()=> setModalOpen(true)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
+                        className="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                         />
                       </svg>
@@ -124,7 +124,7 @@ export default function ManageFacility() {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                       {facility.map((facility) => (
-                        <tr key={facility.email}>
+                        <tr key={facility.name}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="flex-shrink-0 h-10 w-10">
