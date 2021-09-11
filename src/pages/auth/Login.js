@@ -25,7 +25,7 @@ function Login() {
 
         //Redirect user based on user role
         if (sessionStorage.getItem('userRole') === "normal_user") {
-          history.push("/managefacility");
+          history.push("/userdashboard");
         } else if (sessionStorage.getItem('userRole') === "facility_owner") {
           history.push("/dashboard");
         } else {
