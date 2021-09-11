@@ -153,7 +153,7 @@ function UserNavbar() {
                 <NavLink
                   activeClassName="bg-gray-900 text-white"
                   to="/userdashboard"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
                   <a key="Dashboard">Dashboard</a>
                 </NavLink>
@@ -161,7 +161,7 @@ function UserNavbar() {
                 <NavLink
                   activeClassName="bg-gray-900 text-white"
                   to="/facilitieslist"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
                   <a key="Browse Facilities">Browse Facilities</a>
                 </NavLink>
@@ -169,7 +169,7 @@ function UserNavbar() {
                 <NavLink
                   activeClassName="bg-gray-900 text-white"
                   to="/managebooking"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
                   <a key="Manage Booking">Manage Booking</a>
                 </NavLink>
