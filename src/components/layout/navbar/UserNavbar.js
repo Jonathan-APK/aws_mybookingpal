@@ -2,23 +2,30 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Auth } from "aws-amplify";
-import { NavLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+const navigation = [
+  { name: "Browse Facilities", href: "/facilitieslist", current: false },
+  { name: "Manage Booking", href: "/managebooking", current: false },
+  { name: "Calendar", href: "#", current: false },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Navbar() {
+function UserNavbar() {
+  
   const history = useHistory();
 
   const signOut = async (event) => {
     event.preventDefault();
     try {
       await Auth.signOut();
-      sessionStorage.clear(); //Clear session storage once signout
       history.push("/");
     } catch (error) {
-      console.log("error signing out ", error);
+      console.log('error signing out ', error);
       history.push("/error");
     }
   };
@@ -44,33 +51,32 @@ function Navbar() {
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex-shrink-0 flex items-center">
                     <div className="text-white font-black text-xl flex items-center">
-                      <a className="pb-1 mr-2" href="#">
+                      <Link to="/userdashboard">
                       <img
                         className="h-auto w-auto sm:h-10 mr-2"
                         src="/logo_white.svg"
                         alt=""
                       />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div className="hidden sm:block sm:ml-6">
                     <div className="flex space-x-4">
-                      {/* Dashboard Tab */}
-                      <NavLink
-                        activeClassName="bg-gray-900 text-white"
-                        to="/dashboard"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        <a key="Dashboard">Dashboard</a>
-                      </NavLink>
-                      {/* ManageFacility Tab */}
-                      <NavLink
-                        activeClassName="bg-gray-900 text-white"
-                        to="/managefacility"
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                      >
-                        <a key="Manage Facility">Manage Facility</a>
-                      </NavLink>
+                      {navigation.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-900 text-white"
+                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "px-3 py-2 rounded-md text-sm font-medium"
+                          )}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </a>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -137,25 +143,24 @@ function Navbar() {
                 </div>
               </div>
             </div>
-            {/* Mobile menu tab*/}
+
             <Disclosure.Panel className="sm:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                {/* Dashboard Tab */}
-                <NavLink
-                  activeClassName="bg-gray-900 text-white"
-                  to="/dashboard"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  <a key="Dashboard">Dashboard</a>
-                </NavLink>
-                {/* ManageFacility Tab */}
-                <NavLink
-                  activeClassName="bg-gray-900 text-white"
-                  to="/managefacility"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  <a key="Manage Facility">Manage Facility</a>
-                </NavLink>
+                {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "block px-3 py-2 rounded-md text-base font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </a>
+                ))}
               </div>
             </Disclosure.Panel>
           </>
@@ -165,4 +170,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default UserNavbar;

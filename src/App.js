@@ -12,23 +12,14 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
+import UserDashboard from "./pages/user/UserDashboard";
+import FacilitiesList from "./pages/user/FacilitiesList";
+import ManageBooking from "./pages/user/ManageBooking";
+import FacilityDetails from "./pages/user/FacilityDetails";
 
 Amplify.configure(awsconfig);
 
 function App() {
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // useEffect(() => {
-  //   assessLoggedInState()
-  // }, [])
-
-  // const assessLoggedInState = () => {
-  //   Auth.currentAuthenticatedUser().then(() =>{
-  //     setLoggedIn(true);
-  //   }).catch(() => {
-  //     setLoggedIn(false);
-  //   })
-  // }
 
   return (
     <div>
@@ -38,17 +29,62 @@ function App() {
 
           <PrivateRoute path="/dashboard" component={PartnerDashboard} exact />
 
-          <PrivateRoute path="/managefacility" component={ManageFacility} exact />
+          <PrivateRoute
+            path="/managefacility"
+            component={ManageFacility}
+            exact
+          />
 
-          <PublicRoute restricted={true} path="/login" component={Login} exact />
+          <PublicRoute
+            restricted={true}
+            path="/login"
+            component={Login}
+            exact
+          />
 
-          <PublicRoute restricted={false} path="/userregister" component={UserRegister} exact />
+          <PublicRoute
+            restricted={false}
+            path="/userregister"
+            component={UserRegister}
+            exact
+          />
 
-          <PublicRoute restricted={false} path="/partnerregister" component={PartnerRegister} exact />
+          <PublicRoute
+            restricted={false}
+            path="/partnerregister"
+            component={PartnerRegister}
+            exact
+          />
 
-          <PublicRoute restricted={false} path="/forgotpassword" component={ForgotPassword} exact />
+          <PublicRoute
+            restricted={false}
+            path="/forgotpassword"
+            component={ForgotPassword}
+            exact
+          />
 
-          <PublicRoute restricted={false} path="/resetpassword" component={ResetPassword} exact />
+          <PublicRoute
+            restricted={false}
+            path="/resetpassword"
+            component={ResetPassword}
+            exact
+          />
+
+          <PrivateRoute path="/userdashboard" component={UserDashboard} exact />
+
+          <PrivateRoute
+            path="/facilitieslist"
+            component={FacilitiesList}
+            exact
+          />
+
+          <PrivateRoute path="/managebooking" component={ManageBooking} exact />
+
+          <PrivateRoute
+            path="/facilitydetails"
+            component={FacilityDetails}
+            exact
+          />
 
           <Route component={Error} />
         </Switch>
