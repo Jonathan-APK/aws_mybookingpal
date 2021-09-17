@@ -49,7 +49,7 @@ function Login() {
           <div>
             <Link to="/">
               <img
-                className="mx-auto h-12 w-auto"
+                className="mx-auto h-8 w-auto"
                 src="/logo_darkblue.svg"
                 alt="Workflow"
               />

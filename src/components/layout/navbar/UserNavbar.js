@@ -47,7 +47,7 @@ function UserNavbar() {
                     <div className="text-white font-black text-xl flex items-center">
                       <Link to="/userdashboard">
                         <img
-                          className="h-auto w-auto sm:h-10 mr-2"
+                          className="h-auto w-auto sm:h-8 mr-2"
                           src="/logo_white.svg"
                           alt=""
                         />

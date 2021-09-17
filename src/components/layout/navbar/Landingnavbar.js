@@ -8,7 +8,7 @@ function Landingnavbar() {
           <div className="text-black font-black text-2xl flex items-center">
             <a href="#" className="pb-1">
             <img
-              className="h-8 w-auto sm:h-10 mr-2"
+              className="h-8 w-auto sm:h-9 mr-2"
               src="/logo_darkblue.svg"
               alt=""
             />
