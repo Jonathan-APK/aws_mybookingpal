@@ -1,4 +1,19 @@
-type User @model {
+type Facility @model @key(name: "byUser", fields: ["userID"]) @auth(rules: [{allow: private}]) {
+  id: ID!
+  name: String!
+  type: String!
+  address: String!
+  area: String!
+  size: Int!
+  rate: Float!
+  description: String!
+  opening_hrs: AWSTime!
+  closing_hrs: AWSTime!
+  operating_days: [String]!
+  userID: ID!
+}
+
+type User @model @auth(rules: [{allow: private}]) {
   id: ID!
   email: String!
   username: String!
@@ -6,12 +21,12 @@ type User @model {
   lastname: String
   contact: String
   address: String
-  when_created: AWSDateTime!
-  roles: [Role] @connection(keyName: "userRoleIndex", fields: ["id"])
+  Facilities: [Facility] @connection(keyName: "byUser", fields: ["id"])
+  role: [String]
 }
 
-type Role @model @key(name: "userRoleIndex", fields: ["userID"]) {
-  id: ID!
-  userID: ID!
-  roleName: String!
+type Subscription {
+  onCreateFacilityByUserId(userID: String!): Facility
+  @aws_subscribe(mutations: ["createFacility"])
 }
+ 

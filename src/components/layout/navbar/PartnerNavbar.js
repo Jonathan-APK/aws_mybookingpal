@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Navbar() {
+function PartnerNavbar() {
   const history = useHistory();
 
   const signOut = async (event) => {
@@ -61,7 +61,7 @@ function Navbar() {
                         to="/dashboard"
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
-                        <a key="Dashboard">Dashboard</a>
+                        Dashboard
                       </NavLink>
                       {/* ManageFacility Tab */}
                       <NavLink
@@ -69,7 +69,7 @@ function Navbar() {
                         to="/managefacility"
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
-                        <a key="Manage Facility">Manage Facility</a>
+                        Manage Facility
                       </NavLink>
                     </div>
                   </div>
@@ -108,7 +108,7 @@ function Navbar() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -146,7 +146,7 @@ function Navbar() {
                   to="/dashboard"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  <a key="Dashboard">Dashboard</a>
+                  Dashboard
                 </NavLink>
                 {/* ManageFacility Tab */}
                 <NavLink
@@ -154,7 +154,7 @@ function Navbar() {
                   to="/managefacility"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  <a key="Manage Facility">Manage Facility</a>
+                  Manage Facility
                 </NavLink>
               </div>
             </Disclosure.Panel>
@@ -165,4 +165,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default PartnerNavbar;
