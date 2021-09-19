@@ -1,6 +1,97 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getFacility = /* GraphQL */ `
+  query GetFacility($id: ID!) {
+    getFacility(id: $id) {
+      id
+      name
+      type
+      address
+      area
+      size
+      rate
+      description
+      opening_hrs
+      closing_hrs
+      operating_days
+      userID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFacilities = /* GraphQL */ `
+  query ListFacilities(
+    $filter: ModelFacilityFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFacilities(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        type
+        address
+        area
+        size
+        rate
+        description
+        opening_hrs
+        closing_hrs
+        operating_days
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncFacilities = /* GraphQL */ `
+  query SyncFacilities(
+    $filter: ModelFacilityFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncFacilities(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        type
+        address
+        area
+        size
+        rate
+        description
+        opening_hrs
+        closing_hrs
+        operating_days
+        userID
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -11,19 +102,35 @@ export const getUser = /* GraphQL */ `
       lastname
       contact
       address
-      when_created
-      roles {
+      role
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      Facilities {
         items {
           id
+          name
+          type
+          address
+          area
+          size
+          rate
+          description
+          opening_hrs
+          closing_hrs
+          operating_days
           userID
-          roleName
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -42,43 +149,56 @@ export const listUsers = /* GraphQL */ `
         lastname
         contact
         address
-        when_created
-        roles {
-          nextToken
-        }
+        role
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
+        Facilities {
+          nextToken
+          startedAt
+        }
       }
       nextToken
+      startedAt
     }
   }
 `;
-export const getRole = /* GraphQL */ `
-  query GetRole($id: ID!) {
-    getRole(id: $id) {
-      id
-      userID
-      roleName
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listRoles = /* GraphQL */ `
-  query ListRoles(
-    $filter: ModelRoleFilterInput
+export const syncUsers = /* GraphQL */ `
+  query SyncUsers(
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
+    $lastSync: AWSTimestamp
   ) {
-    listRoles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    syncUsers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
       items {
         id
-        userID
-        roleName
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
+        Facilities {
+          nextToken
+          startedAt
+        }
       }
       nextToken
+      startedAt
     }
   }
 `;

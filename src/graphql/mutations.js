@@ -1,6 +1,84 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createFacility = /* GraphQL */ `
+  mutation CreateFacility(
+    $input: CreateFacilityInput!
+    $condition: ModelFacilityConditionInput
+  ) {
+    createFacility(input: $input, condition: $condition) {
+      id
+      name
+      type
+      address
+      area
+      size
+      rate
+      description
+      opening_hrs
+      closing_hrs
+      operating_days
+      userID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFacility = /* GraphQL */ `
+  mutation UpdateFacility(
+    $input: UpdateFacilityInput!
+    $condition: ModelFacilityConditionInput
+  ) {
+    updateFacility(input: $input, condition: $condition) {
+      id
+      name
+      type
+      address
+      area
+      size
+      rate
+      description
+      opening_hrs
+      closing_hrs
+      operating_days
+      userID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFacility = /* GraphQL */ `
+  mutation DeleteFacility(
+    $input: DeleteFacilityInput!
+    $condition: ModelFacilityConditionInput
+  ) {
+    deleteFacility(input: $input, condition: $condition) {
+      id
+      name
+      type
+      address
+      area
+      size
+      rate
+      description
+      opening_hrs
+      closing_hrs
+      operating_days
+      userID
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -14,19 +92,35 @@ export const createUser = /* GraphQL */ `
       lastname
       contact
       address
-      when_created
-      roles {
+      role
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      Facilities {
         items {
           id
+          name
+          type
+          address
+          area
+          size
+          rate
+          description
+          opening_hrs
+          closing_hrs
+          operating_days
           userID
-          roleName
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -43,19 +137,35 @@ export const updateUser = /* GraphQL */ `
       lastname
       contact
       address
-      when_created
-      roles {
+      role
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      Facilities {
         items {
           id
+          name
+          type
+          address
+          area
+          size
+          rate
+          description
+          opening_hrs
+          closing_hrs
+          operating_days
           userID
-          roleName
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -72,61 +182,35 @@ export const deleteUser = /* GraphQL */ `
       lastname
       contact
       address
-      when_created
-      roles {
+      role
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+      Facilities {
         items {
           id
+          name
+          type
+          address
+          area
+          size
+          rate
+          description
+          opening_hrs
+          closing_hrs
+          operating_days
           userID
-          roleName
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createRole = /* GraphQL */ `
-  mutation CreateRole(
-    $input: CreateRoleInput!
-    $condition: ModelRoleConditionInput
-  ) {
-    createRole(input: $input, condition: $condition) {
-      id
-      userID
-      roleName
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateRole = /* GraphQL */ `
-  mutation UpdateRole(
-    $input: UpdateRoleInput!
-    $condition: ModelRoleConditionInput
-  ) {
-    updateRole(input: $input, condition: $condition) {
-      id
-      userID
-      roleName
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteRole = /* GraphQL */ `
-  mutation DeleteRole(
-    $input: DeleteRoleInput!
-    $condition: ModelRoleConditionInput
-  ) {
-    deleteRole(input: $input, condition: $condition) {
-      id
-      userID
-      roleName
-      createdAt
-      updatedAt
     }
   }
 `;

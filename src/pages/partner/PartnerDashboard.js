@@ -1,5 +1,5 @@
 import Footer from "../../components/layout/Footer";
-import Navbar from "../../components/layout/navbar/Navbar";
+import Navbar from "../../components/layout/navbar/PartnerNavbar";
 import BookingLineChart from "../../components/graph/LineChart";
 
 const facility = [

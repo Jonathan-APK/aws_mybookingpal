@@ -1,38 +1,41 @@
 import Footer from "../../components/layout/Footer";
-import Navbar from "../../components/layout/navbar/Navbar";
+import Navbar from "../../components/layout/navbar/PartnerNavbar";
 import AddFacilityModal from "../partner/AddFacilityModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as queries from "../../graphql/queries";
+import { API } from "@aws-amplify/api";
+import * as subscriptions from "../../graphql/subscriptions";
 
-const facility = [
-  {
-    name: "ABC Warehouse",
-    location: "Jurong West",
-    address: "12 Jurong West, S545055",
-    rate: "$50/hr",
-    operating_hrs: "Mon-Fri: 7am - 6pm",
-    image:
-      "https://images.unsplash.com/photo-1428366890462-dd4baecf492b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-  },
-  {
-    name: "PK Gym",
-    location: "Jurong West",
-    address: "12 Jurong West, S545055",
-    rate: "$50/hr",
-    operating_hrs: "Mon-Fri: 7am - 6pm",
-    image:
-      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=968&q=80",
-  },
-  {
-    name: "DBC Warehouses",
-    location: "Jurong West",
-    address: "12 Jurong West, S545055",
-    rate: "$50/hr",
-    operating_hrs: "Mon-Fri: 7am - 6pm",
-    image:
-      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=968&q=80",
-  },
-  // More people...
-];
+// const facility = [
+//   {
+//     name: "ABC Warehouse",
+//     location: "Jurong West",
+//     address: "12 Jurong West, S545055",
+//     rate: "$50/hr",
+//     operating_hrs: "Mon-Fri: 7am - 6pm",
+//     image:
+//       "https://images.unsplash.com/photo-1428366890462-dd4baecf492b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+//   },
+//   {
+//     name: "PK Gym",
+//     location: "Jurong West",
+//     address: "12 Jurong West, S545055",
+//     rate: "$50/hr",
+//     operating_hrs: "Mon-Fri: 7am - 6pm",
+//     image:
+//       "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=968&q=80",
+//   },
+//   {
+//     name: "DBC Warehouses",
+//     location: "Jurong West",
+//     address: "12 Jurong West, S545055",
+//     rate: "$50/hr",
+//     operating_hrs: "Mon-Fri: 7am - 6pm",
+//     image:
+//       "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=968&q=80",
+//   },
+//   // More people...
+// ];
 
 const booking = [
   {
@@ -47,6 +50,42 @@ const booking = [
 
 export default function ManageFacility() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [facilityList, setFacilityList] = useState([]);
+  let subscription;
+
+  //Retrieve user's facility list when page onload
+  useEffect(() => {
+    async function getFacilityList() {
+      const getFacility = await API.graphql({
+        query: queries.listFacilities,
+        variables: {
+          filter: { userID: { eq: sessionStorage.getItem("username") } },
+        },
+      });
+      setFacilityList(getFacility.data.listFacilities.items);
+      console.log("List of facilities: " + JSON.stringify(getFacility));
+    }
+    getFacilityList();
+    facilitySubscription();
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  // Subscribe to facility creation created by user
+  function facilitySubscription() {
+    subscription = API.graphql({
+      query: subscriptions.onCreateFacilityByUserId,
+      variables: { userID: sessionStorage.getItem("username") },
+    }).subscribe({
+      //Add newly added facility to existing facility list array for display
+      next: (response) =>
+        setFacilityList((oldArray) => [
+          ...oldArray,
+          response.value.data.onCreateFacilityByUserId,
+        ]),
+      error: (error) => console.warn(error),
+    });
+  }
 
   return (
     <div>
@@ -69,7 +108,10 @@ export default function ManageFacility() {
                     List of Facilities
                   </div>
                   <div className="float-right block">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex" onClick={()=> setModalOpen(true)}>
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex"
+                      onClick={() => setModalOpen(true)}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6"
@@ -123,8 +165,8 @@ export default function ManageFacility() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {facility.map((facility) => (
-                        <tr key={facility.name}>
+                      {facilityList.map((facility) => (
+                        <tr key={facility.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="flex-shrink-0 h-10 w-10">
@@ -143,20 +185,23 @@ export default function ManageFacility() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {facility.location}
+                              {facility.area}
                             </div>
                             <div className="text-sm text-gray-500">
                               {facility.address}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {/* <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                              Active
-                            </span> */}
-                            {facility.operating_hrs}
+                            <div className="text-sm text-gray-900">
+                              {facility.operating_days.join(", ")}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {facility.opening_hrs} - {facility.closing_hrs}
+                            </div>
                           </td>
+
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {facility.rate}
+                            ${facility.rate}/Hr
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a

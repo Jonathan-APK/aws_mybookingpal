@@ -1,9 +1,88 @@
+import API from "@aws-amplify/api";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckCircleIcon } from "@heroicons/react/outline";
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import * as mutations from "../../graphql/mutations";
 
 function AddFacilityModal(props) {
+  const [name, setName] = useState("");
+  const [type, setType] = useState("Meeting Room");
+  const [address, setAddress] = useState("");
+  const [area, setArea] = useState("");
+  const [size, setSize] = useState("");
+  const [operatingFrom, setOperatingFrom] = useState("");
+  const [operatingTo, setOperatingTo] = useState("");
+  const [operatingDays, setOperatingDays] = useState([]);
+  const [rate, setRate] = useState("");
+  const [description, setDescription] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  //Change event for operating days checkboxes
+  const onChangeCheckbox = (event) => {
+    const isChecked = event.target.checked;
+    if (isChecked) {
+      setOperatingDays([...operatingDays, event.target.value]);
+    } else {
+      const index = operatingDays.indexOf(event.target.value);
+      operatingDays.splice(index, 1);
+      setOperatingDays(operatingDays);
+    }
+  };
+
+  //Input validation for operating hours and days
+  const inputValidation = () => {
+    if (!operatingDays.length) {
+      setErrorMsg("Operation Days cannot be empty!");
+      return false;
+    } else if (
+      document.getElementById("operating-from").value >=
+      document.getElementById("operating-to").value
+    ) {
+      setErrorMsg("Operation Hrs (From) should be before Operation Hrs (To)");
+      return false;
+    }
+    return true;
+  };
+
+  //Handle submit action for add button
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setErrorMsg("");
+
+      //If pass input validation
+      if (inputValidation()) {
+        //Object to insert into DB
+        const facilityDetails = {
+          name: name,
+          type: type,
+          address: address,
+          area: area,
+          size: size,
+          rate: rate,
+          description: description,
+          opening_hrs: operatingFrom,
+          closing_hrs: operatingTo,
+          operating_days: operatingDays,
+          userID: sessionStorage.getItem("username"),
+        };
+
+        console.log(
+          "Facility details " + JSON.stringify(facilityDetails)
+        );
+
+        //Call api to add facility
+        const response = await API.graphql({
+          query: mutations.createFacility,
+          variables: { input: facilityDetails },
+        });
+        console.log("Add facility response " + JSON.stringify(response));
+      }
+    } catch (error) {
+      setErrorMsg("Error encounterd. Please contact administrator.");
+    }
+  };
+
   return (
     <Transition.Root show={props.isOpen} as={Fragment}>
       <Dialog
@@ -60,8 +139,21 @@ function AddFacilityModal(props) {
                   ></path>
                 </svg>
               </div>
+
+              <div className="col-span-6">
+                {/* error message */}
+                {errorMsg && (
+                  <div
+                    className="bg-red-100 borderborder-red-400 text-red-700 text-xs text-center px-4 py-3  mx-4 my-2 rounded relative"
+                    role="alert"
+                  >
+                    <span className="block sm:inline">{errorMsg}</span>
+                  </div>
+                )}
+              </div>
+
               <div className="mt-5 md:mt-0 md:col-span-2">
-                <form action="#" method="POST">
+                <form onSubmit={handleSubmit}>
                   <div className="shadow overflow-hidden sm:rounded-md">
                     <div className="px-4 py-5 bg-white sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
@@ -116,6 +208,8 @@ function AddFacilityModal(props) {
                           </label>
                           <input
                             type="text"
+                            required
+                            onChange={(e) => setName(e.target.value)}
                             name="facility-name"
                             id="facility-name"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -131,6 +225,7 @@ function AddFacilityModal(props) {
                           </label>
                           <select
                             id="facility-type"
+                            onChange={(e) => setType(e.target.value)}
                             name="facility-type"
                             className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
@@ -152,6 +247,8 @@ function AddFacilityModal(props) {
                           </label>
                           <input
                             type="text"
+                            required
+                            onChange={(e) => setAddress(e.target.value)}
                             name="street-address"
                             id="street-address"
                             autoComplete="street-address"
@@ -168,6 +265,8 @@ function AddFacilityModal(props) {
                           </label>
                           <input
                             type="text"
+                            required
+                            onChange={(e) => setArea(e.target.value)}
                             name="area-name"
                             id="area-name"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -179,10 +278,12 @@ function AddFacilityModal(props) {
                             htmlFor="rate-hr"
                             className="block text-sm font-medium text-gray-700"
                           >
-                            Estimated Size (Pax)
+                            Estimated Room Size (Pax)
                           </label>
                           <input
                             type="number"
+                            required
+                            onChange={(e) => setSize(e.target.value)}
                             name="rate-hr"
                             id="rate-hr"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -191,17 +292,149 @@ function AddFacilityModal(props) {
 
                         <div className="col-span-6 sm:col-span-3">
                           <label
-                            htmlFor="operating-hr"
+                            htmlFor="operating-from"
                             className="block text-sm font-medium text-gray-700"
                           >
-                            Operating Hours
+                            Operating Hours (From)
                           </label>
                           <input
-                            type="text"
-                            name="operating-hr"
-                            id="operating-hr"
+                            type="time"
+                            required
+                            onChange={(e) => setOperatingFrom(e.target.value)}
+                            name="operating-from"
+                            id="operating-from"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                           />
+                        </div>
+
+                        <div className="col-span-6 sm:col-span-3">
+                          <label
+                            htmlFor="operating-to"
+                            className="block text-sm font-medium text-gray-700"
+                          >
+                            Operating Hours (To)
+                          </label>
+                          <input
+                            type="time"
+                            required
+                            onChange={(e) => setOperatingTo(e.target.value)}
+                            name="operating-to"
+                            id="operating-to"
+                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                          />
+                        </div>
+
+                        <div className="col-span-6">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Operating Days
+                          </label>
+
+                          <div className="flex mt-2 justify-evenly">
+                            <label
+                              htmlFor="mon"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Mon
+                            </label>
+                            <input
+                              type="checkbox"
+                              name="mon"
+                              value="Mon"
+                              onChange={onChangeCheckbox}
+                              id="mon"
+                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+
+                            <label
+                              htmlFor="tue"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Tue
+                            </label>
+                            <input
+                              type="checkbox"
+                              value="Tue"
+                              onChange={onChangeCheckbox}
+                              name="tue"
+                              id="tue"
+                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+
+                            <label
+                              htmlFor="wed"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Wed
+                            </label>
+                            <input
+                              type="checkbox"
+                              value="Wed"
+                              onChange={onChangeCheckbox}
+                              name="wed"
+                              id="wed"
+                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+
+                            <label
+                              htmlFor="thur"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Thur
+                            </label>
+                            <input
+                              type="checkbox"
+                              value="Thur"
+                              onChange={onChangeCheckbox}
+                              name="thur"
+                              id="thur"
+                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+
+                            <label
+                              htmlFor="fri"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Fri
+                            </label>
+                            <input
+                              type="checkbox"
+                              value="Fri"
+                              onChange={onChangeCheckbox}
+                              name="fri"
+                              id="fri"
+                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+
+                            <label
+                              htmlFor="sat"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Sat
+                            </label>
+                            <input
+                              type="checkbox"
+                              value="Sat"
+                              onChange={onChangeCheckbox}
+                              name="sat"
+                              id="sat"
+                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+
+                            <label
+                              htmlFor="sun"
+                              className="block text-sm font-medium text-gray-700"
+                            >
+                              Sun
+                            </label>
+                            <input
+                              type="checkbox"
+                              value="Mon"
+                              onChange={onChangeCheckbox}
+                              name="sun"
+                              id="sun"
+                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                            />
+                          </div>
                         </div>
 
                         <div className="col-span-6 sm:col-span-3">
@@ -213,6 +446,8 @@ function AddFacilityModal(props) {
                           </label>
                           <input
                             type="number"
+                            required
+                            onChange={(e) => setRate(e.target.value)}
                             name="rate-hr"
                             id="rate-hr"
                             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -229,7 +464,9 @@ function AddFacilityModal(props) {
                           <div className="mt-1">
                             <textarea
                               id="about"
+                              required
                               name="about"
+                              onChange={(e) => setDescription(e.target.value)}
                               rows={3}
                               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                               placeholder="Brief description about the facility."
