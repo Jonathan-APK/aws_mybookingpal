@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { BellIcon, MenuIcon, XIcon, ShoppingCartIcon } from "@heroicons/react/outline";
 import { Auth } from "aws-amplify";
 import { NavLink, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -23,6 +23,11 @@ function UserNavbar() {
       history.push("/error");
     }
   };
+
+  function ShoppingCartButton() {
+    console.log('Clicked me')
+  
+  }
 
   return (
     <div>
@@ -143,6 +148,16 @@ function UserNavbar() {
                       </Menu.Items>
                     </Transition>
                   </Menu>
+                  <div>
+                  <button
+                    type="button"
+                    className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                    onClick = {ShoppingCartButton}            
+                  >
+                    <span className="sr-only">View notifications</span>
+                    <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                  </div>
                 </div>
               </div>
             </div>
