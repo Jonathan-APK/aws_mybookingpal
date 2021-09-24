@@ -56,7 +56,7 @@ export default function UserDashboard() {
 
   return (
     <div>
-      <UserNavbar />
+      <UserNavbar setCartOpen={setCartOpen}/>
       <div className="bg-gray-50 mt-1">
         <div className="mx-8 p-8">
           <h1 className="text-5xl text-center font-extrabold tracking-tight text-gray-900">
