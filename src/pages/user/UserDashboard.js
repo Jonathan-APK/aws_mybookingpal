@@ -1,6 +1,9 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
+import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import CategoryItem from "../../components/user/CategoryItem";
+import {useState} from "react";
+
 
 const categories = [
   {
@@ -48,6 +51,9 @@ const categories = [
 ];
 
 export default function UserDashboard() {
+
+  const [cartOpen, setCartOpen] = useState(false);
+
   return (
     <div>
       <UserNavbar />
@@ -107,6 +113,7 @@ export default function UserDashboard() {
         </div>
       </div>
       <Footer />
+      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
     </div>
   );
 }
