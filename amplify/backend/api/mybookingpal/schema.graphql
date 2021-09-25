@@ -28,5 +28,10 @@ type User @model @auth(rules: [{allow: private}]) {
 type Subscription {
   onCreateFacilityByUserId(userID: String!): Facility
   @aws_subscribe(mutations: ["createFacility"])
+  onDeleteFacilityByUserId(userID: String!): Facility
+  @aws_subscribe(mutations: ["deleteFacility"])
+  onUpdateFacilityByUserId(userID: String!): Facility
+  @aws_subscribe(mutations: ["updateFacility"])
 }
+
  
