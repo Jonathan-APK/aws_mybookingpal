@@ -19,9 +19,6 @@ export const createFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -45,9 +42,6 @@ export const updateFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -71,9 +65,6 @@ export const deleteFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -93,9 +84,6 @@ export const createUser = /* GraphQL */ `
       contact
       address
       role
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
       Facilities {
@@ -112,14 +100,10 @@ export const createUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
     }
   }
@@ -138,9 +122,6 @@ export const updateUser = /* GraphQL */ `
       contact
       address
       role
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
       Facilities {
@@ -157,14 +138,10 @@ export const updateUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
     }
   }
@@ -183,9 +160,6 @@ export const deleteUser = /* GraphQL */ `
       contact
       address
       role
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
       Facilities {
@@ -202,14 +176,10 @@ export const deleteUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
     }
   }
