@@ -1,5 +1,6 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
+import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import FacilityListItem from "../../components/user/FacilityListItem";
 import SearchBox from "../../components/user/SearchBox";
 import Pagination from "../../components/layout/Pagination";
@@ -96,6 +97,7 @@ export default function FacilitiesList() {
         </div>
       </div>
       <Footer />
+      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
     </div>
   );
 }

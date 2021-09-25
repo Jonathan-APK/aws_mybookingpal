@@ -1,5 +1,6 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
+import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import Pagination from "../../components/layout/Pagination";
 import {useState} from "react";
 
@@ -120,6 +121,7 @@ export default function ManageBooking() {
         </div>
       </div>
       <Footer />
+      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
     </div>
   );
 }
