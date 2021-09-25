@@ -3,6 +3,8 @@ import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import FacilityListItem from "../../components/user/FacilityListItem";
 import SearchBox from "../../components/user/SearchBox";
 import Pagination from "../../components/layout/Pagination";
+import {useState} from "react";
+
 
 const facilities = [
   {
@@ -65,9 +67,12 @@ const facilities = [
 ];
 
 export default function FacilitiesList() {
+
+  const [cartOpen, setCartOpen] = useState(false);
+
   return (
     <div>
-      <UserNavbar />
+      <UserNavbar setCartOpen={setCartOpen}/>
       <div id="overallLayout" className="grid grid-cols-5 m-8 mx-20">
         <div id="left" className="grid col-span-1 row-span-1 px-2">
           <SearchBox />

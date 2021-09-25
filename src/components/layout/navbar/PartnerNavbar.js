@@ -3,6 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Auth } from "aws-amplify";
 import { NavLink, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -81,7 +82,7 @@ function PartnerNavbar() {
                   >
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  </button>&nbsp;
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
@@ -107,6 +108,7 @@ function PartnerNavbar() {
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
+                            <Link to = "/userprofile">
                             <a
                               
                               className={classNames(
@@ -116,6 +118,7 @@ function PartnerNavbar() {
                             >
                               Your Profile
                             </a>
+                            </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>

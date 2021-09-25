@@ -1,6 +1,8 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import Pagination from "../../components/layout/Pagination";
+import {useState} from "react";
+
 
 const bookings = [
   {
@@ -23,9 +25,12 @@ const bookings = [
 ];
 
 export default function ManageBooking() {
+  
+  const [cartOpen, setCartOpen] = useState(false);
+  
   return (
     <div>
-      <UserNavbar />
+      <UserNavbar setCartOpen={setCartOpen}/>
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-gray-900">Manage Booking</h1>

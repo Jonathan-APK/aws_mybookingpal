@@ -1,10 +1,15 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import CategoryItem from "../../components/user/CategoryItem";
+import {useState} from "react";
+
 
 
 
 export default function ProfileDetails() {
+
+  const [cartOpen, setCartOpen] = useState(false);
+  
   return (
     <div>
 

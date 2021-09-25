@@ -2,6 +2,8 @@ import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import FacilityDetailsItem from "../../components/user/FacilityDetailsItem";
 import SearchBox from "../../components/user/SearchBox";
+import {useState} from "react";
+
 
 const details = [
   {
@@ -19,9 +21,12 @@ const details = [
 ];
 
 export default function FacilityDetails() {
+
+  const [cartOpen, setCartOpen] = useState(false);
+  
   return (
     <div>
-      <UserNavbar />
+      <UserNavbar setCartOpen={setCartOpen}/>
       <div id="overallLayout" className="grid grid-cols-5 m-8 mx-20">
         <div id="left" className="grid col-span-1 row-span-1 px-2">
           <SearchBox />

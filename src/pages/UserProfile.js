@@ -1,8 +1,11 @@
-import Footer from "../../components/layout/Footer";
-import UserNavbar from "../../components/layout/navbar/UserNavbar";
-import Pagination from "../../components/layout/Pagination";
+import Footer from "../components/layout/Footer";
+import UserNavbar from "../components/layout/navbar/UserNavbar";
+import Pagination from "../components/layout/Pagination";
+import { Container,Row,Col,Form ,Button} from 'react-bootstrap';
 import React from 'react';
-import DefaultUserPic from "../../uploads/team-male.jpg";
+import DefaultUserPic from "../uploads/team-male.jpg";
+import EditProfile from "../components/user/EditProfile";
+
 const axios = require('axios');
 
 const profiles = [
@@ -87,7 +90,6 @@ return (
       <div className="container mx-auto px-6 sm:px-12 py-6"></div>
     </header>
     <div>     
-      
     <section class="text-blueGray-700 ">
             <div class="container flex flex-col items-center px-5 py-16 mx-auto md:flex-row lg:px-28">
               <div class="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:mb-0">
@@ -98,14 +100,17 @@ return (
                 <h1 class="mb-2 text-xs font-semibold tracking-widest text-black md:text-xl title-font"> Email: {this.state.email} </h1>
               </div>
               <div>
-              <button class="flex items-center px-6 py-2 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"> Edit </button>
+              <button 
+              class="flex items-center px-6 py-2 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"> Edit </button>
               </div>
             </div>
-          </section>        
+            
+    </section>        
   </div>
   <Footer />
   </div>   
 );
 }  
 }                
+
 export default UserProfile;
