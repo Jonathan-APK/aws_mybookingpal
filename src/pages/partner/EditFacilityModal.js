@@ -1,7 +1,7 @@
 import API from "@aws-amplify/api";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as mutations from "../../graphql/mutations";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import "rc-time-picker/assets/index.css";
@@ -9,7 +9,7 @@ import React from "react";
 import moment from "moment";
 import TimePicker from "rc-time-picker";
 
-function AddFacilityModal(props) {
+function EditFacilityModal(props) {
   const [name, setName] = useState("");
   const [type, setType] = useState("Meeting Room");
   const [address, setAddress] = useState("");
@@ -21,7 +21,20 @@ function AddFacilityModal(props) {
   const [rate, setRate] = useState("");
   const [description, setDescription] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  const [addedModal, setAddedModalOpen] = useState(false);
+  const [updatedModal, setUpdatedModalOpen] = useState(false);
+
+  useEffect(() => {
+    setName(props.facility.name);
+    setType(props.facility.type);
+    setAddress(props.facility.address);
+    setArea(props.facility.area);
+    setSize(props.facility.size);
+    setOperatingFrom(props.facility.opening_hrs);
+    setOperatingTo(props.facility.closing_hrs);
+    setOperatingDays(props.facility.operating_days ? props.facility.operating_days : []);
+    setRate(props.facility.rate);
+    setDescription(props.facility.description);
+  }, [props]);
 
   //Change event for operating days checkboxes
   const onChangeCheckbox = (event) => {
@@ -53,7 +66,7 @@ function AddFacilityModal(props) {
     return true;
   };
 
-  //Handle submit action for add button
+  //Handle submit action for update button
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -61,8 +74,9 @@ function AddFacilityModal(props) {
 
       //If pass input validation
       if (inputValidation()) {
-        //Object to insert into DB
+        //Object to update into DB
         const facilityDetails = {
+          id: props.facility.id,
           name: name,
           type: type,
           address: address,
@@ -78,16 +92,16 @@ function AddFacilityModal(props) {
 
         console.log("Facility details " + JSON.stringify(facilityDetails));
 
-        //Call api to add facility
+        //Call api to update facility
         const response = await API.graphql({
-          query: mutations.createFacility,
+          query: mutations.updateFacility,
           variables: { input: facilityDetails },
         });
 
-        console.log("Add facility response " + JSON.stringify(response));
-        props.setModalOpen(false); //close add facility modal
+        console.log("Update facility response " + JSON.stringify(response));
+        props.setModalOpen(false); //close update facility modal
         setTimeout(() => {
-          setAddedModalOpen(true); //open added modal
+          setUpdatedModalOpen(true); //open updated modal
         }, 1000);
       }
     } catch (error) {
@@ -135,7 +149,7 @@ function AddFacilityModal(props) {
             >
               <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div className="flex flex-row justify-between p-4 bg-gray-100 border-b  rounded-tl-lg rounded-tr-lg">
-                  <p className="font-semibold text-gray-800">Add Facility</p>
+                  <p className="font-semibold text-gray-800">Edit Facility</p>
                   <svg
                     onClick={() => props.setModalOpen(false)}
                     className="w-6 h-6 cursor-pointer"
@@ -171,46 +185,46 @@ function AddFacilityModal(props) {
                       <div className="px-4 py-5 bg-white sm:p-6">
                         <div className="grid grid-cols-6 gap-6">
                           {/* <div className="col-span-6">
-                            <label className="block text-sm font-medium text-gray-700">
-                              Facility photo
-                            </label>
-                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                              <div className="space-y-1 text-center">
-                                <svg
-                                  className="mx-auto h-12 w-12 text-gray-400"
-                                  stroke="currentColor"
-                                  fill="none"
-                                  viewBox="0 0 48 48"
-                                  aria-hidden="true"
+                          <label className="block text-sm font-medium text-gray-700">
+                            Facility photo
+                          </label>
+                          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                            <div className="space-y-1 text-center">
+                              <svg
+                                className="mx-auto h-12 w-12 text-gray-400"
+                                stroke="currentColor"
+                                fill="none"
+                                viewBox="0 0 48 48"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                  strokeWidth={2}
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                              <div className="flex text-sm text-gray-600">
+                                <label
+                                  htmlFor="file-upload"
+                                  className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500"
                                 >
-                                  <path
-                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
+                                  <span>Upload a file</span>
+                                  <input
+                                    id="file-upload"
+                                    name="file-upload"
+                                    type="file"
+                                    className="sr-only"
                                   />
-                                </svg>
-                                <div className="flex text-sm text-gray-600">
-                                  <label
-                                    htmlFor="file-upload"
-                                    className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500"
-                                  >
-                                    <span>Upload a file</span>
-                                    <input
-                                      id="file-upload"
-                                      name="file-upload"
-                                      type="file"
-                                      className="sr-only"
-                                    />
-                                  </label>
-                                  <p className="pl-1">or drag and drop</p>
-                                </div>
-                                <p className="text-xs text-gray-500">
-                                  PNG, JPG, GIF up to 10MB
-                                </p>
+                                </label>
+                                <p className="pl-1">or drag and drop</p>
                               </div>
+                              <p className="text-xs text-gray-500">
+                                PNG, JPG, GIF up to 10MB
+                              </p>
                             </div>
-                          </div> */}
+                          </div>
+                        </div> */}
 
                           <div className="col-span-6 sm:col-span-3">
                             <label
@@ -222,6 +236,7 @@ function AddFacilityModal(props) {
                             <input
                               type="text"
                               required
+                              value={name}
                               onChange={(e) => setName(e.target.value)}
                               name="facility-name"
                               id="facility-name"
@@ -238,6 +253,7 @@ function AddFacilityModal(props) {
                             </label>
                             <select
                               id="facility-type"
+                              value={type}
                               onChange={(e) => setType(e.target.value)}
                               name="facility-type"
                               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -261,6 +277,7 @@ function AddFacilityModal(props) {
                             <input
                               type="text"
                               required
+                              value={address}
                               onChange={(e) => setAddress(e.target.value)}
                               name="street-address"
                               id="street-address"
@@ -279,6 +296,7 @@ function AddFacilityModal(props) {
                             <input
                               type="text"
                               required
+                              value={area}
                               onChange={(e) => setArea(e.target.value)}
                               name="area-name"
                               id="area-name"
@@ -296,6 +314,7 @@ function AddFacilityModal(props) {
                             <input
                               type="number"
                               required
+                              value={size}
                               onChange={(e) => setSize(e.target.value)}
                               name="rate-hr"
                               id="rate-hr"
@@ -319,7 +338,7 @@ function AddFacilityModal(props) {
                                   setOperatingFrom(value.format("HH:mm"));
                                 }
                               }}
-                              defaultValue={moment().hour(0).minute(0)}
+                              value={moment(operatingFrom, "HH:mm")}
                               showSecond={false}
                               minuteStep={30}
                             />
@@ -341,7 +360,7 @@ function AddFacilityModal(props) {
                                   setOperatingTo(value.format("HH:mm"));
                                 }
                               }}
-                              defaultValue={moment().hour(0).minute(0)}
+                              value={moment(operatingTo, "HH:mm")}
                               showSecond={false}
                               minuteStep={30}
                             />
@@ -363,6 +382,9 @@ function AddFacilityModal(props) {
                                 type="checkbox"
                                 name="mon"
                                 value="Mon"
+                                defaultChecked={
+                                  operatingDays.includes("Mon") ? true : false
+                                }
                                 onChange={onChangeCheckbox}
                                 id="mon"
                                 className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
@@ -377,6 +399,9 @@ function AddFacilityModal(props) {
                               <input
                                 type="checkbox"
                                 value="Tue"
+                                defaultChecked={
+                                  operatingDays.includes("Tue") ? true : false
+                                }
                                 onChange={onChangeCheckbox}
                                 name="tue"
                                 id="tue"
@@ -392,6 +417,9 @@ function AddFacilityModal(props) {
                               <input
                                 type="checkbox"
                                 value="Wed"
+                                defaultChecked={
+                                  operatingDays.includes("Wed") ? true : false
+                                }
                                 onChange={onChangeCheckbox}
                                 name="wed"
                                 id="wed"
@@ -407,6 +435,9 @@ function AddFacilityModal(props) {
                               <input
                                 type="checkbox"
                                 value="Thur"
+                                defaultChecked={
+                                  operatingDays.includes("Thur") ? true : false
+                                }
                                 onChange={onChangeCheckbox}
                                 name="thur"
                                 id="thur"
@@ -422,6 +453,9 @@ function AddFacilityModal(props) {
                               <input
                                 type="checkbox"
                                 value="Fri"
+                                defaultChecked={
+                                  operatingDays.includes("Fri") ? true : false
+                                }
                                 onChange={onChangeCheckbox}
                                 name="fri"
                                 id="fri"
@@ -437,6 +471,9 @@ function AddFacilityModal(props) {
                               <input
                                 type="checkbox"
                                 value="Sat"
+                                defaultChecked={
+                                  operatingDays.includes("Sat") ? true : false
+                                }
                                 onChange={onChangeCheckbox}
                                 name="sat"
                                 id="sat"
@@ -452,10 +489,13 @@ function AddFacilityModal(props) {
                               <input
                                 type="checkbox"
                                 value="Sun"
+                                defaultChecked={
+                                  operatingDays.includes("Sun") ? true : false
+                                }
                                 onChange={onChangeCheckbox}
                                 name="sun"
                                 id="sun"
-                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                               />
                             </div>
                           </div>
@@ -470,6 +510,7 @@ function AddFacilityModal(props) {
                             <input
                               type="number"
                               required
+                              value={rate}
                               onChange={(e) => setRate(e.target.value)}
                               name="rate-hr"
                               id="rate-hr"
@@ -488,12 +529,12 @@ function AddFacilityModal(props) {
                               <textarea
                                 id="about"
                                 required
+                                value={description}
                                 name="about"
                                 onChange={(e) => setDescription(e.target.value)}
                                 rows={3}
                                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                                 placeholder="Brief description about the facility."
-                                defaultValue={""}
                               />
                             </div>
                           </div>
@@ -504,7 +545,7 @@ function AddFacilityModal(props) {
                           type="submit"
                           className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                          Add
+                          Save
                         </button>
                       </div>
                     </div>
@@ -517,12 +558,12 @@ function AddFacilityModal(props) {
       </Transition.Root>
 
       {/* Modal for showing added successfully */}
-      <Transition.Root show={addedModal} as={Fragment}>
+      <Transition.Root show={updatedModal} as={Fragment}>
         <Dialog
           as="div"
           auto-reopen="true"
           className="fixed z-10 inset-0 overflow-y-auto"
-          onClose={() => setAddedModalOpen(true)}
+          onClose={() => setUpdatedModalOpen(true)}
         >
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <Transition.Child
@@ -567,11 +608,11 @@ function AddFacilityModal(props) {
                         as="h3"
                         className="text-lg leading-6 font-medium text-gray-900"
                       >
-                        Add Facility
+                        Edit Facility
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Facility has been added successfully!
+                          Facility details has been updated successfully!
                         </p>
                       </div>
                     </div>
@@ -581,7 +622,7 @@ function AddFacilityModal(props) {
                   <button
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 sm:ml-3 sm:w-auto sm:text-sm"
                     type="button"
-                    onClick={() => setAddedModalOpen(false)}
+                    onClick={() => setUpdatedModalOpen(false)}
                   >
                     OK
                   </button>
@@ -595,4 +636,4 @@ function AddFacilityModal(props) {
   );
 }
 
-export default AddFacilityModal;
+export default EditFacilityModal;

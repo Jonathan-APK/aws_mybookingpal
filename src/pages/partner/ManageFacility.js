@@ -1,6 +1,8 @@
 import Footer from "../../components/layout/Footer";
 import Navbar from "../../components/layout/navbar/PartnerNavbar";
 import AddFacilityModal from "../partner/AddFacilityModal";
+import DeleteFacilityModal from "../partner/DeleteFacilityModal";
+import EditFacilityModal from "../partner/EditFacilityModal";
 import { useState, useEffect } from "react";
 import * as queries from "../../graphql/queries";
 import { API } from "@aws-amplify/api";
@@ -49,9 +51,13 @@ const booking = [
 ];
 
 export default function ManageFacility() {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteID, setDeleteID] = useState("");
+  const [selectedFacility, setSelectedFacility] = useState("");
   const [facilityList, setFacilityList] = useState([]);
-  let subscription;
+  let addSubscription, delSubscription, editSubscription;
 
   //Retrieve user's facility list when page onload
   useEffect(() => {
@@ -59,21 +65,31 @@ export default function ManageFacility() {
       const getFacility = await API.graphql({
         query: queries.listFacilities,
         variables: {
-          filter: { userID: { eq: sessionStorage.getItem("username") } },
+          filter: {
+            userID: {
+              eq: sessionStorage.getItem("username"),
+            },
+          },
         },
       });
       setFacilityList(getFacility.data.listFacilities.items);
       console.log("List of facilities: " + JSON.stringify(getFacility));
     }
     getFacilityList();
-    facilitySubscription();
+    addFacilitySubscription();
+    delFacilitySubscription();
+    editFacilitySubscription();
 
-    return () => subscription.unsubscribe();
+    return () => {
+      addSubscription.unsubscribe();
+      delSubscription.unsubscribe();
+      editSubscription.unsubscribe();
+    };
   }, []);
 
   // Subscribe to facility creation created by user
-  function facilitySubscription() {
-    subscription = API.graphql({
+  function addFacilitySubscription() {
+    addSubscription = API.graphql({
       query: subscriptions.onCreateFacilityByUserId,
       variables: { userID: sessionStorage.getItem("username") },
     }).subscribe({
@@ -87,6 +103,42 @@ export default function ManageFacility() {
     });
   }
 
+  // Subscribe to facility deletion by user
+  function delFacilitySubscription() {
+    delSubscription = API.graphql({
+      query: subscriptions.onDeleteFacilityByUserId,
+      variables: { userID: sessionStorage.getItem("username") },
+    }).subscribe({
+      //Remove deleted facility from existing facility list
+      next: (response) => {
+        setFacilityList((array) =>
+          array.filter(
+            (item) =>
+              item.id !== response.value.data.onDeleteFacilityByUserId.id
+          )
+        );
+      },
+      error: (error) => console.warn(error),
+    });
+  }
+
+  // Subscribe to facility edited by user
+  function editFacilitySubscription() {
+    editSubscription = API.graphql({
+      query: subscriptions.onUpdateFacilityByUserId,
+      variables: { userID: sessionStorage.getItem("username") },
+    }).subscribe({
+      //update modified facility from existing facility list
+      next: (response) =>
+        setFacilityList(oldArray => {
+          const index = oldArray.findIndex(item => item.id ===  response.value.data.onUpdateFacilityByUserId.id);
+          oldArray[index] = response.value.data.onUpdateFacilityByUserId;
+          return ([...oldArray]);
+        }),
+      error: (error) => console.warn(error),
+    });
+  }
+
   return (
     <div>
       <Navbar />
@@ -96,7 +148,20 @@ export default function ManageFacility() {
         </div>
       </header>
       <div className="bg-gray-50 mt-1">
-        <AddFacilityModal isOpen={isModalOpen} setModalOpen={setModalOpen} />
+        <AddFacilityModal
+          isOpen={isAddModalOpen}
+          setModalOpen={setAddModalOpen}
+        />
+        <DeleteFacilityModal
+          isOpen={isDeleteModalOpen}
+          setModalOpen={setDeleteModalOpen}
+          deleteID={deleteID}
+        />
+        <EditFacilityModal
+          isOpen={isEditModalOpen}
+          setModalOpen={setEditModalOpen}
+          facility={selectedFacility}
+        />
         {/* Body Content */}
         <div className="container mx-auto px-6 sm:px-12 py-6">
           {/* Facility Table */}
@@ -110,7 +175,7 @@ export default function ManageFacility() {
                   <div className="float-right block">
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex"
-                      onClick={() => setModalOpen(true)}
+                      onClick={() => setAddModalOpen(true)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -169,14 +234,14 @@ export default function ManageFacility() {
                         <tr key={facility.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
-                              <div className="flex-shrink-0 h-10 w-10">
+                              {/* <div className="flex-shrink-0 h-10 w-10">
                                 <img
                                   className="h-10 w-10 rounded-full"
                                   src={facility.image}
                                   alt=""
                                 />
-                              </div>
-                              <div className="ml-4">
+                              </div> */}
+                              <div>
                                 <div className="text-sm font-medium text-gray-900">
                                   {facility.name}
                                 </div>
@@ -205,10 +270,23 @@ export default function ManageFacility() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a
-                              href="#"
-                              className="text-indigo-600 hover:text-indigo-900"
+                              onClick={() => {
+                                setEditModalOpen(true);
+                                setSelectedFacility(facility);
+                              }}
+                              className="text-indigo-600 hover:text-indigo-900 mr-7 cursor-pointer"
                             >
                               Edit
+                            </a>
+
+                            <a
+                              onClick={() => {
+                                setDeleteModalOpen(true);
+                                setDeleteID(facility.id);
+                              }}
+                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+                            >
+                              Delete
                             </a>
                           </td>
                         </tr>

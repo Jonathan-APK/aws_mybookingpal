@@ -16,9 +16,46 @@ export const onCreateFacilityByUserId = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
-      _version
-      _deleted
-      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFacilityByUserId = /* GraphQL */ `
+  subscription OnDeleteFacilityByUserId($userID: String!) {
+    onDeleteFacilityByUserId(userID: $userID) {
+      id
+      name
+      type
+      address
+      area
+      size
+      rate
+      description
+      opening_hrs
+      closing_hrs
+      operating_days
+      userID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFacilityByUserId = /* GraphQL */ `
+  subscription OnUpdateFacilityByUserId($userID: String!) {
+    onUpdateFacilityByUserId(userID: $userID) {
+      id
+      name
+      type
+      address
+      area
+      size
+      rate
+      description
+      opening_hrs
+      closing_hrs
+      operating_days
+      userID
       createdAt
       updatedAt
     }
@@ -39,9 +76,6 @@ export const onCreateFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -62,9 +96,6 @@ export const onUpdateFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -85,9 +116,6 @@ export const onDeleteFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -104,9 +132,6 @@ export const onCreateUser = /* GraphQL */ `
       contact
       address
       role
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
       Facilities {
@@ -123,14 +148,10 @@ export const onCreateUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
     }
   }
@@ -146,9 +167,6 @@ export const onUpdateUser = /* GraphQL */ `
       contact
       address
       role
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
       Facilities {
@@ -165,14 +183,10 @@ export const onUpdateUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
     }
   }
@@ -188,9 +202,6 @@ export const onDeleteUser = /* GraphQL */ `
       contact
       address
       role
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
       Facilities {
@@ -207,14 +218,10 @@ export const onDeleteUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
     }
   }
