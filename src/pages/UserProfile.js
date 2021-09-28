@@ -1,12 +1,10 @@
+import React from 'react'
 import Footer from "../components/layout/Footer";
+import ShoppingCartDetails from "../components/layout/ShoppingCartDetails"
 import UserNavbar from "../components/layout/navbar/UserNavbar";
-import Pagination from "../components/layout/Pagination";
-import { Container,Row,Col,Form ,Button} from 'react-bootstrap';
-import React from 'react';
 import DefaultUserPic from "../uploads/team-male.jpg";
 import EditProfile from "../components/user/EditProfile";
-
-const axios = require('axios');
+import {useState} from 'react';
 
 const profiles = [
   {
@@ -18,60 +16,9 @@ const profiles = [
   }
   // More booking...
 ];
-class UserProfile extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state={
-        user_id:"Maria Ozawa",
-        username:this.props.username,
-        email:"pornhub@gmail.com",
-        profileImage:this.props.profileImage,
-        msg:this.props.msg,
-        uploadedFile:null
-    }
-}
-
-fetchUserDetails=(user_id)=>{
-  //console.log(user_id);
-  axios.get("http://localhost:5000/userapi/getUserDetails/"+user_id,{
-      headers: {
-          "content-type": "application/json"
-        }
-  }).then(res=>{
-      console.log(res);
-      this.setState({email:res.data.results[0].email});
-      this.setState({profileImage:res.data.results[0].profileImage})
-  })
-  .catch(err=>console.log(err))
-}
-
-changeProfileImage=(event)=>{
-       
-  this.setState({uploadedFile:event.target.files[0]});
-}
-
-UpdateProfileHandler=(e)=>{
-  e.preventDefault();
-  //create object of form data
-  const formData=new FormData();
-  formData.append("profileImage",this.state.uploadedFile);
-  formData.append("user_id",this.state.user_id);
-
-  //update-profile
-  axios.post("http://localhost:3000/userapi/update-profile/",formData,{
-      headers: {
-          "content-type": "application/json"
-        }
-  }).then(res=>{
-      console.log(res);
-     this.setState({msg:res.data.message});
-     this.setState({profileImage:res.data.results.profileImage});
-  })
-  .catch(err=>console.log(err))
-}
-
-render(){
+export default function UserProfile() {
+  /*
   if(this.state.profileImage){
     var imagestr=this.state.profileImage;
     imagestr = imagestr.replace("public/", "");
@@ -79,9 +26,15 @@ render(){
   }else{
      profilePic=DefaultUserPic;
   }
+  */
+
+  const [cartOpen, setCartOpen] = useState(false);
+
+  const profilePic=DefaultUserPic;
+
 return (
   <div>
-    <UserNavbar />
+    <UserNavbar setCartOpen={setCartOpen}/>
     <header className="bg-white shadow">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-gray-900">Manage Profile</h1>
@@ -90,27 +43,29 @@ return (
       <div className="container mx-auto px-6 sm:px-12 py-6"></div>
     </header>
     <div>     
+      
     <section class="text-blueGray-700 ">
             <div class="container flex flex-col items-center px-5 py-16 mx-auto md:flex-row lg:px-28">
               <div class="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:mb-0">
                 <img class="object-cover object-center rounded-lg " alt="profile pic" src={profilePic}/>
               </div>
               <div class="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:mb-0">
-                <h1 class="mb-2 text-xs font-semibold tracking-widest text-black md:text-xl title-font"> Name: {this.state.user_id} </h1>
-                <h1 class="mb-2 text-xs font-semibold tracking-widest text-black md:text-xl title-font"> Email: {this.state.email} </h1>
+                <h2 class="mb-8 text-xs font-semibold tracking-widest text-black uppercase title-font"> Name: {profiles.firstName} </h2>
+                <h1 class="mb-8 text-2xl font-black tracking-tighter text-black md:text-5xl title-font"> Medium length display headline. </h1>
+                <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600 "> Deploy your mvp in minutes, not days. WT offers you a a wide selection swapable sections for your landing page. </p>
+                <div class="flex flex-col justify-center lg:flex-row">
+                  <button class="flex items-center px-6 py-2 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"> Show me </button>
+                  <p class="mt-2 text-sm text-left text-blueGray-600 md:ml-6 md:mt-0"> It will take you to candy shop. <br class="hidden lg:block"/>
+                    <a href="#" class="inline-flex items-center font-semibold text-blue-600 md:mb-2 lg:mb-0 hover:text-black " title="read more"> Read more about it » </a>
+                  </p>
+                </div>
               </div>
-              <div>
-              <button 
-              class="flex items-center px-6 py-2 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"> Edit </button>
-              </div>
+              
             </div>
-            
-    </section>        
+          </section>        
   </div>
   <Footer />
+  {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
   </div>   
 );
-}  
-}                
-
-export default UserProfile;
+}

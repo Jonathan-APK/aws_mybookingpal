@@ -1,5 +1,6 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
+import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import FacilityDetailsItem from "../../components/user/FacilityDetailsItem";
 import SearchBox from "../../components/user/SearchBox";
 import {useState} from "react";
@@ -49,6 +50,7 @@ export default function FacilityDetails() {
         </div>
       </div>
       <Footer />
+      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
     </div>
   );
 }
