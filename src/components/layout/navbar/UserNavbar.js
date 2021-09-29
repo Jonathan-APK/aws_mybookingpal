@@ -4,7 +4,6 @@ import {
   BellIcon,
   MenuIcon,
   XIcon,
-  ShoppingCartIcon,
 } from "@heroicons/react/outline";
 import { Auth } from "aws-amplify";
 import { NavLink, useHistory } from "react-router-dom";
@@ -96,15 +95,6 @@ function UserNavbar(props) {
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>&nbsp;
-                  <button
-                    type="button"
-                    className="bg-gray-800 p-2 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                    onClick={()=> props.setCartOpen(true)}
-                  >
-                    <span className="sr-only">View Shopping Cart</span>
-                    <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>&nbsp;
-
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
                     <div>

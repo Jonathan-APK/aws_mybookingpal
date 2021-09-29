@@ -1,8 +1,6 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
-import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import CategoryItem from "../../components/user/CategoryItem";
-import {useState} from "react";
 
 
 const categories = [
@@ -52,11 +50,10 @@ const categories = [
 
 export default function UserDashboard() {
 
-  const [cartOpen, setCartOpen] = useState(false);
 
   return (
     <div>
-      <UserNavbar setCartOpen={setCartOpen}/>
+      <UserNavbar/>
       <div className="bg-gray-50 mt-1">
         <div className="mx-8 p-8">
           <h1 className="text-5xl text-center font-extrabold tracking-tight text-gray-900">
@@ -113,7 +110,6 @@ export default function UserDashboard() {
         </div>
       </div>
       <Footer />
-      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
     </div>
   );
 }
