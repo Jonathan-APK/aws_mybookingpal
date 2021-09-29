@@ -2,7 +2,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateFacilityByUserId = /* GraphQL */ `
-  subscription OnCreateFacilityByUserId($userID: String!) {
+  subscription OnCreateFacilityByUserId($userID: ID!) {
     onCreateFacilityByUserId(userID: $userID) {
       id
       name
@@ -18,11 +18,29 @@ export const onCreateFacilityByUserId = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      user {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
     }
   }
 `;
 export const onDeleteFacilityByUserId = /* GraphQL */ `
-  subscription OnDeleteFacilityByUserId($userID: String!) {
+  subscription OnDeleteFacilityByUserId($userID: ID!) {
     onDeleteFacilityByUserId(userID: $userID) {
       id
       name
@@ -38,11 +56,29 @@ export const onDeleteFacilityByUserId = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      user {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
     }
   }
 `;
 export const onUpdateFacilityByUserId = /* GraphQL */ `
-  subscription OnUpdateFacilityByUserId($userID: String!) {
+  subscription OnUpdateFacilityByUserId($userID: ID!) {
     onUpdateFacilityByUserId(userID: $userID) {
       id
       name
@@ -58,6 +94,24 @@ export const onUpdateFacilityByUserId = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      user {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -78,6 +132,24 @@ export const onCreateFacility = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      user {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -98,6 +170,24 @@ export const onUpdateFacility = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      user {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -118,6 +208,24 @@ export const onDeleteFacility = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      user {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -148,6 +256,27 @@ export const onCreateUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      booking {
+        items {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
           createdAt
           updatedAt
         }
@@ -188,6 +317,27 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      booking {
+        items {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -222,6 +372,474 @@ export const onDeleteUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      booking {
+        items {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreateBooking = /* GraphQL */ `
+  subscription OnCreateBooking {
+    onCreateBooking {
+      id
+      booking_date
+      start_date
+      end_date
+      start_time
+      end_time
+      facility_name
+      rate
+      address
+      area
+      status
+      cust_id
+      facilityowner_id
+      payment_id
+      createdAt
+      updatedAt
+      owner {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      customer {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        booking_id
+        createdAt
+        updatedAt
+        booking {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const onUpdateBooking = /* GraphQL */ `
+  subscription OnUpdateBooking {
+    onUpdateBooking {
+      id
+      booking_date
+      start_date
+      end_date
+      start_time
+      end_time
+      facility_name
+      rate
+      address
+      area
+      status
+      cust_id
+      facilityowner_id
+      payment_id
+      createdAt
+      updatedAt
+      owner {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      customer {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        booking_id
+        createdAt
+        updatedAt
+        booking {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const onDeleteBooking = /* GraphQL */ `
+  subscription OnDeleteBooking {
+    onDeleteBooking {
+      id
+      booking_date
+      start_date
+      end_date
+      start_time
+      end_time
+      facility_name
+      rate
+      address
+      area
+      status
+      cust_id
+      facilityowner_id
+      payment_id
+      createdAt
+      updatedAt
+      owner {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      customer {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        booking_id
+        createdAt
+        updatedAt
+        booking {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const onCreatePayment = /* GraphQL */ `
+  subscription OnCreatePayment {
+    onCreatePayment {
+      id
+      payment_date
+      paid_amt
+      status
+      booking_id
+      createdAt
+      updatedAt
+      booking {
+        id
+        booking_date
+        start_date
+        end_date
+        start_time
+        end_time
+        facility_name
+        rate
+        address
+        area
+        status
+        cust_id
+        facilityowner_id
+        payment_id
+        createdAt
+        updatedAt
+        owner {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        customer {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        payment {
+          id
+          payment_date
+          paid_amt
+          status
+          booking_id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const onUpdatePayment = /* GraphQL */ `
+  subscription OnUpdatePayment {
+    onUpdatePayment {
+      id
+      payment_date
+      paid_amt
+      status
+      booking_id
+      createdAt
+      updatedAt
+      booking {
+        id
+        booking_date
+        start_date
+        end_date
+        start_time
+        end_time
+        facility_name
+        rate
+        address
+        area
+        status
+        cust_id
+        facilityowner_id
+        payment_id
+        createdAt
+        updatedAt
+        owner {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        customer {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        payment {
+          id
+          payment_date
+          paid_amt
+          status
+          booking_id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const onDeletePayment = /* GraphQL */ `
+  subscription OnDeletePayment {
+    onDeletePayment {
+      id
+      payment_date
+      paid_amt
+      status
+      booking_id
+      createdAt
+      updatedAt
+      booking {
+        id
+        booking_date
+        start_date
+        end_date
+        start_time
+        end_time
+        facility_name
+        rate
+        address
+        area
+        status
+        cust_id
+        facilityowner_id
+        payment_id
+        createdAt
+        updatedAt
+        owner {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        customer {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        payment {
+          id
+          payment_date
+          paid_amt
+          status
+          booking_id
+          createdAt
+          updatedAt
+        }
       }
     }
   }
