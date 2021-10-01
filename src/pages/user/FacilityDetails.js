@@ -1,9 +1,9 @@
 import Breadcrumbs from "../../components/layout/Breadcrumbs";
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
-import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import FacilityDetailsItem from "../../components/user/FacilityDetailsItem";
 import {useState} from "react";
+import SearchBox from "../../components/user/SearchBox";
 
 
 const details = [
@@ -24,11 +24,10 @@ const details = [
 
 export default function FacilityDetails() {
 
-  const [cartOpen, setCartOpen] = useState(false);
   
   return (
     <div>
-      <UserNavbar setCartOpen={setCartOpen}/>
+      <UserNavbar/>
       <Breadcrumbs />
       {/* ./ Breadcrumbs */}
       {details.map((details) => (
@@ -44,7 +43,6 @@ export default function FacilityDetails() {
         />
       ))}
       <Footer />
-      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
     </div>
   );
 }

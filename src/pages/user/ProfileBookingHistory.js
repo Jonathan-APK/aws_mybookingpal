@@ -1,15 +1,12 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import CategoryItem from "../../components/user/CategoryItem";
-import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
-import {useState} from "react";
 
 
 
 
 export default function ProfileDetails() {
 
-  const [cartOpen, setCartOpen] = useState(false);
   
   return (
     <div>
@@ -19,7 +16,6 @@ export default function ProfileDetails() {
           </h1>
         
       <Footer />
-      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
     </div>
   );
 }

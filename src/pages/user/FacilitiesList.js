@@ -1,6 +1,5 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
-import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import FacilityListItem from "../../components/user/FacilityListItem";
 import SearchBox from "../../components/user/SearchBox";
 import Pagination from "../../components/layout/Pagination";
@@ -75,7 +74,6 @@ const facilityList = [
 ];
 
 export default function FacilitiesList(props) {
-  const [cartOpen, setCartOpen] = useState(false);
   const category = props.location.category;
   const searchTerm = props.location.searchTerm;
   const [searchResultsText, setSearchResultText] =
@@ -123,7 +121,7 @@ export default function FacilitiesList(props) {
 
   return (
     <div>
-      <UserNavbar setCartOpen={setCartOpen} />
+      <UserNavbar/>
       <Breadcrumbs category={category} searchTerm={searchTerm} />
       <div
         id="overallLayout"
@@ -155,7 +153,6 @@ export default function FacilitiesList(props) {
         </div>
       </div>
       <Footer />
-      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen} />}
     </div>
   );
 }

@@ -1,10 +1,8 @@
 import React from 'react'
 import Footer from "../components/layout/Footer";
-import ShoppingCartDetails from "../components/layout/ShoppingCartDetails"
 import UserNavbar from "../components/layout/navbar/UserNavbar";
 import DefaultUserPic from "../uploads/team-male.jpg";
 import EditProfile from "../components/user/EditProfile";
-import {useState} from 'react';
 
 const profiles = [
   {
@@ -28,13 +26,12 @@ export default function UserProfile() {
   }
   */
 
-  const [cartOpen, setCartOpen] = useState(false);
 
   const profilePic=DefaultUserPic;
 
 return (
   <div>
-    <UserNavbar setCartOpen={setCartOpen}/>
+    <UserNavbar/>
     <header className="bg-white shadow">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-gray-900">Manage Profile</h1>
@@ -65,7 +62,6 @@ return (
           </section>        
   </div>
   <Footer />
-  {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen}/> }
   </div>   
 );
 }

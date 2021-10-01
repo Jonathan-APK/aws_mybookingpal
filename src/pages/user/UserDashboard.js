@@ -1,6 +1,5 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
-import ShoppingCartDetails from "../../components/layout/ShoppingCartDetails";
 import CategoryItem from "../../components/user/CategoryItem";
 import { useState } from "react";
 import { useHistory } from "react-router";
@@ -45,7 +44,6 @@ const categories = [
 ];
 
 export default function UserDashboard() {
-  const [cartOpen, setCartOpen] = useState(false);
   const user = sessionStorage.getItem("username");
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
@@ -61,7 +59,7 @@ export default function UserDashboard() {
 
   return (
     <div>
-      <UserNavbar setCartOpen={setCartOpen} />
+      <UserNavbar/>
       <div className="bg-gray-50 mt-1">
         <div className="max-w-2xl mx-auto py-8 px-4 sm:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
           <h1 className="text-5xl text-center font-extrabold tracking-tight text-gray-900">
@@ -121,7 +119,6 @@ export default function UserDashboard() {
         </div>
       </div>
       <Footer />
-      {cartOpen && <ShoppingCartDetails setCartOpen={setCartOpen} />}
     </div>
   );
 }

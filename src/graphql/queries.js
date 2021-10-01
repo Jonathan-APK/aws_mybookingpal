@@ -18,6 +18,24 @@ export const getFacility = /* GraphQL */ `
       userID
       createdAt
       updatedAt
+      user {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -43,6 +61,18 @@ export const listFacilities = /* GraphQL */ `
         userID
         createdAt
         updatedAt
+        user {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -80,6 +110,27 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      booking {
+        items {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -103,6 +154,258 @@ export const listUsers = /* GraphQL */ `
         updatedAt
         Facilities {
           nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getBooking = /* GraphQL */ `
+  query GetBooking($id: ID!) {
+    getBooking(id: $id) {
+      id
+      booking_date
+      start_date
+      end_date
+      start_time
+      end_time
+      facility_name
+      rate
+      address
+      area
+      status
+      cust_id
+      facilityowner_id
+      payment_id
+      createdAt
+      updatedAt
+      owner {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      customer {
+        id
+        email
+        username
+        firstname
+        lastname
+        contact
+        address
+        role
+        createdAt
+        updatedAt
+        Facilities {
+          nextToken
+        }
+        booking {
+          nextToken
+        }
+      }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        booking_id
+        createdAt
+        updatedAt
+        booking {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const listBookings = /* GraphQL */ `
+  query ListBookings(
+    $filter: ModelBookingFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBookings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        booking_date
+        start_date
+        end_date
+        start_time
+        end_time
+        facility_name
+        rate
+        address
+        area
+        status
+        cust_id
+        facilityowner_id
+        payment_id
+        createdAt
+        updatedAt
+        owner {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        customer {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        payment {
+          id
+          payment_date
+          paid_amt
+          status
+          booking_id
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getPayment = /* GraphQL */ `
+  query GetPayment($id: ID!) {
+    getPayment(id: $id) {
+      id
+      payment_date
+      paid_amt
+      status
+      booking_id
+      createdAt
+      updatedAt
+      booking {
+        id
+        booking_date
+        start_date
+        end_date
+        start_time
+        end_time
+        facility_name
+        rate
+        address
+        area
+        status
+        cust_id
+        facilityowner_id
+        payment_id
+        createdAt
+        updatedAt
+        owner {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        customer {
+          id
+          email
+          username
+          firstname
+          lastname
+          contact
+          address
+          role
+          createdAt
+          updatedAt
+        }
+        payment {
+          id
+          payment_date
+          paid_amt
+          status
+          booking_id
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const listPayments = /* GraphQL */ `
+  query ListPayments(
+    $filter: ModelPaymentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        payment_date
+        paid_amt
+        status
+        booking_id
+        createdAt
+        updatedAt
+        booking {
+          id
+          booking_date
+          start_date
+          end_date
+          start_time
+          end_time
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          payment_id
+          createdAt
+          updatedAt
         }
       }
       nextToken
