@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function CategoryItem(props) {
   return (
     <div className="group relative">
@@ -9,11 +11,16 @@ export default function CategoryItem(props) {
       </div>
       <div className="mt-4 flex justify-between">
         <div>
-          <h3 className="text-base text-gray-700">
-            <a href={props.href}>
+          <h3 className="text-base font-medium text-gray-700">
+            <Link to={{
+              pathname: "/facilitieslist",
+              category: props.name
+            }}>
+            <a>
               <span aria-hidden="true" className="absolute inset-0" />
               {props.name}
             </a>
+            </Link>
           </h3>
         </div>
       </div>
