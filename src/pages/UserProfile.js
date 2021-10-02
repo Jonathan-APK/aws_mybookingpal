@@ -1,8 +1,15 @@
-import React from 'react'
+import React from "react";
+import { connect } from "react-redux";
 import Footer from "../components/layout/Footer";
 import UserNavbar from "../components/layout/navbar/UserNavbar";
 import DefaultUserPic from "../uploads/team-male.jpg";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { API } from "@aws-amplify/api";
+import * as queries from "../graphql/queries";
+import UploadPicModal from "../components/user/UploadPicModal";
 import EditProfile from "../components/user/EditProfile";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 
 const profiles = [
   {
@@ -10,58 +17,177 @@ const profiles = [
       "http://i0.wp.com/rakenrol.net/japan/wp-content/uploads/2013/12/MariaOzawa01.jpg?fit=300%2C300",
     firstName: "Maria",
     lastName: "Ozawa",
-    email: "maria_ozawa@gmail.com"
-  }
+    email: "maria_ozawa@gmail.com",
+    contact: "96712341",
+    dob: "09-08-1965",
+    address: "NCS Building"
+  },
   // More booking...
 ];
 
-export default function UserProfile() {
-  /*
-  if(this.state.profileImage){
-    var imagestr=this.state.profileImage;
-    imagestr = imagestr.replace("public/", "");
-    var profilePic="http://localhost:5000/"+imagestr;
-  }else{
-     profilePic=DefaultUserPic;
-  }
-  */
 
 
-  const profilePic=DefaultUserPic;
+  export default function UserProfile() {
 
-return (
-  <div>
-    <UserNavbar/>
-    <header className="bg-white shadow">
-      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold text-gray-900">Manage Profile</h1>
-      </div>
-      {/* Mini Cards */}
-      <div className="container mx-auto px-6 sm:px-12 py-6"></div>
-    </header>
-    <div>     
-      
-    <section class="text-blueGray-700 ">
-            <div class="container flex flex-col items-center px-5 py-16 mx-auto md:flex-row lg:px-28">
-              <div class="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:mb-0">
-                <img class="object-cover object-center rounded-lg " alt="profile pic" src={profilePic}/>
-              </div>
-              <div class="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:mb-0">
-                <h2 class="mb-8 text-xs font-semibold tracking-widest text-black uppercase title-font"> Name: {profiles.firstName} </h2>
-                <h1 class="mb-8 text-2xl font-black tracking-tighter text-black md:text-5xl title-font"> Medium length display headline. </h1>
-                <p class="mb-8 text-base leading-relaxed text-left text-blueGray-600 "> Deploy your mvp in minutes, not days. WT offers you a a wide selection swapable sections for your landing page. </p>
-                <div class="flex flex-col justify-center lg:flex-row">
-                  <button class="flex items-center px-6 py-2 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-lg hover:bg-blue-700 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"> Show me </button>
-                  <p class="mt-2 text-sm text-left text-blueGray-600 md:ml-6 md:mt-0"> It will take you to candy shop. <br class="hidden lg:block"/>
-                    <a href="#" class="inline-flex items-center font-semibold text-blue-600 md:mb-2 lg:mb-0 hover:text-black " title="read more"> Read more about it » </a>
-                  </p>
+    const profilePic = DefaultUserPic;
+
+    const [userData, setUserData] = useState([]);
+  
+  useEffect(() => {
+    async function getUserData() {
+      const getUserData = await API.graphql({
+        query: queries.getUser,
+        variables: {
+          filter: {
+            cust_id: {
+              eq: sessionStorage.getItem("username"),
+            },
+          },
+        },
+      });
+      setUserData(getUserData.data.getUser);
+    }
+    getUserData();
+  }, []);
+
+
+    return (
+      <div>
+        <UserNavbar />
+        <header className="bg-white shadow">
+          <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold text-gray-900">Manage Profile</h1>
+          </div>
+        </header>
+        <div>
+          <section className="text-blueGray-700 ">
+            <div className="container flex flex-col items-center px-5 py-16 mx-auto md:flex-row lg:px-28">
+              <div className="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/4 lg:pr-24 md:pr-16 md:mb-0">
+                <div>
+                  <div>
+                    <a href="#">
+                      <img
+                        className="h-30 w-30 rounded-full "
+                        alt="profile pic"
+                        src={profilePic}
+                      />
+                    </a>
+                  </div>
+                  <div className="py-5 margin: text-center">
+                    <input type="file" onChange="" />
+                    <button className="ui button teal" onClick="">Save</button>
+                  </div>
                 </div>
               </div>
-              
+              <div className="flex flex-col items-start mb-16 text-left lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 md:mb-0">
+                {userData.map((user) => (
+                  <Container>
+                    <Row>
+                      <Col>
+                        <Form>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formPlaintextFirstName"
+                          >
+                            <Form.Label column sm="2">
+                              First Name
+                            </Form.Label>
+                            <Col sm="10">
+                              <Form.Control
+                                plaintext
+                                readOnly
+                                defaultValue={user.firstname}
+                              />
+                            </Col>
+                          </Form.Group>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formPlaintextLastName"
+                          >
+                            <Form.Label column sm="2">
+                              Last Name
+                            </Form.Label>
+                            <Col sm="10">
+                              <Form.Control
+                                plaintext
+                                readOnly
+                                defaultValue={user.lastName}
+                              />
+                            </Col>
+                          </Form.Group>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formPlaintextEmail"
+                          >
+                            <Form.Label column sm="2">
+                              Email
+                            </Form.Label>
+                            <Col sm="10">
+                              <Form.Control
+                                plaintext
+                                readOnly
+                                defaultValue={user.email}
+                              />
+                            </Col>
+                          </Form.Group>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formPlaintextEmail"
+                          >
+                            <Form.Label column sm="2">
+                              Contact Number
+                            </Form.Label>
+                            <Col sm="10">
+                              <Form.Control
+                                plaintext
+                                readOnly
+                                defaultValue={user.contact}
+                              />
+                            </Col>
+                          </Form.Group>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formPlaintextEmail"
+                          >
+                            <Form.Label column sm="2">
+                              Date Of Birth
+                            </Form.Label>
+                            <Col sm="10">
+                              <Form.Control
+                                plaintext
+                                readOnly
+                                defaultValue={user.dob}
+                              />
+                            </Col>
+                          </Form.Group>
+                          <Form.Group
+                            className="mb-3"
+                            controlId="formPlaintextEmail"
+                          >
+                            <Form.Label column sm="2">
+                              Address
+                            </Form.Label>
+                            <Col sm="10">
+                              <Form.Control
+                                plaintext
+                                readOnly
+                                defaultValue={user.address}
+                              />
+                            </Col>
+                          </Form.Group>
+                        </Form>
+                      </Col>
+                    </Row>
+                  </Container>
+                ))}
+              </div>
             </div>
-          </section>        
-  </div>
-  <Footer />
-  </div>   
-);
-}
+          </section>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+
+
