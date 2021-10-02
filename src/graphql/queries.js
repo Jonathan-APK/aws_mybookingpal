@@ -114,10 +114,7 @@ export const getUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -126,6 +123,7 @@ export const getUser = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -168,10 +166,7 @@ export const getBooking = /* GraphQL */ `
     getBooking(id: $id) {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -180,6 +175,7 @@ export const getBooking = /* GraphQL */ `
       cust_id
       facilityowner_id
       payment_id
+      slot_id
       createdAt
       updatedAt
       owner {
@@ -218,6 +214,14 @@ export const getBooking = /* GraphQL */ `
           nextToken
         }
       }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
+      }
       payment {
         id
         payment_date
@@ -229,10 +233,7 @@ export const getBooking = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -241,6 +242,7 @@ export const getBooking = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -258,10 +260,7 @@ export const listBookings = /* GraphQL */ `
       items {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -270,6 +269,7 @@ export const listBookings = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -296,6 +296,14 @@ export const listBookings = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        slot {
+          id
+          start_time
+          end_time
+          duration
+          createdAt
+          updatedAt
+        }
         payment {
           id
           payment_date
@@ -305,6 +313,37 @@ export const listBookings = /* GraphQL */ `
           createdAt
           updatedAt
         }
+      }
+      nextToken
+    }
+  }
+`;
+export const getSlot = /* GraphQL */ `
+  query GetSlot($id: ID!) {
+    getSlot(id: $id) {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listSlots = /* GraphQL */ `
+  query ListSlots(
+    $filter: ModelSlotFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listSlots(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -323,10 +362,7 @@ export const getPayment = /* GraphQL */ `
       booking {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -335,6 +371,7 @@ export const getPayment = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -358,6 +395,14 @@ export const getPayment = /* GraphQL */ `
           contact
           address
           role
+          createdAt
+          updatedAt
+        }
+        slot {
+          id
+          start_time
+          end_time
+          duration
           createdAt
           updatedAt
         }
@@ -392,10 +437,7 @@ export const listPayments = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -404,6 +446,7 @@ export const listPayments = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
