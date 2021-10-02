@@ -115,13 +115,13 @@ export default function FacilitiesList(props) {
         });
         setFacilityList(getFacility.data.listFacilities.items);
       }
-    };
+    }
     getFacilityList();
   }, []);
 
   return (
     <div>
-      <UserNavbar/>
+      <UserNavbar />
       <Breadcrumbs category={category} searchTerm={searchTerm} />
       <div
         id="overallLayout"
@@ -136,15 +136,7 @@ export default function FacilitiesList(props) {
           </div>
           <div className="grid auto-rows-auto gap-y-2">
             {facilityList.map((facility) => (
-              <FacilityListItem
-                key={facility.id}
-                name={facility.name}
-                opening_hrs={facility.opening_hrs}
-                closing_hrs={facility.closing_hrs}
-                address={facility.address}
-                description={facility.description}
-                rate={facility.rate}
-              />
+              <FacilityListItem facility={facility} />
             ))}
           </div>
           <Pagination />
