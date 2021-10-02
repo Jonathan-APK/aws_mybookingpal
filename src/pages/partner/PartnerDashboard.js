@@ -1,39 +1,58 @@
 import Footer from "../../components/layout/Footer";
 import Navbar from "../../components/layout/navbar/PartnerNavbar";
 import BookingLineChart from "../../components/graph/LineChart";
-
-const facility = [
-  {
-    name: "ABC Warehouse",
-    location: "Jurong West",
-    address: "12 Jurong West, S545055",
-    rate: "$50/hr",
-    operating_hrs: "Mon-Fri: 7am - 6pm",
-    image:
-      "https://images.unsplash.com/photo-1428366890462-dd4baecf492b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-  },
-  {
-    name: "PK Gym",
-    location: "Jurong West",
-    address: "12 Jurong West, S545055",
-    rate: "$50/hr",
-    operating_hrs: "Mon-Fri: 7am - 6pm",
-    image:
-      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=968&q=80",
-  },
-  {
-    name: "ABC Warehouse",
-    location: "Jurong West",
-    address: "12 Jurong West, S545055",
-    rate: "$50/hr",
-    operating_hrs: "Mon-Fri: 7am - 6pm",
-    image:
-      "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=968&q=80",
-  },
-  // More people...
-];
+import { useState, useEffect } from "react";
+import * as queries from "../../graphql/queries";
+import { API } from "@aws-amplify/api";
+import moment from 'moment';
 
 export default function PartnerDashboard() {
+  const [facilityList, setFacilityList] = useState([]);
+  const [bookingList, setBookingList] = useState([]);
+
+  //Retrieve user's facility and booking list when page onload
+  useEffect(() => {
+    async function getFacilityList() {
+      const getFacility = await API.graphql({
+        query: queries.listFacilities,
+        variables: {
+          filter: {
+            userID: {
+              eq: sessionStorage.getItem("username"),
+            },
+          },
+        },
+      });
+      setFacilityList(getFacility.data.listFacilities.items);
+      console.log("List of facilities: ", getFacility);
+    }
+    async function getBookingList() {
+      //get start and end date of the week in AWSDateTime format
+      const startOfWeek = moment().startOf('isoweek').toDate().toISOString();;
+      const endOfWeek = moment().endOf('isoweek').toDate().toISOString();;
+
+      //get list of booking based on owner ID and booking date must be made this week
+      const getBooking = await API.graphql({
+        query: queries.listBookings,
+        variables: {
+          filter: {
+            facilityowner_id: {
+              eq: sessionStorage.getItem("username"),
+            },
+            booking_date: {
+              //between: ["2021-09-27T00:00:00.000Z", "2021-10-01T00:00:00.000Z"],
+              between: [startOfWeek, endOfWeek],
+            },
+          },
+        },
+      });
+      setBookingList(getBooking.data.listBookings.items);
+      console.log("List of bookings owned by facility owner: ", getBooking);
+    }
+    getFacilityList();
+    getBookingList();
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -67,7 +86,7 @@ export default function PartnerDashboard() {
 
                 <div className="mx-5">
                   <h4 className="text-2xl font-semibold text-gray-700">
-                    8,282
+                    {facilityList.length}
                   </h4>
                   <div className="text-gray-500">No. of Facilities</div>
                 </div>
@@ -95,7 +114,7 @@ export default function PartnerDashboard() {
 
                 <div className="mx-5">
                   <h4 className="text-2xl font-semibold text-gray-700">
-                    200,521
+                    {bookingList.length}
                   </h4>
                   <div className="text-gray-500">Weekly Bookings</div>
                 </div>
@@ -123,7 +142,7 @@ export default function PartnerDashboard() {
 
                 <div className="mx-5">
                   <h4 className="text-2xl font-semibold text-gray-700">
-                    215,542
+                    {(bookingList.length ===0) ? 0 : (bookingList.map(data => data.payment.paid_amt).reduce((a, b) => a + b))} 
                   </h4>
                   <div className="text-gray-500">Weekly Earnings</div>
                 </div>
