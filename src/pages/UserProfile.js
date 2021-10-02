@@ -34,20 +34,20 @@ const profiles = [
     const [userData, setUserData] = useState([]);
   
   useEffect(() => {
-    async function getUserData() {
-      const getUserData = await API.graphql({
-        query: queries.getUser,
+    async function getUser() {
+      const getUser = await API.graphql({
+        query: queries.listUsers,
         variables: {
           filter: {
-            cust_id: {
+            id: {
               eq: sessionStorage.getItem("username"),
             },
           },
         },
       });
-      setUserData(getUserData.data.getUser);
+      // setUserData(getUserData.data.listUsers);
     }
-    getUserData();
+    getUser();
   }, []);
 
 
