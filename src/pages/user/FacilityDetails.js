@@ -102,7 +102,7 @@ export default function FacilityDetails(props) {
                 Select Booking Date
               </label>
               <input
-                type="time"
+                type="date"
                 required
                 onChange={(e) => setBookingTime(e.target.value)}
                 name="booking-time"
@@ -111,22 +111,23 @@ export default function FacilityDetails(props) {
               />
               <label
                 htmlFor="operating-from"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-700 margin-200"
               >
                 Select Booking Time
               </label>
               <ul>
-                {slots.map(slot => <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded onClick=">
- {slot.startTime}</button>)}
+                {slots.map(slot => <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded onClick={(e) => setBookingTime(slot.startTime)}">
+ {slot.startTime}-{slot.endTime}</button>)}
 
               </ul>
-            </div>
-            <button
+              <button
               type="button"
               className="h-14 px-6 py-2 font-semibold rounded-xl bg-blue-600 hover:bg-blue-800 text-white"
             >
               Checkout
             </button>
+            </div>
+            
           </div>
         </div>
       </div>
