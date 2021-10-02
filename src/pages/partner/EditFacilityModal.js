@@ -53,10 +53,10 @@ function EditFacilityModal(props) {
     if (!operatingDays.length) {
       setErrorMsg("Operation Days cannot be empty!");
       return false;
-    } else if (operatingFrom.trim() == "") {
+    } else if (operatingFrom.trim() === "") {
       setErrorMsg("Operation Hrs (From) cannot be empty!");
       return false;
-    } else if (operatingTo.trim() == "") {
+    } else if (operatingTo.trim() === "") {
       setErrorMsg("Operation Hrs (To) cannot be empty!");
       return false;
     } else if (operatingFrom >= operatingTo) {

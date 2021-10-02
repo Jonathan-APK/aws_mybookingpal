@@ -3,6 +3,7 @@ import Navbar from "../../components/layout/navbar/PartnerNavbar";
 import AddFacilityModal from "../partner/AddFacilityModal";
 import DeleteFacilityModal from "../partner/DeleteFacilityModal";
 import EditFacilityModal from "../partner/EditFacilityModal";
+import ViewBookingModal from "../partner/ViewBookingModal";
 import { useState, useEffect } from "react";
 import * as queries from "../../graphql/queries";
 import { API } from "@aws-amplify/api";
@@ -39,27 +40,31 @@ import * as subscriptions from "../../graphql/subscriptions";
 //   // More people...
 // ];
 
-const booking = [
-  {
-    ref_id: "S1234",
-    period: "14 May 2021 - 14 May 2021",
-    duration: "1200 - 1300",
-    rate: "$54/hrs",
-    total_amt: "$54",
-    customer: "sam@gmail.com",
-  },
-];
+// const booking = [
+//   {
+//     ref_id: "S1234",
+//     period: "14 May 2021 - 14 May 2021",
+//     duration: "1200 - 1300",
+//     rate: "$54/hrs",
+//     total_amt: "$54",
+//     customer: "sam@gmail.com",
+//   },
+// ];
 
 export default function ManageFacility() {
-  const [isAddModalOpen, setAddModalOpen] = useState(false);
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isAddFacilityModalOpen, setAddFacilityModalOpen] = useState(false);
+  const [isEditFacilityModalOpen, setEditFacilityModalOpen] = useState(false);
+  const [isDeleteFacilityModalOpen, setDeleteFacilityModalOpen] =
+    useState(false);
+  const [isViewBookingModalOpen, setViewBookingModalOpen] = useState(false);
   const [deleteID, setDeleteID] = useState("");
   const [selectedFacility, setSelectedFacility] = useState("");
   const [facilityList, setFacilityList] = useState([]);
+  const [bookingList, setBookingList] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState([]);
   let addSubscription, delSubscription, editSubscription;
 
-  //Retrieve user's facility list when page onload
+  //Retrieve user's facility and booking list when page onload
   useEffect(() => {
     async function getFacilityList() {
       const getFacility = await API.graphql({
@@ -73,9 +78,24 @@ export default function ManageFacility() {
         },
       });
       setFacilityList(getFacility.data.listFacilities.items);
-      console.log("List of facilities: " + JSON.stringify(getFacility));
+      console.log("List of facilities: ", getFacility);
+    }
+    async function getBookingList() {
+      const getBooking = await API.graphql({
+        query: queries.listBookings,
+        variables: {
+          filter: {
+            facilityowner_id: {
+              eq: sessionStorage.getItem("username"),
+            },
+          },
+        },
+      });
+      setBookingList(getBooking.data.listBookings.items);
+      console.log("List of bookings owned by facility owner: ", getBooking);
     }
     getFacilityList();
+    getBookingList();
     addFacilitySubscription();
     delFacilitySubscription();
     editFacilitySubscription();
@@ -130,10 +150,13 @@ export default function ManageFacility() {
     }).subscribe({
       //update modified facility from existing facility list
       next: (response) =>
-        setFacilityList(oldArray => {
-          const index = oldArray.findIndex(item => item.id ===  response.value.data.onUpdateFacilityByUserId.id);
+        setFacilityList((oldArray) => {
+          const index = oldArray.findIndex(
+            (item) =>
+              item.id === response.value.data.onUpdateFacilityByUserId.id
+          );
           oldArray[index] = response.value.data.onUpdateFacilityByUserId;
-          return ([...oldArray]);
+          return [...oldArray];
         }),
       error: (error) => console.warn(error),
     });
@@ -149,19 +172,30 @@ export default function ManageFacility() {
       </header>
       <div className="bg-gray-50 mt-1">
         <AddFacilityModal
-          isOpen={isAddModalOpen}
-          setModalOpen={setAddModalOpen}
+          isOpen={isAddFacilityModalOpen}
+          setModalOpen={setAddFacilityModalOpen}
         />
         <DeleteFacilityModal
-          isOpen={isDeleteModalOpen}
-          setModalOpen={setDeleteModalOpen}
+          isOpen={isDeleteFacilityModalOpen}
+          setModalOpen={setDeleteFacilityModalOpen}
           deleteID={deleteID}
         />
-        <EditFacilityModal
-          isOpen={isEditModalOpen}
-          setModalOpen={setEditModalOpen}
-          facility={selectedFacility}
-        />
+
+        {selectedFacility.id && (
+          <EditFacilityModal
+            isOpen={isEditFacilityModalOpen}
+            setModalOpen={setEditFacilityModalOpen}
+            facility={selectedFacility}
+          />
+        )}
+        {selectedBooking.id && (
+          <ViewBookingModal
+            isOpen={isViewBookingModalOpen}
+            setModalOpen={setViewBookingModalOpen}
+            booking={selectedBooking}
+          />
+        )}
+
         {/* Body Content */}
         <div className="container mx-auto px-6 sm:px-12 py-6">
           {/* Facility Table */}
@@ -175,7 +209,7 @@ export default function ManageFacility() {
                   <div className="float-right block">
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex"
-                      onClick={() => setAddModalOpen(true)}
+                      onClick={() => setAddFacilityModalOpen(true)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -271,7 +305,7 @@ export default function ManageFacility() {
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a
                               onClick={() => {
-                                setEditModalOpen(true);
+                                setEditFacilityModalOpen(true);
                                 setSelectedFacility(facility);
                               }}
                               className="text-indigo-600 hover:text-indigo-900 mr-7 cursor-pointer"
@@ -281,7 +315,7 @@ export default function ManageFacility() {
 
                             <a
                               onClick={() => {
-                                setDeleteModalOpen(true);
+                                setDeleteFacilityModalOpen(true);
                                 setDeleteID(facility.id);
                               }}
                               className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
@@ -313,7 +347,7 @@ export default function ManageFacility() {
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Ref ID
+                          Booking ID
                         </th>
                         <th
                           scope="col"
@@ -339,36 +373,40 @@ export default function ManageFacility() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {booking.map((booking) => (
-                        <tr key={booking.ref_id}>
+                      {bookingList.map((booking) => (
+                        <tr key={booking.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
-                              {booking.ref_id}
+                              {booking.id.substring(0, 13)}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
-                              {booking.period}
+                              {booking.start_date} to {booking.end_date}
                             </div>
                             <div className="text-sm text-gray-500">
-                              {booking.duration}
+                              {booking.start_time.substring(0, 5)} -{" "}
+                              {booking.end_time.substring(0, 5)}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <div className="text-sm text-gray-900">
-                              {booking.rate}
+                              ${booking.rate}/Hr
                             </div>
                             <div className="text-sm text-gray-500">
-                              {booking.total_amt}
+                              ${booking.payment.paid_amt}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {booking.customer}
+                            {booking.customer.email}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <a
-                              href="#"
-                              className="text-indigo-600 hover:text-indigo-900"
+                              onClick={() => {
+                                setViewBookingModalOpen(true);
+                                setSelectedBooking(booking);
+                              }}
+                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
                             >
                               View
                             </a>
