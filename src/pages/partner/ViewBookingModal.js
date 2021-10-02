@@ -23,8 +23,8 @@ function ViewBookingModal(props) {
     setAddress(props.booking.address);
     setArea(props.booking.area);
     setBookingDate(props.booking.booking_date);
-    setStartTime(props.booking.start_time);
-    setEndTime(props.booking.end_time);
+    setStartTime(props.booking.slot.start_time);
+    setEndTime(props.booking.slot.end_time);
     setRate(props.booking.rate);
     setCustEmail(props.booking.customer.email);
     setStatus(props.booking.status);
