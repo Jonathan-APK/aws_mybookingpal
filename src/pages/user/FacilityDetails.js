@@ -2,6 +2,7 @@ import Breadcrumbs from "../../components/layout/Breadcrumbs";
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import {useState} from "react";
+import TimePicker from "rc-time-picker";
 
 
 const details = [
@@ -20,11 +21,56 @@ const details = [
   // More facilities...
 ];
 
+const slots = [
+  {
+    facilityId:"asd",
+    bookingDate: "03/10/2021",
+    startTime:"08:00",
+    endTime:"09:00"
+  },
+  {
+    facilityId:"asd",
+    bookingDate: "03/10/2021",
+    startTime:"10:00",
+    endTime:"11:00"
+  },
+  {
+    facilityId:"asd",
+    bookingDate: "03/10/2021",
+    startTime:"12:00",
+    endTime:"13:00"
+  },
+  {
+    facilityId:"asd",
+    bookingDate: "03/10/2021",
+    startTime:"14:00",
+    endTime:"15:00"
+  },
+  {
+    facilityId:"asd",
+    bookingDate: "03/10/2021",
+    startTime:"16:00",
+    endTime:"17:00"
+  },
+  {
+    facilityId:"asd",
+    bookingDate: "03/10/2021",
+    startTime:"18:00",
+    endTime:"19:00"
+  },
+  {
+    facilityId:"asd",
+    bookingDate: "03/10/2021",
+    startTime:"20:00",
+    endTime:"21:00"
+  }
+];
+
 export default function FacilityDetails(props) {
 
   const facility = props.location.facility;
   const [bookingTime, setBookingTime] = useState("");
-  
+
   return (
     <div>
       <UserNavbar/>
@@ -53,7 +99,7 @@ export default function FacilityDetails(props) {
                 htmlFor="operating-from"
                 className="block text-sm font-medium text-gray-700"
               >
-                Select Booking Time
+                Select Booking Date
               </label>
               <input
                 type="time"
@@ -63,6 +109,17 @@ export default function FacilityDetails(props) {
                 id="booking-time"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
+              <label
+                htmlFor="operating-from"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Select Booking Time
+              </label>
+              <ul>
+                {slots.map(slot => <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded onClick=">
+ {slot.startTime}</button>)}
+
+              </ul>
             </div>
             <button
               type="button"
