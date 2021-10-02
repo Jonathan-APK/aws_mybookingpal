@@ -19,7 +19,17 @@ export default function FacilityListItem(props) {
           ${props.rate}/hr
         </div>
         <button className="py-2 px-4 hover:bg-blue-800 bg-blue-600 text-white rounded-md shadow-xl">
-          <Link to="/facilitydetails">
+          <Link
+            to={{
+              pathname: "/facilitydetails",
+              name: props.name,
+              opening_hrs: props.opening_hrs,
+              closing_hrs: props.closing_hrs,
+              address: props.address,
+              description: props.description,
+              rate: props.rate,
+            }}
+          >
             <a>
               <span aria-hidden="true" />
               Check Availability

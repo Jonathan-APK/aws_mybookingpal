@@ -1,13 +1,16 @@
 import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import Pagination from "../../components/layout/Pagination";
-
+import { useState, useEffect } from "react";
+import * as queries from "../../graphql/queries";
+import { API } from "@aws-amplify/api";
 
 const bookings = [
   {
     image:
       "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-    venue: "EnergyOne (Punggol)",
+    facility_name: "EnergyOne (Punggol)",
+    area:"Punggol",
     address: "9 Sentul Cres, Level 4, Singapore 828654",
     dateTime: "20 September 2021 7:30PM",
     status: "Booked",
@@ -15,7 +18,8 @@ const bookings = [
   {
     image:
       "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-    venue: "Anytime Fitness (Buangkok)",
+    facility_name: "Anytime Fitness (Buangkok)",
+    area:"Buangkok",
     address: "Hougang Green Shopping Mall, 21 Hougang Street 51 #02-13A Singapore, Central Singapore",
     dateTime: "22 September 2021 7:30PM",
     status: "Booked",
@@ -24,8 +28,26 @@ const bookings = [
 ];
 
 export default function ManageBooking() {
+
+  const [bookingList, setBookingList] = useState([]);
   
-  
+  useEffect(() => {
+    async function getBookingList() {
+      const getBooking = await API.graphql({
+        query: queries.listBookings,
+        variables: {
+          filter: {
+            cust_id: {
+              eq: sessionStorage.getItem("username"),
+            },
+          },
+        },
+      });
+      setBookingList(getBooking.data.listBookings.items);
+    }
+    getBookingList();
+  }, []);
+
   return (
     <div>
       <UserNavbar/>
@@ -49,13 +71,19 @@ export default function ManageBooking() {
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Venue
+                          Name
                         </th>
                         <th
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
-                          Date & Time
+                          Location
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Period/Duration
                         </th>
                         <th
                           scope="col"
@@ -69,25 +97,18 @@ export default function ManageBooking() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {bookings.map((booking) => (
+                      {bookingList.map((booking) => (
                         <tr key={booking.id}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                  {booking.facility_name}
+                                
+                          </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <div className="flex-shrink-0 h-10 w-10">
-                                <img
-                                  className="h-10 w-10 rounded-full"
-                                  src={booking.image}
-                                  alt=""
-                                />
-                              </div>
-                              <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">
-                                  {booking.venue}
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  {booking.address}
-                                </div>
-                              </div>
+                            <div className="text-sm text-gray-900">
+                              {booking.area}
+                            </div>
+                            <div className="text-sm text-gray-500 truncate">
+                              {booking.address}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

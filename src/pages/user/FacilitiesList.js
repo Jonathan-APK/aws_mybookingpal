@@ -115,7 +115,7 @@ export default function FacilitiesList(props) {
         });
         setFacilityList(getFacility.data.listFacilities.items);
       }
-    }
+    };
     getFacilityList();
   }, []);
 
@@ -138,8 +138,6 @@ export default function FacilitiesList(props) {
             {facilityList.map((facility) => (
               <FacilityListItem
                 key={facility.id}
-                imageSrc={facility.imageSrc}
-                href={facility.href}
                 name={facility.name}
                 opening_hrs={facility.opening_hrs}
                 closing_hrs={facility.closing_hrs}
