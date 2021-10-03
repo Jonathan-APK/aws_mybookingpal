@@ -3,73 +3,182 @@ import Footer from "../../components/layout/Footer";
 import UserNavbar from "../../components/layout/navbar/UserNavbar";
 import {useState} from "react";
 import TimePicker from "rc-time-picker";
+import { useEffect } from "react";
 
-
-const details = [
+let slots = [
   {
-    id: 1,
-    venue: "EnergyOne (SAFRA Punggol)",
-    address: "9 Sentul Cres, Level 4, Singapore 828654",
-    hours: "10am - 10pm",
-    description:
-      "Offering the best of resistance training equipment and cardio machines, EnergyOne Gyms also come equipped with free weights, personal training and spacious changing rooms. What's more, SAFRA members can cross train in other sports facilities located within our SAFRA clubs! Ask about fitness assessments & consultations, and corporate services. Our personal training services are also highly effective and our personal trainers are qualified fitness professionals who specialise in various areas, such as weight management, injury rehabilitation, sports specifics and nutrition.",
-    price: "5",
-    href: "/facilitydetails",
-    imageSrc:
-      "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-  },
-  // More facilities...
-];
-
-const slots = [
-  {
-    facilityId:"asd",
-    bookingDate: "03/10/2021",
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-3"),
     startTime:"08:00",
-    endTime:"09:00"
+    endTime:"09:00",
+    selected: true,
+    available: true
   },
   {
-    facilityId:"asd",
-    bookingDate: "03/10/2021",
-    startTime:"10:00",
-    endTime:"11:00"
-  },
-  {
-    facilityId:"asd",
-    bookingDate: "03/10/2021",
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-3"),
     startTime:"12:00",
-    endTime:"13:00"
+    endTime:"13:00",
+    selected: false,
+    available: false
   },
   {
-    facilityId:"asd",
-    bookingDate: "03/10/2021",
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-3"),
     startTime:"14:00",
-    endTime:"15:00"
+    endTime:"15:00",
+    selected: false,
+    available: true
   },
   {
-    facilityId:"asd",
-    bookingDate: "03/10/2021",
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-3"),
     startTime:"16:00",
-    endTime:"17:00"
+    endTime:"17:00",
+    selected: false,
+    available: true
   },
   {
-    facilityId:"asd",
-    bookingDate: "03/10/2021",
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-3"),
     startTime:"18:00",
-    endTime:"19:00"
+    endTime:"19:00",
+    selected: false,
+    available: true
   },
   {
-    facilityId:"asd",
-    bookingDate: "03/10/2021",
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-3"),
     startTime:"20:00",
-    endTime:"21:00"
-  }
+    endTime:"21:00",
+    selected: false,
+    available: true
+  },
+  {
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-4"),
+    startTime:"08:00",
+    endTime:"09:00",
+    selected: true,
+    available: true
+  },
+  {
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-4"),
+    startTime:"10:00",
+    endTime:"11:00",
+    selected: false,
+    available: true
+  },
+  {
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-4"),
+    startTime:"12:00",
+    endTime:"13:00",
+    selected: false,
+    available: true
+  },
+  {
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-4"),
+    startTime:"14:00",
+    endTime:"15:00",
+    selected: false,
+    available: true
+  },
+  {
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-4"),
+    startTime:"16:00",
+    endTime:"17:00",
+    selected: false,
+    available: false
+  },
+  {
+    facilityId:"e4ef9825-2b1a-435b-88c3-65d0e767b394",
+    bookingDate: new Date("2021-10-4"),
+    startTime:"18:00",
+    endTime:"19:00",
+    selected: false,
+    available: true
+  },
 ];
 
+
+
+var bookingDate = new Date();
 export default function FacilityDetails(props) {
 
   const facility = props.location.facility;
+  console.log(facility);
   const [bookingTime, setBookingTime] = useState("");
+  const [bookingDate, setBookingDate] = useState(new Date());
+  const [filteredSlots, setFilteredSlots] = useState([]);
+  const [buttons,setButtons] = useState("Please select a date.");
+  //renderSlotOptions();
+
+  function renderSlotOptions () {
+    let results = fetchSlots("e4ef9825-2b1a-435b-88c3-65d0e767b394",bookingDate);
+    setFilteredSlots(results);
+    console.log("Filtered:");
+    console.log(filteredSlots);
+    let buttonsTemp = 'Please Select a date.';
+    if (filteredSlots!= null && filteredSlots.length == 0) {
+      buttonsTemp = <p>Sorry. There are no slots available.</p>;
+    } else {
+      buttonsTemp = <ul>{filteredSlots.map((slot,i) => <button onClick={function(e) {toggleSlotSelection(slot);}} className={getSlotButtonClass(slot.selected, slot.available)}>
+        {slot.startTime}
+      </button>)}</ul>;
+    }
+    setButtons(buttonsTemp)
+  }
+  function getSlotButtonClass(slotSelected, slotAvailable){
+    console.log("is slot selected?");
+    console.log(slotSelected, slotAvailable);
+    if(!slotAvailable){
+      return "bg-gray-500 text-gray-700 font-semibold py-2 px-4 border border-blue-500  rounded margin-top-100px"
+    }
+    else if(slotSelected){
+      return "bg-blue-200 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded margin-top-100px"
+    }else{
+      return "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded margin-top-100px"
+    }
+
+  }
+  function toggleSlotSelection(slot){
+    console.log("Toggle Slot Selection")
+    console.log("slot selected: ");
+
+    let results = [];
+    for (const x of slots) {
+      if (x.bookingDate.toDateString() == slot.bookingDate.toDateString() && x.facilityId == slot.facilityId && slot.startTime == x.startTime) {
+        console.log(x)
+      }
+    }
+
+  }
+  function udpateBookingDate(date){
+    console.log("Date entered: " + date);
+    setBookingDate(new Date(date));
+    renderSlotOptions();
+  }
+  
+
+
+
+  function fetchSlots(facilityId, date){
+    //query toi fetch slots based on id and date
+    let results = [];
+    for (const x of slots) {
+      if (x.bookingDate.toDateString() == date.toDateString() && x.facilityId == facilityId) {
+        results.push(x);
+      }
+    }
+    console.log("Results:");
+    console.log(results);
+    return results;
+  }
+
 
   return (
     <div>
@@ -104,9 +213,9 @@ export default function FacilityDetails(props) {
               <input
                 type="date"
                 required
-                onChange={(e) => setBookingTime(e.target.value)}
-                name="booking-time"
-                id="booking-time"
+                onChange={(e) => udpateBookingDate(e.target.value)}
+                name="booking-date"
+                id="booking-date"
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               />
               <label
@@ -116,9 +225,7 @@ export default function FacilityDetails(props) {
                 Select Booking Time
               </label>
               <ul>
-                {slots.map(slot => <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded onClick={(e) => setBookingTime(slot.startTime)}">
- {slot.startTime}-{slot.endTime}</button>)}
-
+                {buttons}
               </ul>
               <button
               type="button"
@@ -136,3 +243,5 @@ export default function FacilityDetails(props) {
     </div>
   );
 }
+
+
