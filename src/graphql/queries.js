@@ -122,8 +122,8 @@ export const getUser = /* GraphQL */ `
           status
           cust_id
           facilityowner_id
-          payment_id
           slot_id
+          payment_id
           createdAt
           updatedAt
         }
@@ -174,8 +174,8 @@ export const getBooking = /* GraphQL */ `
       status
       cust_id
       facilityowner_id
-      payment_id
       slot_id
+      payment_id
       createdAt
       updatedAt
       owner {
@@ -214,6 +214,14 @@ export const getBooking = /* GraphQL */ `
           nextToken
         }
       }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        createdAt
+        updatedAt
+      }
       slot {
         id
         start_time
@@ -221,31 +229,6 @@ export const getBooking = /* GraphQL */ `
         duration
         createdAt
         updatedAt
-      }
-      payment {
-        id
-        payment_date
-        paid_amt
-        status
-        booking_id
-        createdAt
-        updatedAt
-        booking {
-          id
-          booking_date
-          facility_id
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          slot_id
-          createdAt
-          updatedAt
-        }
       }
     }
   }
@@ -268,8 +251,8 @@ export const listBookings = /* GraphQL */ `
         status
         cust_id
         facilityowner_id
-        payment_id
         slot_id
+        payment_id
         createdAt
         updatedAt
         owner {
@@ -296,6 +279,14 @@ export const listBookings = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        payment {
+          id
+          payment_date
+          paid_amt
+          status
+          createdAt
+          updatedAt
+        }
         slot {
           id
           start_time
@@ -304,15 +295,37 @@ export const listBookings = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getPayment = /* GraphQL */ `
+  query GetPayment($id: ID!) {
+    getPayment(id: $id) {
+      id
+      payment_date
+      paid_amt
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPayments = /* GraphQL */ `
+  query ListPayments(
+    $filter: ModelPaymentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        payment_date
+        paid_amt
+        status
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -344,112 +357,6 @@ export const listSlots = /* GraphQL */ `
         duration
         createdAt
         updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPayment = /* GraphQL */ `
-  query GetPayment($id: ID!) {
-    getPayment(id: $id) {
-      id
-      payment_date
-      paid_amt
-      status
-      booking_id
-      createdAt
-      updatedAt
-      booking {
-        id
-        booking_date
-        facility_id
-        facility_name
-        rate
-        address
-        area
-        status
-        cust_id
-        facilityowner_id
-        payment_id
-        slot_id
-        createdAt
-        updatedAt
-        owner {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        slot {
-          id
-          start_time
-          end_time
-          duration
-          createdAt
-          updatedAt
-        }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
-export const listPayments = /* GraphQL */ `
-  query ListPayments(
-    $filter: ModelPaymentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        payment_date
-        paid_amt
-        status
-        booking_id
-        createdAt
-        updatedAt
-        booking {
-          id
-          booking_date
-          facility_id
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          slot_id
-          createdAt
-          updatedAt
-        }
       }
       nextToken
     }
