@@ -139,7 +139,7 @@ export default function FacilityDetails(props) {
         query: queries.listBookings,
         variables: {
           filter: {
-            id: {
+            facility_id: {
               eq: facility.id
             },
             booking_date:{
@@ -149,7 +149,7 @@ export default function FacilityDetails(props) {
         },
       });
 
-      setExistingBookings(getBooking.data.listBookings.items);
+      //setExistingBookings(getBooking.data.listBookings.items);
 
       console.log("List of bookings done on this date: ", getBooking);
       //setExistingBookings([{"fake":123}]);
@@ -158,6 +158,7 @@ export default function FacilityDetails(props) {
   },[slotDate]);
   useEffect(()=> {
     function fetchSlots(){
+      console.log(existingBookings);
       console.log("fetch slots List of bookings done on this date: ", existingBookings);
       console.log("Date entered: " + slotDate);
       let results = [];
