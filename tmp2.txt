@@ -1,0 +1,2715 @@
+// @ts-check
+import { initSchema } from '@aws-amplify/datastore';
+import { schema } from './schema';
+
+
+
+const { Facility, User } = initSchema(schema);
+
+export {
+  Facility,
+  User
+};export const schema = {
+    "models": {
+        "Facility": {
+            "name": "Facility",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "address": {
+                    "name": "address",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "area": {
+                    "name": "area",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "size": {
+                    "name": "size",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "rate": {
+                    "name": "rate",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "opening_hrs": {
+                    "name": "opening_hrs",
+                    "isArray": false,
+                    "type": "AWSTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "closing_hrs": {
+                    "name": "closing_hrs",
+                    "isArray": false,
+                    "type": "AWSTime",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "operating_days": {
+                    "name": "operating_days",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": false
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Facilities",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "User": {
+            "name": "User",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "username": {
+                    "name": "username",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "firstname": {
+                    "name": "firstname",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lastname": {
+                    "name": "lastname",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "contact": {
+                    "name": "contact",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "address": {
+                    "name": "address",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Facilities": {
+                    "name": "Facilities",
+                    "isArray": true,
+                    "type": {
+                        "model": "Facility"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "userID"
+                    }
+                },
+                "role": {
+                    "name": "role",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Users",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "enums": {},
+    "nonModels": {},
+    "version": "8aa751e427606bbb65f587dab0eb45c2"
+};import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
+
+
+
+
+
+type FacilityMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type UserMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class Facility {
+  readonly id: string;
+  readonly name: string;
+  readonly type: string;
+  readonly address: string;
+  readonly area: string;
+  readonly size: number;
+  readonly rate: number;
+  readonly description: string;
+  readonly opening_hrs: string;
+  readonly closing_hrs: string;
+  readonly operating_days: (string | null)[];
+  readonly userID: string;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<Facility, FacilityMetaData>);
+  static copyOf(source: Facility, mutator: (draft: MutableModel<Facility, FacilityMetaData>) => MutableModel<Facility, FacilityMetaData> | void): Facility;
+}
+
+export declare class User {
+  readonly id: string;
+  readonly email: string;
+  readonly username: string;
+  readonly firstname?: string;
+  readonly lastname?: string;
+  readonly contact?: string;
+  readonly address?: string;
+  readonly Facilities?: (Facility | null)[];
+  readonly role?: (string | null)[];
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<User, UserMetaData>);
+  static copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
+}commit 008206a04df622b011a03e7f952485602c9bc872
+Merge: 81bc5b5 784526c
+Author: Poh Keong <angpkeong@gmail.com>
+Date:   Sun Sep 26 01:13:28 2021 +0800
+
+    On feat-facilityapi: 26/9/21
+
+diff --cc amplify/backend/api/mybookingpal/schema.graphql
+index cd9fd06,cd9fd06..c8d8ce5
+--- a/amplify/backend/api/mybookingpal/schema.graphql
++++ b/amplify/backend/api/mybookingpal/schema.graphql
+@@@ -28,5 -28,5 +28,10 @@@ type User @model @auth(rules: [{allow: 
+  type Subscription {
+    onCreateFacilityByUserId(userID: String!): Facility
+    @aws_subscribe(mutations: ["createFacility"])
+++  onDeleteFacilityByUserId(userID: String!): Facility
+++  @aws_subscribe(mutations: ["deleteFacility"])
+++  onUpdateFacilityByUserId(userID: String!): Facility
+++  @aws_subscribe(mutations: ["updateFacility"])
+  }
+++
+   
+diff --cc amplify/backend/api/mybookingpal/transform.conf.json
+index 1a748d4,1a748d4..98e1e19
+--- a/amplify/backend/api/mybookingpal/transform.conf.json
++++ b/amplify/backend/api/mybookingpal/transform.conf.json
+@@@ -1,10 -1,10 +1,4 @@@
+  {
+      "Version": 5,
+--    "ElasticsearchWarning": true,
+--    "ResolverConfig": {
+--        "project": {
+--            "ConflictHandler": "AUTOMERGE",
+--            "ConflictDetection": "VERSION"
+--        }
+--    }
+++    "ElasticsearchWarning": true
+  }
+diff --cc package-lock.json
+index 891f22d,891f22d..5c7f9a7
+--- a/package-lock.json
++++ b/package-lock.json
+@@@ -4778,6 -4778,6 +4778,14 @@@
+        "resolved": "https://registry.npmjs.org/acorn-walk/-/acorn-walk-7.2.0.tgz",
+        "integrity": "sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA=="
+      },
+++    "add-dom-event-listener": {
+++      "version": "1.1.0",
+++      "resolved": "https://registry.npmjs.org/add-dom-event-listener/-/add-dom-event-listener-1.1.0.tgz",
+++      "integrity": "sha512-WCxx1ixHT0GQU9hb0KI/mhgRQhnU+U3GvwY6ZvVjYq8rsihIGoaIOUbY0yMPBxLH5MDtr0kz3fisWGNcbWW7Jw==",
+++      "requires": {
+++        "object-assign": "4.x"
+++      }
+++    },
+      "address": {
+        "version": "1.1.2",
+        "resolved": "https://registry.npmjs.org/address/-/address-1.1.2.tgz",
+@@@ -6164,6 -6164,6 +6172,11 @@@
+          }
+        }
+      },
+++    "classnames": {
+++      "version": "2.3.1",
+++      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.3.1.tgz",
+++      "integrity": "sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA=="
+++    },
+      "clean-css": {
+        "version": "4.2.3",
+        "resolved": "https://registry.npmjs.org/clean-css/-/clean-css-4.2.3.tgz",
+@@@ -6282,11 -6282,11 +6295,24 @@@
+        "resolved": "https://registry.npmjs.org/commondir/-/commondir-1.0.1.tgz",
+        "integrity": "sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs="
+      },
+++    "component-classes": {
+++      "version": "1.2.6",
+++      "resolved": "https://registry.npmjs.org/component-classes/-/component-classes-1.2.6.tgz",
+++      "integrity": "sha1-xkI5TDYYpNiwuJGe/Mu9kw5c1pE=",
+++      "requires": {
+++        "component-indexof": "0.0.3"
+++      }
+++    },
+      "component-emitter": {
+        "version": "1.3.0",
+        "resolved": "https://registry.npmjs.org/component-emitter/-/component-emitter-1.3.0.tgz",
+        "integrity": "sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg=="
+      },
+++    "component-indexof": {
+++      "version": "0.0.3",
+++      "resolved": "https://registry.npmjs.org/component-indexof/-/component-indexof-0.0.3.tgz",
+++      "integrity": "sha1-EdCRMSI5648yyPJa6csAL/6NPCQ="
+++    },
+      "compose-function": {
+        "version": "3.0.3",
+        "resolved": "https://registry.npmjs.org/compose-function/-/compose-function-3.0.3.tgz",
+@@@ -6511,6 -6511,6 +6537,15 @@@
+          "sha.js": "^2.4.8"
+        }
+      },
+++    "create-react-class": {
+++      "version": "15.7.0",
+++      "resolved": "https://registry.npmjs.org/create-react-class/-/create-react-class-15.7.0.tgz",
+++      "integrity": "sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==",
+++      "requires": {
+++        "loose-envify": "^1.3.1",
+++        "object-assign": "^4.1.1"
+++      }
+++    },
+      "cross-spawn": {
+        "version": "6.0.5",
+        "resolved": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-6.0.5.tgz",
+@@@ -6576,6 -6576,6 +6611,15 @@@
+          }
+        }
+      },
+++    "css-animation": {
+++      "version": "1.6.1",
+++      "resolved": "https://registry.npmjs.org/css-animation/-/css-animation-1.6.1.tgz",
+++      "integrity": "sha512-/48+/BaEaHRY6kNQ2OIPzKf9A6g8WjZYjhiNDNuIVbsm5tXCGIAsHDjB4Xu1C4vXJtUWZo26O68OQkDpNBaPog==",
+++      "requires": {
+++        "babel-runtime": "6.x",
+++        "component-classes": "^1.2.5"
+++      }
+++    },
+      "css-blank-pseudo": {
+        "version": "0.1.4",
+        "resolved": "https://registry.npmjs.org/css-blank-pseudo/-/css-blank-pseudo-0.1.4.tgz",
+@@@ -7212,6 -7212,6 +7256,11 @@@
+        "resolved": "https://registry.npmjs.org/dom-accessibility-api/-/dom-accessibility-api-0.5.7.tgz",
+        "integrity": "sha512-ml3lJIq9YjUfM9TUnEPvEYWFSwivwIGBPKpewX7tii7fwCazA8yCioGdqQcNsItPpfFvSJ3VIdMQPj60LJhcQA=="
+      },
+++    "dom-align": {
+++      "version": "1.12.2",
+++      "resolved": "https://registry.npmjs.org/dom-align/-/dom-align-1.12.2.tgz",
+++      "integrity": "sha512-pHuazgqrsTFrGU2WLDdXxCFabkdQDx72ddkraZNih1KsMcN5qsRSTR9O4VJRlwTPCPb5COYg3LOfiMHHcPInHg=="
+++    },
+      "dom-converter": {
+        "version": "0.2.0",
+        "resolved": "https://registry.npmjs.org/dom-converter/-/dom-converter-0.2.0.tgz",
+@@@ -12283,6 -12283,6 +12332,11 @@@
+        "integrity": "sha512-2lMlY1Yc1+CUy0gw4H95uNN7vjbpoED7NNRSBHE25nWfLBdmMzFCsPshlzbxHz+gYMcBEUN8V4pU16prcdPSgA==",
+        "dev": true
+      },
+++    "moment": {
+++      "version": "2.29.1",
+++      "resolved": "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz",
+++      "integrity": "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
+++    },
+      "move-concurrently": {
+        "version": "1.0.1",
+        "resolved": "https://registry.npmjs.org/move-concurrently/-/move-concurrently-1.0.1.tgz",
+@@@ -14535,6 -14535,6 +14589,96 @@@
+          }
+        }
+      },
+++    "rc-align": {
+++      "version": "2.4.5",
+++      "resolved": "https://registry.npmjs.org/rc-align/-/rc-align-2.4.5.tgz",
+++      "integrity": "sha512-nv9wYUYdfyfK+qskThf4BQUSIadeI/dCsfaMZfNEoxm9HwOIioQ+LyqmMK6jWHAZQgOzMLaqawhuBXlF63vgjw==",
+++      "requires": {
+++        "babel-runtime": "^6.26.0",
+++        "dom-align": "^1.7.0",
+++        "prop-types": "^15.5.8",
+++        "rc-util": "^4.0.4"
+++      }
+++    },
+++    "rc-animate": {
+++      "version": "2.11.1",
+++      "resolved": "https://registry.npmjs.org/rc-animate/-/rc-animate-2.11.1.tgz",
+++      "integrity": "sha512-1NyuCGFJG/0Y+9RKh5y/i/AalUCA51opyyS/jO2seELpgymZm2u9QV3xwODwEuzkmeQ1BDPxMLmYLcTJedPlkQ==",
+++      "requires": {
+++        "babel-runtime": "6.x",
+++        "classnames": "^2.2.6",
+++        "css-animation": "^1.3.2",
+++        "prop-types": "15.x",
+++        "raf": "^3.4.0",
+++        "rc-util": "^4.15.3",
+++        "react-lifecycles-compat": "^3.0.4"
+++      }
+++    },
+++    "rc-time-picker": {
+++      "version": "3.7.3",
+++      "resolved": "https://registry.npmjs.org/rc-time-picker/-/rc-time-picker-3.7.3.tgz",
+++      "integrity": "sha512-Lv1Mvzp9fRXhXEnRLO4nW6GLNxUkfAZ3RsiIBsWjGjXXvMNjdr4BX/ayElHAFK0DoJqOhm7c5tjmIYpEOwcUXg==",
+++      "requires": {
+++        "classnames": "2.x",
+++        "moment": "2.x",
+++        "prop-types": "^15.5.8",
+++        "raf": "^3.4.1",
+++        "rc-trigger": "^2.2.0",
+++        "react-lifecycles-compat": "^3.0.4"
+++      },
+++      "dependencies": {
+++        "rc-trigger": {
+++          "version": "2.6.5",
+++          "resolved": "https://registry.npmjs.org/rc-trigger/-/rc-trigger-2.6.5.tgz",
+++          "integrity": "sha512-m6Cts9hLeZWsTvWnuMm7oElhf+03GOjOLfTuU0QmdB9ZrW7jR2IpI5rpNM7i9MvAAlMAmTx5Zr7g3uu/aMvZAw==",
+++          "requires": {
+++            "babel-runtime": "6.x",
+++            "classnames": "^2.2.6",
+++            "prop-types": "15.x",
+++            "rc-align": "^2.4.0",
+++            "rc-animate": "2.x",
+++            "rc-util": "^4.4.0",
+++            "react-lifecycles-compat": "^3.0.4"
+++          }
+++        }
+++      }
+++    },
+++    "rc-time-picker-24": {
+++      "version": "2.0.6",
+++      "resolved": "https://registry.npmjs.org/rc-time-picker-24/-/rc-time-picker-24-2.0.6.tgz",
+++      "integrity": "sha1-1lcifYQlELK7Uj59y29pI34CXyQ=",
+++      "requires": {
+++        "babel-runtime": "6.x",
+++        "classnames": "2.x",
+++        "moment": "2.x",
+++        "rc-trigger": "1.x"
+++      }
+++    },
+++    "rc-trigger": {
+++      "version": "1.11.5",
+++      "resolved": "https://registry.npmjs.org/rc-trigger/-/rc-trigger-1.11.5.tgz",
+++      "integrity": "sha512-MBuUPw1nFzA4K7jQOwb7uvFaZFjXGd00EofUYiZ+l/fgKVq8wnLC0lkv36kwqM7vfKyftRo2sh7cWVpdPuNnnw==",
+++      "requires": {
+++        "babel-runtime": "6.x",
+++        "create-react-class": "15.x",
+++        "prop-types": "15.x",
+++        "rc-align": "2.x",
+++        "rc-animate": "2.x",
+++        "rc-util": "4.x"
+++      }
+++    },
+++    "rc-util": {
+++      "version": "4.21.1",
+++      "resolved": "https://registry.npmjs.org/rc-util/-/rc-util-4.21.1.tgz",
+++      "integrity": "sha512-Z+vlkSQVc1l8O2UjR3WQ+XdWlhj5q9BMQNLk2iOBch75CqPfrJyGtcWMcnhRlNuDu0Ndtt4kLVO8JI8BrABobg==",
+++      "requires": {
+++        "add-dom-event-listener": "^1.1.0",
+++        "prop-types": "^15.5.10",
+++        "react-is": "^16.12.0",
+++        "react-lifecycles-compat": "^3.0.4",
+++        "shallowequal": "^1.1.0"
+++      }
+++    },
+      "react": {
+        "version": "17.0.2",
+        "resolved": "https://registry.npmjs.org/react/-/react-17.0.2.tgz",
+@@@ -14731,6 -14731,6 +14875,11 @@@
+        "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+        "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+      },
+++    "react-lifecycles-compat": {
+++      "version": "3.0.4",
+++      "resolved": "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz",
+++      "integrity": "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA=="
+++    },
+      "react-native-get-random-values": {
+        "version": "1.7.0",
+        "resolved": "https://registry.npmjs.org/react-native-get-random-values/-/react-native-get-random-values-1.7.0.tgz",
+@@@ -15835,6 -15835,6 +15984,11 @@@
+          "safe-buffer": "^5.0.1"
+        }
+      },
+++    "shallowequal": {
+++      "version": "1.1.0",
+++      "resolved": "https://registry.npmjs.org/shallowequal/-/shallowequal-1.1.0.tgz",
+++      "integrity": "sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ=="
+++    },
+      "shebang-command": {
+        "version": "1.2.0",
+        "resolved": "https://registry.npmjs.org/shebang-command/-/shebang-command-1.2.0.tgz",
+diff --cc package.json
+index 674550f,674550f..10c0415
+--- a/package.json
++++ b/package.json
+@@@ -12,6 -12,6 +12,8 @@@
+      "@testing-library/user-event": "^12.8.3",
+      "aws-amplify": "^4.2.4",
+      "chart.js": "^3.5.1",
+++    "rc-time-picker": "^3.7.3",
+++    "rc-time-picker-24": "^2.0.6",
+      "react": "^17.0.2",
+      "react-chartjs-2": "^3.0.4",
+      "react-dom": "^17.0.2",
+diff --cc src/graphql/mutations.js
+index f539611,f539611..0bb2491
+--- a/src/graphql/mutations.js
++++ b/src/graphql/mutations.js
+@@@ -19,9 -19,9 +19,6 @@@ export const createFacility = /* GraphQ
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+      }
+@@@ -45,9 -45,9 +42,6 @@@ export const updateFacility = /* GraphQ
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+      }
+@@@ -71,9 -71,9 +65,6 @@@ export const deleteFacility = /* GraphQ
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+      }
+@@@ -93,9 -93,9 +84,6 @@@ export const createUser = /* GraphQL *
+        contact
+        address
+        role
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+        Facilities {
+@@@ -112,14 -112,14 +100,10 @@@
+            closing_hrs
+            operating_days
+            userID
+--          _version
+--          _deleted
+--          _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+--        startedAt
+        }
+      }
+    }
+@@@ -138,9 -138,9 +122,6 @@@ export const updateUser = /* GraphQL *
+        contact
+        address
+        role
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+        Facilities {
+@@@ -157,14 -157,14 +138,10 @@@
+            closing_hrs
+            operating_days
+            userID
+--          _version
+--          _deleted
+--          _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+--        startedAt
+        }
+      }
+    }
+@@@ -183,9 -183,9 +160,6 @@@ export const deleteUser = /* GraphQL *
+        contact
+        address
+        role
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+        Facilities {
+@@@ -202,14 -202,14 +176,10 @@@
+            closing_hrs
+            operating_days
+            userID
+--          _version
+--          _deleted
+--          _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+--        startedAt
+        }
+      }
+    }
+diff --cc src/graphql/queries.js
+index a7ae78b,a7ae78b..bf37060
+--- a/src/graphql/queries.js
++++ b/src/graphql/queries.js
+@@@ -16,9 -16,9 +16,6 @@@ export const getFacility = /* GraphQL *
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+      }
+@@@ -44,51 -44,51 +41,10 @@@ export const listFacilities = /* GraphQ
+          closing_hrs
+          operating_days
+          userID
+--        _version
+--        _deleted
+--        _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+--      startedAt
+--    }
+--  }
+--`;
+--export const syncFacilities = /* GraphQL */ `
+--  query SyncFacilities(
+--    $filter: ModelFacilityFilterInput
+--    $limit: Int
+--    $nextToken: String
+--    $lastSync: AWSTimestamp
+--  ) {
+--    syncFacilities(
+--      filter: $filter
+--      limit: $limit
+--      nextToken: $nextToken
+--      lastSync: $lastSync
+--    ) {
+--      items {
+--        id
+--        name
+--        type
+--        address
+--        area
+--        size
+--        rate
+--        description
+--        opening_hrs
+--        closing_hrs
+--        operating_days
+--        userID
+--        _version
+--        _deleted
+--        _lastChangedAt
+--        createdAt
+--        updatedAt
+--      }
+--      nextToken
+--      startedAt
+      }
+    }
+  `;
+@@@ -103,9 -103,9 +59,6 @@@ export const getUser = /* GraphQL */ 
+        contact
+        address
+        role
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+        Facilities {
+@@@ -122,14 -122,14 +75,10 @@@
+            closing_hrs
+            operating_days
+            userID
+--          _version
+--          _deleted
+--          _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+--        startedAt
+        }
+      }
+    }
+@@@ -150,55 -150,55 +99,13 @@@ export const listUsers = /* GraphQL */ 
+          contact
+          address
+          role
+--        _version
+--        _deleted
+--        _lastChangedAt
+--        createdAt
+--        updatedAt
+--        Facilities {
+--          nextToken
+--          startedAt
+--        }
+--      }
+--      nextToken
+--      startedAt
+--    }
+--  }
+--`;
+--export const syncUsers = /* GraphQL */ `
+--  query SyncUsers(
+--    $filter: ModelUserFilterInput
+--    $limit: Int
+--    $nextToken: String
+--    $lastSync: AWSTimestamp
+--  ) {
+--    syncUsers(
+--      filter: $filter
+--      limit: $limit
+--      nextToken: $nextToken
+--      lastSync: $lastSync
+--    ) {
+--      items {
+--        id
+--        email
+--        username
+--        firstname
+--        lastname
+--        contact
+--        address
+--        role
+--        _version
+--        _deleted
+--        _lastChangedAt
+          createdAt
+          updatedAt
+          Facilities {
+            nextToken
+--          startedAt
+          }
+        }
+        nextToken
+--      startedAt
+      }
+    }
+  `;
+diff --cc src/graphql/schema.json
+index a683083,a683083..edb2318
+--- a/src/graphql/schema.json
++++ b/src/graphql/schema.json
+@@@ -76,53 -76,53 +76,6 @@@
+            },
+            "isDeprecated" : false,
+            "deprecationReason" : null
+--        }, {
+--          "name" : "syncFacilities",
+--          "description" : null,
+--          "args" : [ {
+--            "name" : "filter",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "INPUT_OBJECT",
+--              "name" : "ModelFacilityFilterInput",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          }, {
+--            "name" : "limit",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "SCALAR",
+--              "name" : "Int",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          }, {
+--            "name" : "nextToken",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "SCALAR",
+--              "name" : "String",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          }, {
+--            "name" : "lastSync",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "SCALAR",
+--              "name" : "AWSTimestamp",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          } ],
+--          "type" : {
+--            "kind" : "OBJECT",
+--            "name" : "ModelFacilityConnection",
+--            "ofType" : null
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+          }, {
+            "name" : "getUser",
+            "description" : null,
+@@@ -185,53 -185,53 +138,6 @@@
+            },
+            "isDeprecated" : false,
+            "deprecationReason" : null
+--        }, {
+--          "name" : "syncUsers",
+--          "description" : null,
+--          "args" : [ {
+--            "name" : "filter",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "INPUT_OBJECT",
+--              "name" : "ModelUserFilterInput",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          }, {
+--            "name" : "limit",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "SCALAR",
+--              "name" : "Int",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          }, {
+--            "name" : "nextToken",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "SCALAR",
+--              "name" : "String",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          }, {
+--            "name" : "lastSync",
+--            "description" : null,
+--            "type" : {
+--              "kind" : "SCALAR",
+--              "name" : "AWSTimestamp",
+--              "ofType" : null
+--            },
+--            "defaultValue" : null
+--          } ],
+--          "type" : {
+--            "kind" : "OBJECT",
+--            "name" : "ModelUserConnection",
+--            "ofType" : null
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+          } ],
+          "inputFields" : null,
+          "interfaces" : [ ],
+@@@ -425,47 -425,47 +331,6 @@@
+            },
+            "isDeprecated" : false,
+            "deprecationReason" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "NON_NULL",
+--            "name" : null,
+--            "ofType" : {
+--              "kind" : "SCALAR",
+--              "name" : "Int",
+--              "ofType" : null
+--            }
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+--        }, {
+--          "name" : "_deleted",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Boolean",
+--            "ofType" : null
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+--        }, {
+--          "name" : "_lastChangedAt",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "NON_NULL",
+--            "name" : null,
+--            "ofType" : {
+--              "kind" : "SCALAR",
+--              "name" : "AWSTimestamp",
+--              "ofType" : null
+--            }
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+          }, {
+            "name" : "createdAt",
+            "description" : null,
+@@@ -546,24 -546,24 +411,6 @@@
+          "interfaces" : null,
+          "enumValues" : null,
+          "possibleTypes" : null
+--      }, {
+--        "kind" : "SCALAR",
+--        "name" : "Boolean",
+--        "description" : "Built-in Boolean",
+--        "fields" : null,
+--        "inputFields" : null,
+--        "interfaces" : null,
+--        "enumValues" : null,
+--        "possibleTypes" : null
+--      }, {
+--        "kind" : "SCALAR",
+--        "name" : "AWSTimestamp",
+--        "description" : "The `AWSTimestamp` scalar type provided by AWS AppSync, represents the number of seconds that have elapsed since `1970-01-01T00:00Z`. Negative values are also accepted and these represent the number of seconds till `1970-01-01T00:00Z`.  Timestamps are serialized and deserialized as integers. The minimum supported timestamp value is **`-31557014167219200`** which corresponds to `-1000000000-01-01T00:00Z`. The maximum supported timestamp value is **`31556889864403199`** which corresponds to `1000000000-12-31T23:59:59.999999999Z`.",
+--        "fields" : null,
+--        "inputFields" : null,
+--        "interfaces" : null,
+--        "enumValues" : null,
+--        "possibleTypes" : null
+        }, {
+          "kind" : "SCALAR",
+          "name" : "AWSDateTime",
+@@@ -603,17 -603,17 +450,6 @@@
+            },
+            "isDeprecated" : false,
+            "deprecationReason" : null
+--        }, {
+--          "name" : "startedAt",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "AWSTimestamp",
+--            "ofType" : null
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+          } ],
+          "inputFields" : null,
+          "interfaces" : [ ],
+@@@ -901,6 -901,6 +737,15 @@@
+          "interfaces" : null,
+          "enumValues" : null,
+          "possibleTypes" : null
+++      }, {
+++        "kind" : "SCALAR",
+++        "name" : "Boolean",
+++        "description" : "Built-in Boolean",
+++        "fields" : null,
+++        "inputFields" : null,
+++        "interfaces" : null,
+++        "enumValues" : null,
+++        "possibleTypes" : null
+        }, {
+          "kind" : "ENUM",
+          "name" : "ModelAttributeTypes",
+@@@ -1462,47 -1462,47 +1307,6 @@@
+            },
+            "isDeprecated" : false,
+            "deprecationReason" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "NON_NULL",
+--            "name" : null,
+--            "ofType" : {
+--              "kind" : "SCALAR",
+--              "name" : "Int",
+--              "ofType" : null
+--            }
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+--        }, {
+--          "name" : "_deleted",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Boolean",
+--            "ofType" : null
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+--        }, {
+--          "name" : "_lastChangedAt",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "NON_NULL",
+--            "name" : null,
+--            "ofType" : {
+--              "kind" : "SCALAR",
+--              "name" : "AWSTimestamp",
+--              "ofType" : null
+--            }
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+          }, {
+            "name" : "createdAt",
+            "description" : null,
+@@@ -1634,17 -1634,17 +1438,6 @@@
+            },
+            "isDeprecated" : false,
+            "deprecationReason" : null
+--        }, {
+--          "name" : "startedAt",
+--          "description" : null,
+--          "args" : [ ],
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "AWSTimestamp",
+--            "ofType" : null
+--          },
+--          "isDeprecated" : false,
+--          "deprecationReason" : null
+          } ],
+          "inputFields" : null,
+          "interfaces" : [ ],
+@@@ -2134,15 -2134,15 +1927,6 @@@
+              }
+            },
+            "defaultValue" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Int",
+--            "ofType" : null
+--          },
+--          "defaultValue" : null
+          } ],
+          "interfaces" : null,
+          "enumValues" : null,
+@@@ -2411,15 -2411,15 +2195,6 @@@
+              "ofType" : null
+            },
+            "defaultValue" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Int",
+--            "ofType" : null
+--          },
+--          "defaultValue" : null
+          } ],
+          "interfaces" : null,
+          "enumValues" : null,
+@@@ -2442,15 -2442,15 +2217,6 @@@
+              }
+            },
+            "defaultValue" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Int",
+--            "ofType" : null
+--          },
+--          "defaultValue" : null
+          } ],
+          "interfaces" : null,
+          "enumValues" : null,
+@@@ -2544,15 -2544,15 +2310,6 @@@
+              }
+            },
+            "defaultValue" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Int",
+--            "ofType" : null
+--          },
+--          "defaultValue" : null
+          } ],
+          "interfaces" : null,
+          "enumValues" : null,
+@@@ -2749,15 -2749,15 +2506,6 @@@
+              }
+            },
+            "defaultValue" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Int",
+--            "ofType" : null
+--          },
+--          "defaultValue" : null
+          } ],
+          "interfaces" : null,
+          "enumValues" : null,
+@@@ -2780,15 -2780,15 +2528,6 @@@
+              }
+            },
+            "defaultValue" : null
+--        }, {
+--          "name" : "_version",
+--          "description" : null,
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "Int",
+--            "ofType" : null
+--          },
+--          "defaultValue" : null
+          } ],
+          "interfaces" : null,
+          "enumValues" : null,
+@@@ -2821,6 -2821,6 +2560,54 @@@
+            },
+            "isDeprecated" : false,
+            "deprecationReason" : null
+++        }, {
+++          "name" : "onDeleteFacilityByUserId",
+++          "description" : null,
+++          "args" : [ {
+++            "name" : "userID",
+++            "description" : null,
+++            "type" : {
+++              "kind" : "NON_NULL",
+++              "name" : null,
+++              "ofType" : {
+++                "kind" : "SCALAR",
+++                "name" : "String",
+++                "ofType" : null
+++              }
+++            },
+++            "defaultValue" : null
+++          } ],
+++          "type" : {
+++            "kind" : "OBJECT",
+++            "name" : "Facility",
+++            "ofType" : null
+++          },
+++          "isDeprecated" : false,
+++          "deprecationReason" : null
+++        }, {
+++          "name" : "onUpdateFacilityByUserId",
+++          "description" : null,
+++          "args" : [ {
+++            "name" : "userID",
+++            "description" : null,
+++            "type" : {
+++              "kind" : "NON_NULL",
+++              "name" : null,
+++              "ofType" : {
+++                "kind" : "SCALAR",
+++                "name" : "String",
+++                "ofType" : null
+++              }
+++            },
+++            "defaultValue" : null
+++          } ],
+++          "type" : {
+++            "kind" : "OBJECT",
+++            "name" : "Facility",
+++            "ofType" : null
+++          },
+++          "isDeprecated" : false,
+++          "deprecationReason" : null
+          }, {
+            "name" : "onCreateFacility",
+            "description" : null,
+@@@ -3741,6 -3741,6 +3528,23 @@@
+          "onOperation" : false,
+          "onFragment" : false,
+          "onField" : false
+++      }, {
+++        "name" : "deprecated",
+++        "description" : null,
+++        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+++        "args" : [ {
+++          "name" : "reason",
+++          "description" : null,
+++          "type" : {
+++            "kind" : "SCALAR",
+++            "name" : "String",
+++            "ofType" : null
+++          },
+++          "defaultValue" : "\"No longer supported\""
+++        } ],
+++        "onOperation" : false,
+++        "onFragment" : false,
+++        "onField" : false
+        }, {
+          "name" : "aws_api_key",
+          "description" : "Tells the service this field/object has access authorized by an API key.",
+@@@ -3836,23 -3836,23 +3640,6 @@@
+          "onOperation" : false,
+          "onFragment" : false,
+          "onField" : false
+--      }, {
+--        "name" : "deprecated",
+--        "description" : null,
+--        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+--        "args" : [ {
+--          "name" : "reason",
+--          "description" : null,
+--          "type" : {
+--            "kind" : "SCALAR",
+--            "name" : "String",
+--            "ofType" : null
+--          },
+--          "defaultValue" : "\"No longer supported\""
+--        } ],
+--        "onOperation" : false,
+--        "onFragment" : false,
+--        "onField" : false
+        } ]
+      }
+    }
+diff --cc src/graphql/subscriptions.js
+index 7c89782,7c89782..c4a27bc
+--- a/src/graphql/subscriptions.js
++++ b/src/graphql/subscriptions.js
+@@@ -16,9 -16,9 +16,46 @@@ export const onCreateFacilityByUserId 
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+++      createdAt
+++      updatedAt
+++    }
+++  }
+++`;
+++export const onDeleteFacilityByUserId = /* GraphQL */ `
+++  subscription OnDeleteFacilityByUserId($userID: String!) {
+++    onDeleteFacilityByUserId(userID: $userID) {
+++      id
+++      name
+++      type
+++      address
+++      area
+++      size
+++      rate
+++      description
+++      opening_hrs
+++      closing_hrs
+++      operating_days
+++      userID
+++      createdAt
+++      updatedAt
+++    }
+++  }
+++`;
+++export const onUpdateFacilityByUserId = /* GraphQL */ `
+++  subscription OnUpdateFacilityByUserId($userID: String!) {
+++    onUpdateFacilityByUserId(userID: $userID) {
+++      id
+++      name
+++      type
+++      address
+++      area
+++      size
+++      rate
+++      description
+++      opening_hrs
+++      closing_hrs
+++      operating_days
+++      userID
+        createdAt
+        updatedAt
+      }
+@@@ -39,9 -39,9 +76,6 @@@ export const onCreateFacility = /* Grap
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+      }
+@@@ -62,9 -62,9 +96,6 @@@ export const onUpdateFacility = /* Grap
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+      }
+@@@ -85,9 -85,9 +116,6 @@@ export const onDeleteFacility = /* Grap
+        closing_hrs
+        operating_days
+        userID
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+      }
+@@@ -104,9 -104,9 +132,6 @@@ export const onCreateUser = /* GraphQL 
+        contact
+        address
+        role
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+        Facilities {
+@@@ -123,14 -123,14 +148,10 @@@
+            closing_hrs
+            operating_days
+            userID
+--          _version
+--          _deleted
+--          _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+--        startedAt
+        }
+      }
+    }
+@@@ -146,9 -146,9 +167,6 @@@ export const onUpdateUser = /* GraphQL 
+        contact
+        address
+        role
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+        Facilities {
+@@@ -165,14 -165,14 +183,10 @@@
+            closing_hrs
+            operating_days
+            userID
+--          _version
+--          _deleted
+--          _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+--        startedAt
+        }
+      }
+    }
+@@@ -188,9 -188,9 +202,6 @@@ export const onDeleteUser = /* GraphQL 
+        contact
+        address
+        role
+--      _version
+--      _deleted
+--      _lastChangedAt
+        createdAt
+        updatedAt
+        Facilities {
+@@@ -207,14 -207,14 +218,10 @@@
+            closing_hrs
+            operating_days
+            userID
+--          _version
+--          _deleted
+--          _lastChangedAt
+            createdAt
+            updatedAt
+          }
+          nextToken
+--        startedAt
+        }
+      }
+    }
+diff --cc src/pages/partner/AddFacilityModal.js
+index 1ab2ceb,1ab2ceb..292c445
+--- a/src/pages/partner/AddFacilityModal.js
++++ b/src/pages/partner/AddFacilityModal.js
+@@@ -3,6 -3,6 +3,11 @@@ import { Dialog, Transition } from "@he
+  import { Fragment } from "react";
+  import { useState } from "react";
+  import * as mutations from "../../graphql/mutations";
+++import { CheckCircleIcon } from "@heroicons/react/outline";
+++import "rc-time-picker/assets/index.css";
+++import React from "react";
+++import moment from "moment";
+++import TimePicker from "rc-time-picker";
+  
+  function AddFacilityModal(props) {
+    const [name, setName] = useState("");
+@@@ -10,12 -10,12 +15,13 @@@
+    const [address, setAddress] = useState("");
+    const [area, setArea] = useState("");
+    const [size, setSize] = useState("");
+--  const [operatingFrom, setOperatingFrom] = useState("");
+--  const [operatingTo, setOperatingTo] = useState("");
+++  const [operatingFrom, setOperatingFrom] = useState("00:00");
+++  const [operatingTo, setOperatingTo] = useState("00:00");
+    const [operatingDays, setOperatingDays] = useState([]);
+    const [rate, setRate] = useState("");
+    const [description, setDescription] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+++  const [addedModal, setAddedModalOpen] = useState(false);
+  
+    //Change event for operating days checkboxes
+    const onChangeCheckbox = (event) => {
+@@@ -34,10 -34,10 +40,13 @@@
+      if (!operatingDays.length) {
+        setErrorMsg("Operation Days cannot be empty!");
+        return false;
+--    } else if (
+--      document.getElementById("operating-from").value >=
+--      document.getElementById("operating-to").value
+--    ) {
+++    } else if (operatingFrom.trim() == "") {
+++      setErrorMsg("Operation Hrs (From) cannot be empty!");
+++      return false;
+++    } else if (operatingTo.trim() == "") {
+++      setErrorMsg("Operation Hrs (To) cannot be empty!");
+++      return false;
+++    } else if (operatingFrom >= operatingTo) {
+        setErrorMsg("Operation Hrs (From) should be before Operation Hrs (To)");
+        return false;
+      }
+@@@ -67,16 -67,16 +76,19 @@@
+            userID: sessionStorage.getItem("username"),
+          };
+  
+--        console.log(
+--          "Facility details " + JSON.stringify(facilityDetails)
+--        );
+++        console.log("Facility details " + JSON.stringify(facilityDetails));
+  
+          //Call api to add facility
+          const response = await API.graphql({
+            query: mutations.createFacility,
+            variables: { input: facilityDetails },
+          });
+++
+          console.log("Add facility response " + JSON.stringify(response));
+++        props.setModalOpen(false); //close add facility modal
+++        setTimeout(() => {
+++          setAddedModalOpen(true); //open added modal
+++        }, 1000);
+        }
+      } catch (error) {
+        setErrorMsg("Error encounterd. Please contact administrator.");
+@@@ -84,414 -84,414 +96,502 @@@
+    };
+  
+    return (
+--    <Transition.Root show={props.isOpen} as={Fragment}>
+--      <Dialog
+--        as="div"
+--        auto-reopen="true"
+--        className="fixed z-10 inset-0 overflow-y-auto"
+--        onClose={() => props.setModalOpen(true)}
+--      >
+--        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+--          <Transition.Child
+--            as={Fragment}
+--            enter="ease-out duration-300"
+--            enterFrom="opacity-0"
+--            enterTo="opacity-100"
+--            leave="ease-in duration-200"
+--            leaveFrom="opacity-100"
+--            leaveTo="opacity-0"
+--          >
+--            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+--          </Transition.Child>
+--
+--          {/* This element is to trick the browser into centering the modal contents. */}
+--          <span
+--            className="hidden sm:inline-block sm:align-middle sm:h-screen"
+--            aria-hidden="true"
+--          >
+--            &#8203;
+--          </span>
+--          <Transition.Child
+--            as={Fragment}
+--            enter="ease-out duration-300"
+--            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+--            enterTo="opacity-100 translate-y-0 sm:scale-100"
+--            leave="ease-in duration-200"
+--            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+--            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+--          >
+--            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+--              <div className="flex flex-row justify-between p-4 bg-gray-100 border-b  rounded-tl-lg rounded-tr-lg">
+--                <p className="font-semibold text-gray-800">Add Facility</p>
+--                <svg
+--                  onClick={() => props.setModalOpen(false)}
+--                  className="w-6 h-6 cursor-pointer"
+--                  fill="none"
+--                  stroke="currentColor"
+--                  viewBox="0 0 24 24"
+--                  xmlns="http://www.w3.org/2000/svg"
+--                >
+--                  <path
+--                    strokeLinecap="round"
+--                    strokeLinejoin="round"
+--                    strokeWidth="2"
+--                    d="M6 18L18 6M6 6l12 12"
+--                  ></path>
+--                </svg>
+--              </div>
+++    <div>
+++      <Transition.Root show={props.isOpen} as={Fragment}>
+++        <Dialog
+++          as="div"
+++          auto-reopen="true"
+++          className="fixed z-10 inset-0 overflow-y-auto"
+++          onClose={() => props.setModalOpen(true)}
+++        >
+++          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+++            <Transition.Child
+++              as={Fragment}
+++              enter="ease-out duration-300"
+++              enterFrom="opacity-0"
+++              enterTo="opacity-100"
+++              leave="ease-in duration-200"
+++              leaveFrom="opacity-100"
+++              leaveTo="opacity-0"
+++            >
+++              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+++            </Transition.Child>
+  
+--              <div className="col-span-6">
+--                {/* error message */}
+--                {errorMsg && (
+--                  <div
+--                    className="bg-red-100 borderborder-red-400 text-red-700 text-xs text-center px-4 py-3  mx-4 my-2 rounded relative"
+--                    role="alert"
+++            {/* This element is to trick the browser into centering the modal contents. */}
+++            <span
+++              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+++              aria-hidden="true"
+++            >
+++              &#8203;
+++            </span>
+++            <Transition.Child
+++              as={Fragment}
+++              enter="ease-out duration-300"
+++              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+++              enterTo="opacity-100 translate-y-0 sm:scale-100"
+++              leave="ease-in duration-200"
+++              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+++              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+++            >
+++              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+++                <div className="flex flex-row justify-between p-4 bg-gray-100 border-b  rounded-tl-lg rounded-tr-lg">
+++                  <p className="font-semibold text-gray-800">Add Facility</p>
+++                  <svg
+++                    onClick={() => props.setModalOpen(false)}
+++                    className="w-6 h-6 cursor-pointer"
+++                    fill="none"
+++                    stroke="currentColor"
+++                    viewBox="0 0 24 24"
+++                    xmlns="http://www.w3.org/2000/svg"
+                    >
+--                    <span className="block sm:inline">{errorMsg}</span>
+--                  </div>
+--                )}
+--              </div>
+++                    <path
+++                      strokeLinecap="round"
+++                      strokeLinejoin="round"
+++                      strokeWidth="2"
+++                      d="M6 18L18 6M6 6l12 12"
+++                    ></path>
+++                  </svg>
+++                </div>
+  
+--              <div className="mt-5 md:mt-0 md:col-span-2">
+--                <form onSubmit={handleSubmit}>
+--                  <div className="shadow overflow-hidden sm:rounded-md">
+--                    <div className="px-4 py-5 bg-white sm:p-6">
+--                      <div className="grid grid-cols-6 gap-6">
+--                        <div className="col-span-6">
+--                          <label className="block text-sm font-medium text-gray-700">
+--                            Facility photo
+--                          </label>
+--                          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+--                            <div className="space-y-1 text-center">
+--                              <svg
+--                                className="mx-auto h-12 w-12 text-gray-400"
+--                                stroke="currentColor"
+--                                fill="none"
+--                                viewBox="0 0 48 48"
+--                                aria-hidden="true"
+--                              >
+--                                <path
+--                                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+--                                  strokeWidth={2}
+--                                  strokeLinecap="round"
+--                                  strokeLinejoin="round"
+--                                />
+--                              </svg>
+--                              <div className="flex text-sm text-gray-600">
+--                                <label
+--                                  htmlFor="file-upload"
+--                                  className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500"
+++                <div className="col-span-6">
+++                  {/* error message */}
+++                  {errorMsg && (
+++                    <div
+++                      className="bg-red-100 borderborder-red-400 text-red-700 text-xs text-center px-4 py-3  mx-4 my-2 rounded relative"
+++                      role="alert"
+++                    >
+++                      <span className="block sm:inline">{errorMsg}</span>
+++                    </div>
+++                  )}
+++                </div>
+++
+++                <div className="mt-5 md:mt-0 md:col-span-2">
+++                  <form onSubmit={handleSubmit}>
+++                    <div className="shadow overflow-hidden sm:rounded-md">
+++                      <div className="px-4 py-5 bg-white sm:p-6">
+++                        <div className="grid grid-cols-6 gap-6">
+++                          {/* <div className="col-span-6">
+++                            <label className="block text-sm font-medium text-gray-700">
+++                              Facility photo
+++                            </label>
+++                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+++                              <div className="space-y-1 text-center">
+++                                <svg
+++                                  className="mx-auto h-12 w-12 text-gray-400"
+++                                  stroke="currentColor"
+++                                  fill="none"
+++                                  viewBox="0 0 48 48"
+++                                  aria-hidden="true"
+                                  >
+--                                  <span>Upload a file</span>
+--                                  <input
+--                                    id="file-upload"
+--                                    name="file-upload"
+--                                    type="file"
+--                                    className="sr-only"
+++                                  <path
+++                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+++                                    strokeWidth={2}
+++                                    strokeLinecap="round"
+++                                    strokeLinejoin="round"
+                                    />
+--                                </label>
+--                                <p className="pl-1">or drag and drop</p>
+++                                </svg>
+++                                <div className="flex text-sm text-gray-600">
+++                                  <label
+++                                    htmlFor="file-upload"
+++                                    className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500"
+++                                  >
+++                                    <span>Upload a file</span>
+++                                    <input
+++                                      id="file-upload"
+++                                      name="file-upload"
+++                                      type="file"
+++                                      className="sr-only"
+++                                    />
+++                                  </label>
+++                                  <p className="pl-1">or drag and drop</p>
+++                                </div>
+++                                <p className="text-xs text-gray-500">
+++                                  PNG, JPG, GIF up to 10MB
+++                                </p>
+                                </div>
+--                              <p className="text-xs text-gray-500">
+--                                PNG, JPG, GIF up to 10MB
+--                              </p>
+                              </div>
+--                          </div>
+--                        </div>
+--
+--                        <div className="col-span-6 sm:col-span-3">
+--                          <label
+--                            htmlFor="facility-name"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Facility Name
+--                          </label>
+--                          <input
+--                            type="text"
+--                            required
+--                            onChange={(e) => setName(e.target.value)}
+--                            name="facility-name"
+--                            id="facility-name"
+--                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+--                          />
+--                        </div>
+--
+--                        <div className="col-span-6 sm:col-span-3">
+--                          <label
+--                            htmlFor="facility-type"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Facility Type
+--                          </label>
+--                          <select
+--                            id="facility-type"
+--                            onChange={(e) => setType(e.target.value)}
+--                            name="facility-type"
+--                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+--                          >
+--                            <option>Meeting Room</option>
+--                            <option>Sport Venues</option>
+--                            <option>Desk Booking</option>
+--                            <option>Professional Studios</option>
+--                            <option>Coworking spaces</option>
+--                            <option>Community Facilities</option>
+--                          </select>
+--                        </div>
+--
+--                        <div className="col-span-6">
+--                          <label
+--                            htmlFor="street-address"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Address
+--                          </label>
+--                          <input
+--                            type="text"
+--                            required
+--                            onChange={(e) => setAddress(e.target.value)}
+--                            name="street-address"
+--                            id="street-address"
+--                            autoComplete="street-address"
+--                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+--                          />
+--                        </div>
+--
+--                        <div className="col-span-6 sm:col-span-3">
+--                          <label
+--                            htmlFor="area-name"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Area
+--                          </label>
+--                          <input
+--                            type="text"
+--                            required
+--                            onChange={(e) => setArea(e.target.value)}
+--                            name="area-name"
+--                            id="area-name"
+--                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+--                          />
+--                        </div>
+++                          </div> */}
+  
+--                        <div className="col-span-6 sm:col-span-3">
+--                          <label
+--                            htmlFor="rate-hr"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Estimated Room Size (Pax)
+--                          </label>
+--                          <input
+--                            type="number"
+--                            required
+--                            onChange={(e) => setSize(e.target.value)}
+--                            name="rate-hr"
+--                            id="rate-hr"
+--                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+--                          />
+--                        </div>
+--
+--                        <div className="col-span-6 sm:col-span-3">
+--                          <label
+--                            htmlFor="operating-from"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Operating Hours (From)
+--                          </label>
+--                          <input
+--                            type="time"
+--                            required
+--                            onChange={(e) => setOperatingFrom(e.target.value)}
+--                            name="operating-from"
+--                            id="operating-from"
+--                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+--                          />
+--                        </div>
+--
+--                        <div className="col-span-6 sm:col-span-3">
+--                          <label
+--                            htmlFor="operating-to"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Operating Hours (To)
+--                          </label>
+--                          <input
+--                            type="time"
+--                            required
+--                            onChange={(e) => setOperatingTo(e.target.value)}
+--                            name="operating-to"
+--                            id="operating-to"
+--                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+--                          />
+--                        </div>
+--
+--                        <div className="col-span-6">
+--                          <label className="block text-sm font-medium text-gray-700">
+--                            Operating Days
+--                          </label>
+--
+--                          <div className="flex mt-2 justify-evenly">
+++                          <div className="col-span-6 sm:col-span-3">
+                              <label
+--                              htmlFor="mon"
+++                              htmlFor="facility-name"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+--                              Mon
+++                              Facility Name
+                              </label>
+                              <input
+--                              type="checkbox"
+--                              name="mon"
+--                              value="Mon"
+--                              onChange={onChangeCheckbox}
+--                              id="mon"
+--                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              type="text"
+++                              required
+++                              onChange={(e) => setName(e.target.value)}
+++                              name="facility-name"
+++                              id="facility-name"
+++                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+++                          </div>
+  
+++                          <div className="col-span-6 sm:col-span-3">
+                              <label
+--                              htmlFor="tue"
+++                              htmlFor="facility-type"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+--                              Tue
+++                              Facility Type
+                              </label>
+--                            <input
+--                              type="checkbox"
+--                              value="Tue"
+--                              onChange={onChangeCheckbox}
+--                              name="tue"
+--                              id="tue"
+--                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+--                            />
+++                            <select
+++                              id="facility-type"
+++                              onChange={(e) => setType(e.target.value)}
+++                              name="facility-type"
+++                              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+++                            >
+++                              <option>Meeting Room</option>
+++                              <option>Sport Venues</option>
+++                              <option>Desk Booking</option>
+++                              <option>Professional Studios</option>
+++                              <option>Coworking spaces</option>
+++                              <option>Community Facilities</option>
+++                            </select>
+++                          </div>
+  
+++                          <div className="col-span-6">
+                              <label
+--                              htmlFor="wed"
+++                              htmlFor="street-address"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+--                              Wed
+++                              Address
+                              </label>
+                              <input
+--                              type="checkbox"
+--                              value="Wed"
+--                              onChange={onChangeCheckbox}
+--                              name="wed"
+--                              id="wed"
+--                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              type="text"
+++                              required
+++                              onChange={(e) => setAddress(e.target.value)}
+++                              name="street-address"
+++                              id="street-address"
+++                              autoComplete="street-address"
+++                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+++                          </div>
+  
+++                          <div className="col-span-6 sm:col-span-3">
+                              <label
+--                              htmlFor="thur"
+++                              htmlFor="area-name"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+--                              Thur
+++                              Area
+                              </label>
+                              <input
+--                              type="checkbox"
+--                              value="Thur"
+--                              onChange={onChangeCheckbox}
+--                              name="thur"
+--                              id="thur"
+--                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              type="text"
+++                              required
+++                              onChange={(e) => setArea(e.target.value)}
+++                              name="area-name"
+++                              id="area-name"
+++                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+++                          </div>
+  
+++                          <div className="col-span-6 sm:col-span-3">
+                              <label
+--                              htmlFor="fri"
+++                              htmlFor="rate-hr"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+--                              Fri
+++                              Estimated Room Size (Pax)
+                              </label>
+                              <input
+--                              type="checkbox"
+--                              value="Fri"
+--                              onChange={onChangeCheckbox}
+--                              name="fri"
+--                              id="fri"
+--                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              type="number"
+++                              required
+++                              onChange={(e) => setSize(e.target.value)}
+++                              name="rate-hr"
+++                              id="rate-hr"
+++                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+++                          </div>
+  
+++                          <div className="col-span-6 sm:col-span-3">
+                              <label
+--                              htmlFor="sat"
+++                              htmlFor="operating-from"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+--                              Sat
+++                              Operating Hours (From)
+                              </label>
+--                            <input
+--                              type="checkbox"
+--                              value="Sat"
+--                              onChange={onChangeCheckbox}
+--                              name="sat"
+--                              id="sat"
+--                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                            <TimePicker
+++                              className="mt-1"
+++                              onChange={(value) => {
+++                                if (value == null) {
+++                                  setOperatingFrom("");
+++                                } else {
+++                                  setOperatingFrom(value.format("HH:mm"));
+++                                }
+++                              }}
+++                              defaultValue={moment().hour(0).minute(0)}
+++                              showSecond={false}
+++                              minuteStep={30}
+                              />
+++                          </div>
+  
+++                          <div className="col-span-6 sm:col-span-3">
+                              <label
+--                              htmlFor="sun"
+++                              htmlFor="operating-to"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+--                              Sun
+++                              Operating Hours (To)
+                              </label>
+--                            <input
+--                              type="checkbox"
+--                              value="Mon"
+--                              onChange={onChangeCheckbox}
+--                              name="sun"
+--                              id="sun"
+--                              className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                            <TimePicker
+++                              className="mt-1"
+++                              onChange={(value) => {
+++                                if (value == null) {
+++                                  setOperatingTo("");
+++                                } else {
+++                                  setOperatingTo(value.format("HH:mm"));
+++                                }
+++                              }}
+++                              defaultValue={moment().hour(0).minute(0)}
+++                              showSecond={false}
+++                              minuteStep={30}
+                              />
+                            </div>
+--                        </div>
+  
+--                        <div className="col-span-6 sm:col-span-3">
+--                          <label
+--                            htmlFor="rate-hr"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Rate/Hr
+--                          </label>
+--                          <input
+--                            type="number"
+--                            required
+--                            onChange={(e) => setRate(e.target.value)}
+--                            name="rate-hr"
+--                            id="rate-hr"
+--                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+--                          />
+--                        </div>
+++                          <div className="col-span-6">
+++                            <label className="block text-sm font-medium text-gray-700">
+++                              Operating Days
+++                            </label>
+++
+++                            <div className="flex mt-2 justify-evenly">
+++                              <label
+++                                htmlFor="mon"
+++                                className="block text-sm font-medium text-gray-700"
+++                              >
+++                                Mon
+++                              </label>
+++                              <input
+++                                type="checkbox"
+++                                name="mon"
+++                                value="Mon"
+++                                onChange={onChangeCheckbox}
+++                                id="mon"
+++                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              />
+++
+++                              <label
+++                                htmlFor="tue"
+++                                className="block text-sm font-medium text-gray-700"
+++                              >
+++                                Tue
+++                              </label>
+++                              <input
+++                                type="checkbox"
+++                                value="Tue"
+++                                onChange={onChangeCheckbox}
+++                                name="tue"
+++                                id="tue"
+++                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              />
+++
+++                              <label
+++                                htmlFor="wed"
+++                                className="block text-sm font-medium text-gray-700"
+++                              >
+++                                Wed
+++                              </label>
+++                              <input
+++                                type="checkbox"
+++                                value="Wed"
+++                                onChange={onChangeCheckbox}
+++                                name="wed"
+++                                id="wed"
+++                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              />
+++
+++                              <label
+++                                htmlFor="thur"
+++                                className="block text-sm font-medium text-gray-700"
+++                              >
+++                                Thur
+++                              </label>
+++                              <input
+++                                type="checkbox"
+++                                value="Thur"
+++                                onChange={onChangeCheckbox}
+++                                name="thur"
+++                                id="thur"
+++                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              />
+++
+++                              <label
+++                                htmlFor="fri"
+++                                className="block text-sm font-medium text-gray-700"
+++                              >
+++                                Fri
+++                              </label>
+++                              <input
+++                                type="checkbox"
+++                                value="Fri"
+++                                onChange={onChangeCheckbox}
+++                                name="fri"
+++                                id="fri"
+++                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              />
+++
+++                              <label
+++                                htmlFor="sat"
+++                                className="block text-sm font-medium text-gray-700"
+++                              >
+++                                Sat
+++                              </label>
+++                              <input
+++                                type="checkbox"
+++                                value="Sat"
+++                                onChange={onChangeCheckbox}
+++                                name="sat"
+++                                id="sat"
+++                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              />
+++
+++                              <label
+++                                htmlFor="sun"
+++                                className="block text-sm font-medium text-gray-700"
+++                              >
+++                                Sun
+++                              </label>
+++                              <input
+++                                type="checkbox"
+++                                value="Sun"
+++                                onChange={onChangeCheckbox}
+++                                name="sun"
+++                                id="sun"
+++                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+++                              />
+++                            </div>
+++                          </div>
+  
+--                        <div className="col-span-6">
+--                          <label
+--                            htmlFor="about"
+--                            className="block text-sm font-medium text-gray-700"
+--                          >
+--                            Description
+--                          </label>
+--                          <div className="mt-1">
+--                            <textarea
+--                              id="about"
+++                          <div className="col-span-6 sm:col-span-3">
+++                            <label
+++                              htmlFor="rate-hr"
+++                              className="block text-sm font-medium text-gray-700"
+++                            >
+++                              Rate/Hr
+++                            </label>
+++                            <input
+++                              type="number"
+                                required
+--                              name="about"
+--                              onChange={(e) => setDescription(e.target.value)}
+--                              rows={3}
+--                              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+--                              placeholder="Brief description about the facility."
+--                              defaultValue={""}
+++                              onChange={(e) => setRate(e.target.value)}
+++                              name="rate-hr"
+++                              id="rate-hr"
+++                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+                            </div>
+++
+++                          <div className="col-span-6">
+++                            <label
+++                              htmlFor="about"
+++                              className="block text-sm font-medium text-gray-700"
+++                            >
+++                              Description
+++                            </label>
+++                            <div className="mt-1">
+++                              <textarea
+++                                id="about"
+++                                required
+++                                name="about"
+++                                onChange={(e) => setDescription(e.target.value)}
+++                                rows={3}
+++                                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+++                                placeholder="Brief description about the facility."
+++                                defaultValue={""}
+++                              />
+++                            </div>
+++                          </div>
+                          </div>
+                        </div>
+++                      <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+++                        <button
+++                          type="submit"
+++                          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+++                        >
+++                          Add
+++                        </button>
+++                      </div>
+++                    </div>
+++                  </form>
+++                </div>
+++              </div>
+++            </Transition.Child>
+++          </div>
+++        </Dialog>
+++      </Transition.Root>
+++
+++      {/* Modal for showing added successfully */}
+++      <Transition.Root show={addedModal} as={Fragment}>
+++        <Dialog
+++          as="div"
+++          auto-reopen="true"
+++          className="fixed z-10 inset-0 overflow-y-auto"
+++          onClose={() => setAddedModalOpen(true)}
+++        >
+++          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+++            <Transition.Child
+++              as={Fragment}
+++              enter="ease-out duration-300"
+++              enterFrom="opacity-0"
+++              enterTo="opacity-100"
+++              leave="ease-in duration-200"
+++              leaveFrom="opacity-100"
+++              leaveTo="opacity-0"
+++            >
+++              <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+++            </Transition.Child>
+++
+++            {/* This element is to trick the browser into centering the modal contents. */}
+++            <span
+++              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+++              aria-hidden="true"
+++            >
+++              &#8203;
+++            </span>
+++            <Transition.Child
+++              as={Fragment}
+++              enter="ease-out duration-300"
+++              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+++              enterTo="opacity-100 translate-y-0 sm:scale-100"
+++              leave="ease-in duration-200"
+++              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+++              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+++            >
+++              <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+++                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+++                  <div className="sm:flex sm:items-start">
+++                    <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+++                      <CheckCircleIcon
+++                        className="h-6 w-6 text-green-600"
+++                        aria-hidden="true"
+++                      />
+                      </div>
+--                    <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+--                      <button
+--                        type="submit"
+--                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+++                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+++                      <Dialog.Title
+++                        as="h3"
+++                        className="text-lg leading-6 font-medium text-gray-900"
+                        >
+--                        Add
+--                      </button>
+++                        Add Facility
+++                      </Dialog.Title>
+++                      <div className="mt-2">
+++                        <p className="text-sm text-gray-500">
+++                          Facility has been added successfully!
+++                        </p>
+++                      </div>
+                      </div>
+                    </div>
+--                </form>
+++                </div>
+++                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+++                  <button
+++                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 sm:ml-3 sm:w-auto sm:text-sm"
+++                    type="button"
+++                    onClick={() => setAddedModalOpen(false)}
+++                  >
+++                    OK
+++                  </button>
+++                </div>
+                </div>
+--            </div>
+--          </Transition.Child>
+--        </div>
+--      </Dialog>
+--    </Transition.Root>
+++            </Transition.Child>
+++          </div>
+++        </Dialog>
+++      </Transition.Root>
+++    </div>
+    );
+  }
+  
+diff --cc src/pages/partner/ManageFacility.js
+index 5b6e8b0,5b6e8b0..10296eb
+--- a/src/pages/partner/ManageFacility.js
++++ b/src/pages/partner/ManageFacility.js
+@@@ -1,6 -1,6 +1,8 @@@
+  import Footer from "../../components/layout/Footer";
+  import Navbar from "../../components/layout/navbar/PartnerNavbar";
+  import AddFacilityModal from "../partner/AddFacilityModal";
+++import DeleteFacilityModal from "../partner/DeleteFacilityModal";
+++import EditFacilityModal from "../partner/EditFacilityModal";
+  import { useState, useEffect } from "react";
+  import * as queries from "../../graphql/queries";
+  import { API } from "@aws-amplify/api";
+@@@ -49,9 -49,9 +51,13 @@@ const booking = 
+  ];
+  
+  export default function ManageFacility() {
+--  const [isModalOpen, setModalOpen] = useState(false);
+++  const [isAddModalOpen, setAddModalOpen] = useState(false);
+++  const [isEditModalOpen, setEditModalOpen] = useState(false);
+++  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+++  const [deleteID, setDeleteID] = useState("");
+++  const [selectedFacility, setSelectedFacility] = useState("");
+    const [facilityList, setFacilityList] = useState([]);
+--  let subscription;
+++  let addSubscription, delSubscription, editSubscription;
+  
+    //Retrieve user's facility list when page onload
+    useEffect(() => {
+@@@ -59,21 -59,21 +65,31 @@@
+        const getFacility = await API.graphql({
+          query: queries.listFacilities,
+          variables: {
+--          filter: { userID: { eq: sessionStorage.getItem("username") } },
+++          filter: {
+++            userID: {
+++              eq: sessionStorage.getItem("username"),
+++            },
+++          },
+          },
+        });
+        setFacilityList(getFacility.data.listFacilities.items);
+        console.log("List of facilities: " + JSON.stringify(getFacility));
+      }
+      getFacilityList();
+--    facilitySubscription();
+++    addFacilitySubscription();
+++    delFacilitySubscription();
+++    editFacilitySubscription();
+  
+--    return () => subscription.unsubscribe();
+++    return () => {
+++      addSubscription.unsubscribe();
+++      delSubscription.unsubscribe();
+++      editSubscription.unsubscribe();
+++    };
+    }, []);
+  
+    // Subscribe to facility creation created by user
+--  function facilitySubscription() {
+--    subscription = API.graphql({
+++  function addFacilitySubscription() {
+++    addSubscription = API.graphql({
+        query: subscriptions.onCreateFacilityByUserId,
+        variables: { userID: sessionStorage.getItem("username") },
+      }).subscribe({
+@@@ -87,6 -87,6 +103,42 @@@
+      });
+    }
+  
+++  // Subscribe to facility deletion by user
+++  function delFacilitySubscription() {
+++    delSubscription = API.graphql({
+++      query: subscriptions.onDeleteFacilityByUserId,
+++      variables: { userID: sessionStorage.getItem("username") },
+++    }).subscribe({
+++      //Remove deleted facility from existing facility list
+++      next: (response) => {
+++        setFacilityList((array) =>
+++          array.filter(
+++            (item) =>
+++              item.id !== response.value.data.onDeleteFacilityByUserId.id
+++          )
+++        );
+++      },
+++      error: (error) => console.warn(error),
+++    });
+++  }
+++
+++  // Subscribe to facility edited by user
+++  function editFacilitySubscription() {
+++    editSubscription = API.graphql({
+++      query: subscriptions.onUpdateFacilityByUserId,
+++      variables: { userID: sessionStorage.getItem("username") },
+++    }).subscribe({
+++      //update modified facility from existing facility list
+++      next: (response) =>
+++        setFacilityList(oldArray => {
+++          const index = oldArray.findIndex(item => item.id ===  response.value.data.onUpdateFacilityByUserId.id);
+++          oldArray[index] = response.value.data.onUpdateFacilityByUserId;
+++          return ([...oldArray]);
+++        }),
+++      error: (error) => console.warn(error),
+++    });
+++  }
+++
+    return (
+      <div>
+        <Navbar />
+@@@ -96,7 -96,7 +148,20 @@@
+          </div>
+        </header>
+        <div className="bg-gray-50 mt-1">
+--        <AddFacilityModal isOpen={isModalOpen} setModalOpen={setModalOpen} />
+++        <AddFacilityModal
+++          isOpen={isAddModalOpen}
+++          setModalOpen={setAddModalOpen}
+++        />
+++        <DeleteFacilityModal
+++          isOpen={isDeleteModalOpen}
+++          setModalOpen={setDeleteModalOpen}
+++          deleteID={deleteID}
+++        />
+++        <EditFacilityModal
+++          isOpen={isEditModalOpen}
+++          setModalOpen={setEditModalOpen}
+++          facility={selectedFacility}
+++        />
+          {/* Body Content */}
+          <div className="container mx-auto px-6 sm:px-12 py-6">
+            {/* Facility Table */}
+@@@ -110,7 -110,7 +175,7 @@@
+                    <div className="float-right block">
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex"
+--                      onClick={() => setModalOpen(true)}
+++                      onClick={() => setAddModalOpen(true)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+@@@ -169,14 -169,14 +234,14 @@@
+                          <tr key={facility.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+--                              <div className="flex-shrink-0 h-10 w-10">
+++                              {/* <div className="flex-shrink-0 h-10 w-10">
+                                  <img
+                                    className="h-10 w-10 rounded-full"
+                                    src={facility.image}
+                                    alt=""
+                                  />
+--                              </div>
+--                              <div className="ml-4">
+++                              </div> */}
+++                              <div>
+                                  <div className="text-sm font-medium text-gray-900">
+                                    {facility.name}
+                                  </div>
+@@@ -205,11 -205,11 +270,24 @@@
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <a
+--                              href="#"
+--                              className="text-indigo-600 hover:text-indigo-900"
+++                              onClick={() => {
+++                                setEditModalOpen(true);
+++                                setSelectedFacility(facility);
+++                              }}
+++                              className="text-indigo-600 hover:text-indigo-900 mr-7 cursor-pointer"
+                              >
+                                Edit
+                              </a>
+++
+++                            <a
+++                              onClick={() => {
+++                                setDeleteModalOpen(true);
+++                                setDeleteID(facility.id);
+++                              }}
+++                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+++                            >
+++                              Delete
+++                            </a>
+                            </td>
+                          </tr>
+                        ))}
+import Landing from "./pages/Landing";
+import Error from "./pages/Error";
+import PartnerDashboard from "./pages/partner/PartnerDashboard";
+import ManageFacility from "./pages/partner/ManageFacility";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Login from "./pages/auth/Login";
+import UserRegister from "./pages/auth/UserRegister";
+import PartnerRegister from "./pages/auth/PartnerRegister";
+import Amplify from "aws-amplify";
+import awsconfig from "./aws-exports";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+<<<<<<< HEAD
+import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
+=======
+import UserDashboard from "./pages/user/UserDashboard";
+import FacilitiesList from "./pages/user/FacilitiesList";
+import ManageBooking from "./pages/user/ManageBooking";
+import FacilityDetails from "./pages/user/FacilityDetails";
+>>>>>>> feat-userui
+
+Amplify.configure(awsconfig);
+
+function App() {
+  // const [loggedIn, setLoggedIn] = useState(false);
+
+  // useEffect(() => {
+  //   assessLoggedInState()
+  // }, [])
+
+  // const assessLoggedInState = () => {
+  //   Auth.currentAuthenticatedUser().then(() =>{
+  //     setLoggedIn(true);
+  //   }).catch(() => {
+  //     setLoggedIn(false);
+  //   })
+  // }
+
+  return (
+    <div>
+      <BrowserRouter>
+        <Switch>
+<<<<<<< HEAD
+          <PublicRoute restricted={false} path="/" component={Landing} exact />
+
+          <PrivateRoute path="/dashboard" component={PartnerDashboard} exact />
+
+          <PrivateRoute path="/managefacility" component={ManageFacility} exact />
+
+          <PublicRoute restricted={true} path="/login" component={Login} exact />
+
+          <PublicRoute restricted={false} path="/userregister" component={UserRegister} exact />
+
+          <PublicRoute restricted={false} path="/partnerregister" component={PartnerRegister} exact />
+
+          <PublicRoute restricted={false} path="/forgotpassword" component={ForgotPassword} exact />
+
+          <PublicRoute restricted={false} path="/resetpassword" component={ResetPassword} exact />
+
+          <Route component={Error} />
+=======
+          <Route path="/" exact>
+            <Landing />
+          </Route>
+          <Route path="/error" exact>
+            <Error />
+          </Route>
+          <Route path="/dashboard" exact>
+            <PartnerDashboard />
+          </Route>
+          <Route path="/login" exact>
+            <Login />
+          </Route>
+          <Route path="/userregister" exact>
+            <UserRegister />
+          </Route>
+          <Route path="/partnerregister" exact>
+            <PartnerRegister />
+          </Route>
+          <Route path="/forgotpassword" exact>
+            <ForgotPassword />
+          </Route>
+          <Route path="/resetpassword" exact>
+            <ResetPassword />
+          </Route>
+          <Route path="/userdashboard" exact>
+            <UserDashboard />
+          </Route>
+          <Route path="/facilitieslist" exact>
+            <FacilitiesList />
+          </Route>
+          <Route path="/managebooking" exact>
+            <ManageBooking />
+          </Route>
+          <Route path="/facilitydetails" exact>
+            <FacilityDetails />
+          </Route>
+>>>>>>> feat-userui
+        </Switch>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+export default App;
+import { Schema } from '@aws-amplify/datastore';
+
+export declare const schema: Schema;

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Payment from "./Payment"
+import Payment from "./Payment";
 
 export default function StripeContainer() {
   const stripePromise = loadStripe(
@@ -11,7 +11,7 @@ export default function StripeContainer() {
   return (
     <div>
       <Elements stripe={stripePromise}>
-        <Payment></Payment>
+        <Payment />
       </Elements>
     </div>
   );
