@@ -4,12 +4,14 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'opensans': ["Open Sans"],
+        opensans: ["Open Sans"],
       },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      opacity: ["disabled"]
+    },
   },
-  plugins: [require('@tailwindcss/forms'),],
+  plugins: [require("@tailwindcss/forms")],
 };
