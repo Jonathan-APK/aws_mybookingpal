@@ -265,10 +265,7 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -277,6 +274,7 @@ export const onCreateUser = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -321,10 +319,7 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -333,6 +328,7 @@ export const onUpdateUser = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -377,10 +373,7 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -389,6 +382,7 @@ export const onDeleteUser = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -402,10 +396,7 @@ export const onCreateBooking = /* GraphQL */ `
     onCreateBooking {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -414,6 +405,7 @@ export const onCreateBooking = /* GraphQL */ `
       cust_id
       facilityowner_id
       payment_id
+      slot_id
       createdAt
       updatedAt
       owner {
@@ -452,6 +444,14 @@ export const onCreateBooking = /* GraphQL */ `
           nextToken
         }
       }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
+      }
       payment {
         id
         payment_date
@@ -463,10 +463,7 @@ export const onCreateBooking = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -475,6 +472,7 @@ export const onCreateBooking = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -487,10 +485,7 @@ export const onUpdateBooking = /* GraphQL */ `
     onUpdateBooking {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -499,6 +494,7 @@ export const onUpdateBooking = /* GraphQL */ `
       cust_id
       facilityowner_id
       payment_id
+      slot_id
       createdAt
       updatedAt
       owner {
@@ -537,6 +533,14 @@ export const onUpdateBooking = /* GraphQL */ `
           nextToken
         }
       }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
+      }
       payment {
         id
         payment_date
@@ -548,10 +552,7 @@ export const onUpdateBooking = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -560,6 +561,7 @@ export const onUpdateBooking = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -572,10 +574,7 @@ export const onDeleteBooking = /* GraphQL */ `
     onDeleteBooking {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -584,6 +583,7 @@ export const onDeleteBooking = /* GraphQL */ `
       cust_id
       facilityowner_id
       payment_id
+      slot_id
       createdAt
       updatedAt
       owner {
@@ -622,6 +622,14 @@ export const onDeleteBooking = /* GraphQL */ `
           nextToken
         }
       }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
+      }
       payment {
         id
         payment_date
@@ -633,10 +641,7 @@ export const onDeleteBooking = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -645,10 +650,47 @@ export const onDeleteBooking = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
       }
+    }
+  }
+`;
+export const onCreateSlot = /* GraphQL */ `
+  subscription OnCreateSlot {
+    onCreateSlot {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSlot = /* GraphQL */ `
+  subscription OnUpdateSlot {
+    onUpdateSlot {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSlot = /* GraphQL */ `
+  subscription OnDeleteSlot {
+    onDeleteSlot {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -665,10 +707,7 @@ export const onCreatePayment = /* GraphQL */ `
       booking {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -677,6 +716,7 @@ export const onCreatePayment = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -700,6 +740,14 @@ export const onCreatePayment = /* GraphQL */ `
           contact
           address
           role
+          createdAt
+          updatedAt
+        }
+        slot {
+          id
+          start_time
+          end_time
+          duration
           createdAt
           updatedAt
         }
@@ -729,10 +777,7 @@ export const onUpdatePayment = /* GraphQL */ `
       booking {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -741,6 +786,7 @@ export const onUpdatePayment = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -764,6 +810,14 @@ export const onUpdatePayment = /* GraphQL */ `
           contact
           address
           role
+          createdAt
+          updatedAt
+        }
+        slot {
+          id
+          start_time
+          end_time
+          duration
           createdAt
           updatedAt
         }
@@ -793,10 +847,7 @@ export const onDeletePayment = /* GraphQL */ `
       booking {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -805,6 +856,7 @@ export const onDeletePayment = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -828,6 +880,14 @@ export const onDeletePayment = /* GraphQL */ `
           contact
           address
           role
+          createdAt
+          updatedAt
+        }
+        slot {
+          id
+          start_time
+          end_time
+          duration
           createdAt
           updatedAt
         }

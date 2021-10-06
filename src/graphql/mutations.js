@@ -163,10 +163,7 @@ export const createUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -175,6 +172,7 @@ export const createUser = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -222,10 +220,7 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -234,6 +229,7 @@ export const updateUser = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -281,10 +277,7 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -293,6 +286,7 @@ export const deleteUser = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -309,10 +303,7 @@ export const createBooking = /* GraphQL */ `
     createBooking(input: $input, condition: $condition) {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -321,6 +312,7 @@ export const createBooking = /* GraphQL */ `
       cust_id
       facilityowner_id
       payment_id
+      slot_id
       createdAt
       updatedAt
       owner {
@@ -359,6 +351,14 @@ export const createBooking = /* GraphQL */ `
           nextToken
         }
       }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
+      }
       payment {
         id
         payment_date
@@ -370,10 +370,7 @@ export const createBooking = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -382,6 +379,7 @@ export const createBooking = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -397,10 +395,7 @@ export const updateBooking = /* GraphQL */ `
     updateBooking(input: $input, condition: $condition) {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -409,6 +404,7 @@ export const updateBooking = /* GraphQL */ `
       cust_id
       facilityowner_id
       payment_id
+      slot_id
       createdAt
       updatedAt
       owner {
@@ -447,6 +443,14 @@ export const updateBooking = /* GraphQL */ `
           nextToken
         }
       }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
+      }
       payment {
         id
         payment_date
@@ -458,10 +462,7 @@ export const updateBooking = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -470,6 +471,7 @@ export const updateBooking = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
@@ -485,10 +487,7 @@ export const deleteBooking = /* GraphQL */ `
     deleteBooking(input: $input, condition: $condition) {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -497,6 +496,7 @@ export const deleteBooking = /* GraphQL */ `
       cust_id
       facilityowner_id
       payment_id
+      slot_id
       createdAt
       updatedAt
       owner {
@@ -535,6 +535,14 @@ export const deleteBooking = /* GraphQL */ `
           nextToken
         }
       }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
+      }
       payment {
         id
         payment_date
@@ -546,10 +554,7 @@ export const deleteBooking = /* GraphQL */ `
         booking {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -558,10 +563,56 @@ export const deleteBooking = /* GraphQL */ `
           cust_id
           facilityowner_id
           payment_id
+          slot_id
           createdAt
           updatedAt
         }
       }
+    }
+  }
+`;
+export const createSlot = /* GraphQL */ `
+  mutation CreateSlot(
+    $input: CreateSlotInput!
+    $condition: ModelSlotConditionInput
+  ) {
+    createSlot(input: $input, condition: $condition) {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateSlot = /* GraphQL */ `
+  mutation UpdateSlot(
+    $input: UpdateSlotInput!
+    $condition: ModelSlotConditionInput
+  ) {
+    updateSlot(input: $input, condition: $condition) {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteSlot = /* GraphQL */ `
+  mutation DeleteSlot(
+    $input: DeleteSlotInput!
+    $condition: ModelSlotConditionInput
+  ) {
+    deleteSlot(input: $input, condition: $condition) {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -581,10 +632,7 @@ export const createPayment = /* GraphQL */ `
       booking {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -593,6 +641,7 @@ export const createPayment = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -616,6 +665,14 @@ export const createPayment = /* GraphQL */ `
           contact
           address
           role
+          createdAt
+          updatedAt
+        }
+        slot {
+          id
+          start_time
+          end_time
+          duration
           createdAt
           updatedAt
         }
@@ -648,10 +705,7 @@ export const updatePayment = /* GraphQL */ `
       booking {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -660,6 +714,7 @@ export const updatePayment = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -683,6 +738,14 @@ export const updatePayment = /* GraphQL */ `
           contact
           address
           role
+          createdAt
+          updatedAt
+        }
+        slot {
+          id
+          start_time
+          end_time
+          duration
           createdAt
           updatedAt
         }
@@ -715,10 +778,7 @@ export const deletePayment = /* GraphQL */ `
       booking {
         id
         booking_date
-        start_date
-        end_date
-        start_time
-        end_time
+        facility_id
         facility_name
         rate
         address
@@ -727,6 +787,7 @@ export const deletePayment = /* GraphQL */ `
         cust_id
         facilityowner_id
         payment_id
+        slot_id
         createdAt
         updatedAt
         owner {
@@ -750,6 +811,14 @@ export const deletePayment = /* GraphQL */ `
           contact
           address
           role
+          createdAt
+          updatedAt
+        }
+        slot {
+          id
+          start_time
+          end_time
+          duration
           createdAt
           updatedAt
         }
