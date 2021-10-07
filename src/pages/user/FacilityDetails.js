@@ -13,17 +13,17 @@ import { Link } from "react-router-dom";
 export default function FacilityDetails(props) {
 
   const facility = props.location.facility;
-  console.log(facility);
+  //console.log(facility);
   const [bookingTime, setBookingTime] = useState("");
   const [slotDate, setSlotDate] = useState(new Date());
   const [filteredSlots, setFilteredSlots] = useState([]);
   const [buttons,setButtons] = useState("Please select a date.");
   const [existingBookings, setExistingBookings] = useState([]);
-
+  const [checkoutButton, setCheckoutButton] = useState([]);
   useEffect(() => {
     async function getBookingList() {
       let slotDateString = slotDate.getFullYear() + "-" + ("0"+(slotDate.getMonth()+1)).slice(-2) + "-" + ("0" + slotDate.getDate()).slice(-2);
-      console.log("Get booking list :" + facility.id + " " + slotDateString);
+      console.log("Get booking list with :" + facility.id + " " + slotDateString);
       const getBooking = await API.graphql({
         query: queries.listBookings,
         variables: {
@@ -45,12 +45,12 @@ export default function FacilityDetails(props) {
   },[slotDate]);
   useEffect(()=> {
     function fetchSlots(){
-      console.log("fetch slots List of bookings done on this date: ", existingBookings);
-      console.log("Date entered: " + slotDate);
+      //console.log("fetch slots List of bookings done on this date: ", existingBookings);
+      //console.log("Date entered: " + slotDate);
       let results = [];
       let weekday = slotDate.toLocaleString('en-us', {  weekday: 'long' }).substring(0,3);
-      console.log(weekday);
-      console.log("Facility operatin days.", facility.operating_days);
+      //console.log(weekday);
+      //console.log("Facility operatin days.", facility.operating_days);
       for(const operatingDay of facility.operating_days){
         if (weekday == operatingDay){
           results = generateSlots(facility.opening_hrs,facility.closing_hrs);
@@ -59,29 +59,31 @@ export default function FacilityDetails(props) {
         
       }
       
-      console.log("Results:");
-      console.log(results);
+      //console.log("Results:");
+      //console.log(results);
       setFilteredSlots(results);
     };
     function generateSlots(){
       let startTime = new Date(slotDate);
       setTime(startTime, facility.opening_hrs);
-      console.log(startTime.toLocaleString());
+      //console.log(startTime.toLocaleString());
       let endTime = new Date(slotDate);
       setTime(endTime, facility.closing_hrs);
-      console.log(endTime.toLocaleString());
+      //console.log(endTime.toLocaleString());
       
       if( endTime.getHours() < startTime.getHours() ){
         return [];
       }
-      console.log(startTime);
+      //console.log(startTime);
       let timeStops = [];
       let count = 0;
       let tempStartTime = startTime;
       let tempEndTime = new Date(startTime.toLocaleString());
+      let currentDateTime = new Date();
+      //console.log("CUrrent Date: " + currentDateTime.toLocaleString());
       tempEndTime.setHours(tempEndTime.getHours() + 1);
       while(tempStartTime.getHours() < endTime.getHours()){
-        console.log(tempStartTime.toLocaleString(),tempEndTime.toLocaleString());
+        // console.log(tempStartTime.toLocaleString(),tempEndTime.toLocaleString());
         let isAvailable = true;
         
         for(const existingBooking of existingBookings){
@@ -89,12 +91,15 @@ export default function FacilityDetails(props) {
           setTime(existingBookingStart, existingBooking.slot.start_time);
           let existingBookinEnd = new Date(slotDate);
           setTime(existingBookinEnd, existingBooking.slot.end_time);
-          console.log(existingBookinEnd,existingBookinEnd);
+          // console.log(existingBookinEnd,existingBookinEnd);
           if(tempStartTime >= existingBookingStart && tempStartTime < existingBookinEnd){
-            console.log("Is not available");
+            // console.log("Is not available");
             isAvailable=false;
           }else if(tempEndTime > existingBookingStart && tempEndTime <= existingBookinEnd){
-            console.log("Is not available");
+            // console.log("Is not available");
+            isAvailable=false;
+          }else if(tempStartTime < new Date()){
+            // console.log("Cannot book past timings.");
             isAvailable=false;
           }
         }
@@ -142,6 +147,54 @@ export default function FacilityDetails(props) {
         {slot.startTime}
       </button>)}</ul>;
     }
+    function renderCheckoutButton(){
+      let tempjsx = <div></div>;
+     if(checkDisableCheckout()){
+       tempjsx =
+       <button type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-gray-600 text-white">
+        <a>
+            <span aria-hidden="true" />
+              Checkout
+          </a>
+        </button>
+        }else{
+       tempjsx = 
+       <button type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-blue-600 hover:bg-blue-800 text-white">
+        <Link to={{
+        pathname: "/payment",
+        totalAmt: facility.rate,
+        token: null,
+        facility_id: facility.id,
+        facility_name: facility.name,
+        rate: facility.rate,
+        address: facility.address,
+        area: facility.area,
+        cust_id: sessionStorage.getItem("username"),
+        facilityowner_id: facility.userID,
+        start_time: getSelectedSlot().startTime,
+        end_time: getSelectedSlot().endTime,
+        duration: 1,
+        }}>
+          <a>
+            <span aria-hidden="true" />
+              Checkout
+          </a>
+        </Link></button>
+        };
+        //console.log(tempjsx);
+        setCheckoutButton(tempjsx);
+    };
+    function checkDisableCheckout(){
+      console.log("Check Disable Checkout");
+      for(const tempSlot of filteredSlots){
+        console.log(tempSlot);
+        if(tempSlot.selected){
+          return false;
+        }
+      }
+      return true;
+    }
+    renderCheckoutButton();
     setButtons(buttonsTemp)
   },[filteredSlots])
 
@@ -150,8 +203,8 @@ export default function FacilityDetails(props) {
     date.setMinutes(timeString.substring(3, 5));
   }
   function toggleSlotSelection(slotId){
-    console.log("Toggle Slot Selection")
-    console.log("slot selected: ");
+    // console.log("Toggle Slot Selection")
+    // console.log("slot selected: ");
     let tempFilteredSlots = [];
     for(const slot of filteredSlots){
       if(slot.id == slotId){
@@ -168,7 +221,7 @@ export default function FacilityDetails(props) {
     
     
     setFilteredSlots(tempFilteredSlots);
-    console.log(filteredSlots);
+    // console.log(filteredSlots);
     
 
   }
@@ -182,6 +235,7 @@ export default function FacilityDetails(props) {
     }
     return {Message : "No Slot Selected"};
   };
+  
   
 
   return (
@@ -212,7 +266,7 @@ export default function FacilityDetails(props) {
                 htmlFor="operating-from"
                 className="block text-sm font-medium text-gray-700"
               >
-                Select Booking Date {/*<p onClick={(e) => setSlotDate(new Date(e.target.value))}>Click Here</p>*/}
+                Select Booking Date
               </label>
               <input
                   type="date"
@@ -231,18 +285,10 @@ export default function FacilityDetails(props) {
               <ul>
                 {buttons}
               </ul>
-              <button type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-blue-600 hover:bg-blue-800 text-white">
-                <Link to={{
-                pathname: "/payment",
-                facility: facility,
-                slotDetails: getSelectedSlot(),
-                }}>
-                  <a>
-                    <span aria-hidden="true" />
-                    Checkout
-                  </a>
-                </Link>
-            </button>
+              
+              {checkoutButton}
+                  
+            
             </div>
             
           </div>
