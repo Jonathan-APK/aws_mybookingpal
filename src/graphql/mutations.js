@@ -1,6 +1,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const processBooking = /* GraphQL */ `
+  mutation ProcessBooking($input: ProcessBookingInput!) {
+    processBooking(input: $input)
+  }
+`;
 export const createFacility = /* GraphQL */ `
   mutation CreateFacility(
     $input: CreateFacilityInput!
@@ -171,8 +176,8 @@ export const createUser = /* GraphQL */ `
           status
           cust_id
           facilityowner_id
-          payment_id
           slot_id
+          payment_id
           createdAt
           updatedAt
         }
@@ -228,8 +233,8 @@ export const updateUser = /* GraphQL */ `
           status
           cust_id
           facilityowner_id
-          payment_id
           slot_id
+          payment_id
           createdAt
           updatedAt
         }
@@ -285,8 +290,8 @@ export const deleteUser = /* GraphQL */ `
           status
           cust_id
           facilityowner_id
-          payment_id
           slot_id
+          payment_id
           createdAt
           updatedAt
         }
@@ -311,8 +316,8 @@ export const createBooking = /* GraphQL */ `
       status
       cust_id
       facilityowner_id
-      payment_id
       slot_id
+      payment_id
       createdAt
       updatedAt
       owner {
@@ -351,6 +356,14 @@ export const createBooking = /* GraphQL */ `
           nextToken
         }
       }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        createdAt
+        updatedAt
+      }
       slot {
         id
         start_time
@@ -358,31 +371,6 @@ export const createBooking = /* GraphQL */ `
         duration
         createdAt
         updatedAt
-      }
-      payment {
-        id
-        payment_date
-        paid_amt
-        status
-        booking_id
-        createdAt
-        updatedAt
-        booking {
-          id
-          booking_date
-          facility_id
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          slot_id
-          createdAt
-          updatedAt
-        }
       }
     }
   }
@@ -403,8 +391,8 @@ export const updateBooking = /* GraphQL */ `
       status
       cust_id
       facilityowner_id
-      payment_id
       slot_id
+      payment_id
       createdAt
       updatedAt
       owner {
@@ -443,6 +431,14 @@ export const updateBooking = /* GraphQL */ `
           nextToken
         }
       }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        createdAt
+        updatedAt
+      }
       slot {
         id
         start_time
@@ -450,31 +446,6 @@ export const updateBooking = /* GraphQL */ `
         duration
         createdAt
         updatedAt
-      }
-      payment {
-        id
-        payment_date
-        paid_amt
-        status
-        booking_id
-        createdAt
-        updatedAt
-        booking {
-          id
-          booking_date
-          facility_id
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          slot_id
-          createdAt
-          updatedAt
-        }
       }
     }
   }
@@ -495,8 +466,8 @@ export const deleteBooking = /* GraphQL */ `
       status
       cust_id
       facilityowner_id
-      payment_id
       slot_id
+      payment_id
       createdAt
       updatedAt
       owner {
@@ -535,6 +506,14 @@ export const deleteBooking = /* GraphQL */ `
           nextToken
         }
       }
+      payment {
+        id
+        payment_date
+        paid_amt
+        status
+        createdAt
+        updatedAt
+      }
       slot {
         id
         start_time
@@ -543,31 +522,51 @@ export const deleteBooking = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      payment {
-        id
-        payment_date
-        paid_amt
-        status
-        booking_id
-        createdAt
-        updatedAt
-        booking {
-          id
-          booking_date
-          facility_id
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          slot_id
-          createdAt
-          updatedAt
-        }
-      }
+    }
+  }
+`;
+export const createPayment = /* GraphQL */ `
+  mutation CreatePayment(
+    $input: CreatePaymentInput!
+    $condition: ModelPaymentConditionInput
+  ) {
+    createPayment(input: $input, condition: $condition) {
+      id
+      payment_date
+      paid_amt
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePayment = /* GraphQL */ `
+  mutation UpdatePayment(
+    $input: UpdatePaymentInput!
+    $condition: ModelPaymentConditionInput
+  ) {
+    updatePayment(input: $input, condition: $condition) {
+      id
+      payment_date
+      paid_amt
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePayment = /* GraphQL */ `
+  mutation DeletePayment(
+    $input: DeletePaymentInput!
+    $condition: ModelPaymentConditionInput
+  ) {
+    deletePayment(input: $input, condition: $condition) {
+      id
+      payment_date
+      paid_amt
+      status
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -613,225 +612,6 @@ export const deleteSlot = /* GraphQL */ `
       duration
       createdAt
       updatedAt
-    }
-  }
-`;
-export const createPayment = /* GraphQL */ `
-  mutation CreatePayment(
-    $input: CreatePaymentInput!
-    $condition: ModelPaymentConditionInput
-  ) {
-    createPayment(input: $input, condition: $condition) {
-      id
-      payment_date
-      paid_amt
-      status
-      booking_id
-      createdAt
-      updatedAt
-      booking {
-        id
-        booking_date
-        facility_id
-        facility_name
-        rate
-        address
-        area
-        status
-        cust_id
-        facilityowner_id
-        payment_id
-        slot_id
-        createdAt
-        updatedAt
-        owner {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        slot {
-          id
-          start_time
-          end_time
-          duration
-          createdAt
-          updatedAt
-        }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
-export const updatePayment = /* GraphQL */ `
-  mutation UpdatePayment(
-    $input: UpdatePaymentInput!
-    $condition: ModelPaymentConditionInput
-  ) {
-    updatePayment(input: $input, condition: $condition) {
-      id
-      payment_date
-      paid_amt
-      status
-      booking_id
-      createdAt
-      updatedAt
-      booking {
-        id
-        booking_date
-        facility_id
-        facility_name
-        rate
-        address
-        area
-        status
-        cust_id
-        facilityowner_id
-        payment_id
-        slot_id
-        createdAt
-        updatedAt
-        owner {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        slot {
-          id
-          start_time
-          end_time
-          duration
-          createdAt
-          updatedAt
-        }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
-export const deletePayment = /* GraphQL */ `
-  mutation DeletePayment(
-    $input: DeletePaymentInput!
-    $condition: ModelPaymentConditionInput
-  ) {
-    deletePayment(input: $input, condition: $condition) {
-      id
-      payment_date
-      paid_amt
-      status
-      booking_id
-      createdAt
-      updatedAt
-      booking {
-        id
-        booking_date
-        facility_id
-        facility_name
-        rate
-        address
-        area
-        status
-        cust_id
-        facilityowner_id
-        payment_id
-        slot_id
-        createdAt
-        updatedAt
-        owner {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        slot {
-          id
-          start_time
-          end_time
-          duration
-          createdAt
-          updatedAt
-        }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
-      }
     }
   }
 `;

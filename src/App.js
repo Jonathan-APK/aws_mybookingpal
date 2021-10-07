@@ -16,12 +16,12 @@ import UserDashboard from "./pages/user/UserDashboard";
 import FacilitiesList from "./pages/user/FacilitiesList";
 import ManageBooking from "./pages/user/ManageBooking";
 import FacilityDetails from "./pages/user/FacilityDetails";
-import UserProfile from "./pages/UserProfile"
+import UserProfile from "./pages/UserProfile";
+import Payment from "./pages/payment/StripeContainer"
 
 Amplify.configure(awsconfig);
 
 function App() {
-
   return (
     <div>
       <BrowserRouter>
@@ -88,6 +88,8 @@ function App() {
           />
 
           <PrivateRoute path="/userprofile" component={UserProfile} exact />
+
+          <PrivateRoute path="/payment" component={Payment} exact />
 
           <Route component={Error} />
         </Switch>
