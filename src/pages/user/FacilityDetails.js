@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { API } from "@aws-amplify/api";
 import * as queries from "../../graphql/queries";
 import moment from "moment";
+import { Link } from "react-router-dom";
+
 
 export default function FacilityDetails(props) {
 
@@ -171,7 +173,15 @@ export default function FacilityDetails(props) {
 
   }
 
-  
+  function getSelectedSlot(){
+    let selectedSlot = [];
+    for(const tempSlot of filteredSlots){
+      if(tempSlot.selected){
+        return tempSlot;
+      }
+    }
+    return {Message : "No Slot Selected"};
+  };
   
 
   return (
@@ -221,11 +231,17 @@ export default function FacilityDetails(props) {
               <ul>
                 {buttons}
               </ul>
-              <button
-              type="button"
-              className="h-14 px-6 py-2 font-semibold rounded-xl bg-blue-600 hover:bg-blue-800 text-white"
-            >
-              Checkout
+              <button type="button" className="h-14 px-6 py-2 font-semibold rounded-xl bg-blue-600 hover:bg-blue-800 text-white">
+                <Link to={{
+                pathname: "/payment",
+                facility: facility,
+                slotDetails: getSelectedSlot(),
+                }}>
+                  <a>
+                    <span aria-hidden="true" />
+                    Checkout
+                  </a>
+                </Link>
             </button>
             </div>
             
