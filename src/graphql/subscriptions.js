@@ -265,10 +265,7 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -276,6 +273,7 @@ export const onCreateUser = /* GraphQL */ `
           status
           cust_id
           facilityowner_id
+          slot_id
           payment_id
           createdAt
           updatedAt
@@ -321,10 +319,7 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -332,6 +327,7 @@ export const onUpdateUser = /* GraphQL */ `
           status
           cust_id
           facilityowner_id
+          slot_id
           payment_id
           createdAt
           updatedAt
@@ -377,10 +373,7 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           booking_date
-          start_date
-          end_date
-          start_time
-          end_time
+          facility_id
           facility_name
           rate
           address
@@ -388,6 +381,7 @@ export const onDeleteUser = /* GraphQL */ `
           status
           cust_id
           facilityowner_id
+          slot_id
           payment_id
           createdAt
           updatedAt
@@ -402,10 +396,7 @@ export const onCreateBooking = /* GraphQL */ `
     onCreateBooking {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -413,6 +404,7 @@ export const onCreateBooking = /* GraphQL */ `
       status
       cust_id
       facilityowner_id
+      slot_id
       payment_id
       createdAt
       updatedAt
@@ -457,27 +449,16 @@ export const onCreateBooking = /* GraphQL */ `
         payment_date
         paid_amt
         status
-        booking_id
         createdAt
         updatedAt
-        booking {
-          id
-          booking_date
-          start_date
-          end_date
-          start_time
-          end_time
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          createdAt
-          updatedAt
-        }
+      }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
       }
     }
   }
@@ -487,10 +468,7 @@ export const onUpdateBooking = /* GraphQL */ `
     onUpdateBooking {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -498,6 +476,7 @@ export const onUpdateBooking = /* GraphQL */ `
       status
       cust_id
       facilityowner_id
+      slot_id
       payment_id
       createdAt
       updatedAt
@@ -542,27 +521,16 @@ export const onUpdateBooking = /* GraphQL */ `
         payment_date
         paid_amt
         status
-        booking_id
         createdAt
         updatedAt
-        booking {
-          id
-          booking_date
-          start_date
-          end_date
-          start_time
-          end_time
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          createdAt
-          updatedAt
-        }
+      }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
       }
     }
   }
@@ -572,10 +540,7 @@ export const onDeleteBooking = /* GraphQL */ `
     onDeleteBooking {
       id
       booking_date
-      start_date
-      end_date
-      start_time
-      end_time
+      facility_id
       facility_name
       rate
       address
@@ -583,6 +548,7 @@ export const onDeleteBooking = /* GraphQL */ `
       status
       cust_id
       facilityowner_id
+      slot_id
       payment_id
       createdAt
       updatedAt
@@ -627,27 +593,16 @@ export const onDeleteBooking = /* GraphQL */ `
         payment_date
         paid_amt
         status
-        booking_id
         createdAt
         updatedAt
-        booking {
-          id
-          booking_date
-          start_date
-          end_date
-          start_time
-          end_time
-          facility_name
-          rate
-          address
-          area
-          status
-          cust_id
-          facilityowner_id
-          payment_id
-          createdAt
-          updatedAt
-        }
+      }
+      slot {
+        id
+        start_time
+        end_time
+        duration
+        createdAt
+        updatedAt
       }
     }
   }
@@ -659,60 +614,8 @@ export const onCreatePayment = /* GraphQL */ `
       payment_date
       paid_amt
       status
-      booking_id
       createdAt
       updatedAt
-      booking {
-        id
-        booking_date
-        start_date
-        end_date
-        start_time
-        end_time
-        facility_name
-        rate
-        address
-        area
-        status
-        cust_id
-        facilityowner_id
-        payment_id
-        createdAt
-        updatedAt
-        owner {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
-      }
     }
   }
 `;
@@ -723,60 +626,8 @@ export const onUpdatePayment = /* GraphQL */ `
       payment_date
       paid_amt
       status
-      booking_id
       createdAt
       updatedAt
-      booking {
-        id
-        booking_date
-        start_date
-        end_date
-        start_time
-        end_time
-        facility_name
-        rate
-        address
-        area
-        status
-        cust_id
-        facilityowner_id
-        payment_id
-        createdAt
-        updatedAt
-        owner {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
-      }
     }
   }
 `;
@@ -787,60 +638,44 @@ export const onDeletePayment = /* GraphQL */ `
       payment_date
       paid_amt
       status
-      booking_id
       createdAt
       updatedAt
-      booking {
-        id
-        booking_date
-        start_date
-        end_date
-        start_time
-        end_time
-        facility_name
-        rate
-        address
-        area
-        status
-        cust_id
-        facilityowner_id
-        payment_id
-        createdAt
-        updatedAt
-        owner {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        customer {
-          id
-          email
-          username
-          firstname
-          lastname
-          contact
-          address
-          role
-          createdAt
-          updatedAt
-        }
-        payment {
-          id
-          payment_date
-          paid_amt
-          status
-          booking_id
-          createdAt
-          updatedAt
-        }
-      }
+    }
+  }
+`;
+export const onCreateSlot = /* GraphQL */ `
+  subscription OnCreateSlot {
+    onCreateSlot {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateSlot = /* GraphQL */ `
+  subscription OnUpdateSlot {
+    onUpdateSlot {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteSlot = /* GraphQL */ `
+  subscription OnDeleteSlot {
+    onDeleteSlot {
+      id
+      start_time
+      end_time
+      duration
+      createdAt
+      updatedAt
     }
   }
 `;

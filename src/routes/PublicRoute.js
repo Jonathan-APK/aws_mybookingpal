@@ -7,7 +7,7 @@ const PublicRoute = ({component: Component, restricted, ...rest}) => {
         // restricted = true meaning restricted route
         <Route {...rest} render={props => (
             sessionStorage.getItem('isLogged') === 'true' && restricted ?
-                <Redirect to="/dashboard" />
+                sessionStorage.getItem('userRole') === "facility_owner" ? <Redirect to="/dashboard" /> : <Redirect to="/userdashboard" />
             : <Component {...props} />
         )} />
     );

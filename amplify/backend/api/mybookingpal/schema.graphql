@@ -1,4 +1,7 @@
-type Facility @model @key(name: "byUser", fields: ["userID"]) @auth(rules: [{allow: private}]) {
+type Facility
+  @model
+  @key(name: "byUser", fields: ["userID"])
+  @auth(rules: [{ allow: private }]) {
   id: ID!
   name: String!
   type: String!
@@ -11,10 +14,12 @@ type Facility @model @key(name: "byUser", fields: ["userID"]) @auth(rules: [{all
   closing_hrs: AWSTime!
   operating_days: [String]!
   userID: ID!
-  user: User! @connection(fields: ["userID"]) 
+  user: User! @connection(fields: ["userID"])
 }
 
-type User @model @auth(rules: [{allow: private}]) {
+type User
+  @model
+  @auth(rules: [{ allow: private }]) {
   id: ID!
   email: String!
   username: String!
@@ -27,13 +32,13 @@ type User @model @auth(rules: [{allow: private}]) {
   booking: [Booking] @connection(keyName: "byCustID", fields: ["id"])
 }
 
-type Booking @model @key(name: "byCustID", fields: ["cust_id"]) @auth(rules: [{allow: private}]) {
+type Booking
+  @model
+  @key(name: "byCustID", fields: ["cust_id"])
+  @auth(rules: [{ allow: private }]) {
   id: ID!
-  booking_date: AWSDateTime!
-  start_date: AWSDate!
-  end_date: AWSDate!
-  start_time: AWSTime!
-  end_time: AWSTime!
+  booking_date: AWSDate!
+  facility_id: ID!
   facility_name: String!
   rate: Float!
   address: String!
@@ -41,28 +46,60 @@ type Booking @model @key(name: "byCustID", fields: ["cust_id"]) @auth(rules: [{a
   status: String!
   cust_id: ID!
   facilityowner_id: ID!
-  payment_id: ID!
+  slot_id: ID
+  payment_id: ID
   owner: User! @connection(fields: ["facilityowner_id"])
   customer: User! @connection(fields: ["cust_id"])
   payment: Payment @connection(fields: ["payment_id"])
+  slot: Slot @connection(fields: ["slot_id"])
 }
 
-type Payment @model @auth(rules: [{allow: private}]) {
+type Payment @model @auth(rules: [{ allow: private }]) {
   id: ID!
   payment_date: AWSDateTime!
   paid_amt: Float!
   status: String!
-  booking_id: ID
-  booking: Booking! @connection(fields: ["booking_id"])
+}
+
+type Slot @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  start_time: AWSTime!
+  end_time: AWSTime!
+  duration: Float!
 }
 
 type Subscription {
   onCreateFacilityByUserId(userID: ID!): Facility
-  @aws_subscribe(mutations: ["createFacility"])
+    @aws_subscribe(mutations: ["createFacility"])
   onDeleteFacilityByUserId(userID: ID!): Facility
-  @aws_subscribe(mutations: ["deleteFacility"])
+    @aws_subscribe(mutations: ["deleteFacility"])
   onUpdateFacilityByUserId(userID: ID!): Facility
-  @aws_subscribe(mutations: ["updateFacility"])
+    @aws_subscribe(mutations: ["updateFacility"])
 }
 
- 
+type Mutation {
+   processBooking(input: ProcessBookingInput!): BookingStatus
+     @function(name: "processPayment-${env}")
+     @function(name: "createBookingDetails-${env}")
+}
+
+input ProcessBookingInput {
+  id: ID!
+  totalAmt: Float!
+  token: String!
+  facility_id: ID!
+  facility_name: String!
+  rate: Float!
+  address: String!
+  area: String!
+  cust_id: ID!
+  facilityowner_id: ID!
+  start_time: AWSTime!
+  end_time: AWSTime!
+  duration: Float!
+}
+
+enum BookingStatus {
+  SUCCESS
+  FAILED
+}
