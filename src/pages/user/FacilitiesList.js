@@ -139,6 +139,7 @@ export default function FacilitiesList(props) {
       }
     }
     getFacilityList();
+    setCurrentPage(1);
   }, [category, searchTerm]);
 
   // Pagination

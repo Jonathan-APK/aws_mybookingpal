@@ -32,12 +32,17 @@ export default function Pagination(props) {
           <p className="text-sm text-gray-700">
             Showing{" "}
             <span className="font-medium">
-              {props.recordsPerPage * props.currentPage -
-                (props.recordsPerPage - 1)}
+              {" "}
+              {props.totalRecords != 0
+                ? props.recordsPerPage * props.currentPage -
+                  (props.recordsPerPage - 1)
+                : 0}
             </span>{" "}
             to{" "}
             <span className="font-medium">
-              {props.currentPage == pageNumbers.at(-1)
+              {props.totalRecords == 0
+                ? 0
+                : props.currentPage == pageNumbers.at(-1)
                 ? props.totalRecords
                 : props.recordsPerPage * props.currentPage}
             </span>{" "}
