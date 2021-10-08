@@ -6,19 +6,38 @@ export default function SearchBox() {
   const [category, setCategory] = useState("");
   const history = useHistory();
 
+  function isValidCategory(category) {
+    if (category && category != "Select Category") {
+      return true;
+    }
+    return false;
+  }
+
   function runSearch() {
-    console.log(searchTerm);
-    console.log(category)
-    if (searchTerm) {
+    if (searchTerm && !isValidCategory(category)) {
       history.push({
         pathname: "/facilitieslist",
         searchTerm: searchTerm,
       });
     }
-    if (category && category != "Select Category") {
+    if (!searchTerm && isValidCategory(category)) {
       history.push({
         pathname: "/facilitieslist",
         category: category,
+      });
+    }
+    if (searchTerm && isValidCategory(category)) {
+      history.push({
+        pathname: "/facilitieslist",
+        searchTerm: searchTerm,
+        category: category,
+      });
+    }
+    if (!searchTerm && !isValidCategory(category)) {
+      history.push({
+        pathname: "/facilitieslist",
+        searchTerm: "",
+        category: "",
       });
     }
   }
@@ -28,14 +47,12 @@ export default function SearchBox() {
       <div className="text-xl font-semibold">Search</div>
       <input
         className="border-none w-full text-sm leading-tight focus:outline-none"
-        id="searchTerm"
-        type="text"
+        type="search"
         placeholder="Enter facility name"
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <select
         className="border-none w-full text-sm text-grayleading-tight focus:outline-none"
-        id="searchCategory"
         onChange={(e) => setCategory(e.target.value)}
       >
         <option>Select Category</option>

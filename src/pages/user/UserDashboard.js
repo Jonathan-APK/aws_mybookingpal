@@ -71,7 +71,7 @@ export default function UserDashboard() {
           <div className="bg-white flex items-center rounded-full shadow-xl py-2">
             <input
               className="rounded-l-full w-full px-4 text-gray-700 leading-tight border-0"
-              type="text"
+              type="search"
               placeholder="What would you like to book?"
               onChange={(e) => setSearchTerm(e.target.value)}
             />

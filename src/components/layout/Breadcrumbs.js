@@ -3,25 +3,29 @@ import { useState, useEffect } from "react";
 
 export default function Breadcrumbs(props) {
   
-  const [showLevelThree, setShowLevelThree] = useState(false);
+  const [showSearchResult, setShowSearchResult] = useState();
 
   useEffect(() => {
-    async function showLevelThree() {
+    async function showSearchResult() {
       if (props.category || props.searchTerm) {
-        setShowLevelThree(true);
+        setShowSearchResult(true);
+      }
+      else {
+        setShowSearchResult(false);
       }
     }
-    showLevelThree();
-  }, []);
+    showSearchResult();
+  }, [props.category, props.searchTerm]);
 
-  function levelThree() {
-    if (props.category) {
-      //setShowLevelThree(true);
+  function searchResult() {
+    if (props.category && !props.searchTerm) {
       return props.category;
     }
-    if (props.searchTerm) {
-      //setShowLevelThree(true);
+    if (props.searchTerm && !props.category) {
       return props.searchTerm;
+    }
+    if (props.searchTerm && props.category) {
+      return props.searchTerm + ' (' + props.category + ')'
     }
   }
 
@@ -49,12 +53,12 @@ export default function Breadcrumbs(props) {
         </span>
         <Link to="/facilitieslist">
         <a 
-        className={`${showLevelThree ? "hover:underline hover:text-gray-600" : ""}`}
+        className={`${showSearchResult ? "hover:underline hover:text-gray-600" : ""}`}
         >
           Browse Facilities
         </a>
         </Link>
-        <span className={`${showLevelThree ? "" : "hidden"}`}>
+        <span className={`${showSearchResult ? "" : "hidden"}`}>
           <svg
             className="h-5 w-5 leading-none text-gray-300"
             xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +74,7 @@ export default function Breadcrumbs(props) {
             />
           </svg>
         </span>
-        <span>{levelThree()}</span>
+        <span>{searchResult()}</span>
       </div>
     </div>
   );

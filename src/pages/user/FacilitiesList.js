@@ -76,24 +76,13 @@ const facilityList = [
 export default function FacilitiesList(props) {
   const category = props.location.category;
   const searchTerm = props.location.searchTerm;
-  const [searchResultsText, setSearchResultText] =
-    useState("Showing x results");
-  const [facilityList, setFacilityList] = useState([]);
 
-  useEffect(() => {
-    async function showSearchResultText() {
-      if (category) {
-        setSearchResultText('Showing x results for "' + category + '"');
-      } else if (searchTerm) {
-        setSearchResultText('Showing x results for "' + searchTerm + '"');
-      }
-    }
-    showSearchResultText();
-  }, []);
+  const [facilityList, setFacilityList] = useState([]);
+  const [searchResultsText, setSearchResultText] = useState();
 
   useEffect(() => {
     async function getFacilityList() {
-      if (category) {
+      if (category && !searchTerm) {
         const getFacility = await API.graphql({
           query: queries.listFacilities,
           variables: {
@@ -101,7 +90,8 @@ export default function FacilitiesList(props) {
           },
         });
         setFacilityList(getFacility.data.listFacilities.items);
-      } else if (searchTerm) {
+        setSearchResultText('Showing ' + getFacility.data.listFacilities.items.length + ' results for "' + category + '"');
+      } else if (searchTerm && !category) {
         const getFacility = await API.graphql({
           query: queries.listFacilities,
           variables: {
@@ -109,15 +99,27 @@ export default function FacilitiesList(props) {
           },
         });
         setFacilityList(getFacility.data.listFacilities.items);
+        setSearchResultText('Showing ' + getFacility.data.listFacilities.items.length + ' results for "' + searchTerm + '"');
+      } else if (searchTerm && category) {
+        const getFacility = await API.graphql({
+          query: queries.listFacilities,
+          variables: {
+            filter: { name: { contains: searchTerm }, type: { eq: category } },
+          },
+        });
+        setFacilityList(getFacility.data.listFacilities.items);
+        setSearchResultText(
+          'Showing ' + getFacility.data.listFacilities.items.length + ' results for "' + searchTerm + " (" + category + ')"');
       } else {
         const getFacility = await API.graphql({
           query: queries.listFacilities,
         });
         setFacilityList(getFacility.data.listFacilities.items);
+        setSearchResultText('Showing ' + getFacility.data.listFacilities.items.length + ' results');
       }
     }
     getFacilityList();
-  }, []);
+  }, [category, searchTerm]);
 
   return (
     <div>
@@ -136,7 +138,7 @@ export default function FacilitiesList(props) {
           </div>
           <div className="grid auto-rows-auto gap-y-2">
             {facilityList.map((facility) => (
-              <FacilityListItem facility={facility} />
+              <FacilityListItem key={facility.id} facility={facility} />
             ))}
           </div>
           <Pagination />
