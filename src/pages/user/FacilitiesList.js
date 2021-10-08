@@ -79,6 +79,8 @@ export default function FacilitiesList(props) {
 
   const [facilityList, setFacilityList] = useState([]);
   const [searchResultsText, setSearchResultText] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [facilitiesPerPage] = useState(3);
 
   useEffect(() => {
     async function getFacilityList() {
@@ -90,7 +92,12 @@ export default function FacilitiesList(props) {
           },
         });
         setFacilityList(getFacility.data.listFacilities.items);
-        setSearchResultText('Showing ' + getFacility.data.listFacilities.items.length + ' results for "' + category + '"');
+        setSearchResultText(
+          getFacility.data.listFacilities.items.length +
+            ' facilities found for "' +
+            category +
+            '"'
+        );
       } else if (searchTerm && !category) {
         const getFacility = await API.graphql({
           query: queries.listFacilities,
@@ -99,7 +106,12 @@ export default function FacilitiesList(props) {
           },
         });
         setFacilityList(getFacility.data.listFacilities.items);
-        setSearchResultText('Showing ' + getFacility.data.listFacilities.items.length + ' results for "' + searchTerm + '"');
+        setSearchResultText(
+          getFacility.data.listFacilities.items.length +
+            ' facilities found for "' +
+            searchTerm +
+            '"'
+        );
       } else if (searchTerm && category) {
         const getFacility = await API.graphql({
           query: queries.listFacilities,
@@ -109,17 +121,34 @@ export default function FacilitiesList(props) {
         });
         setFacilityList(getFacility.data.listFacilities.items);
         setSearchResultText(
-          'Showing ' + getFacility.data.listFacilities.items.length + ' results for "' + searchTerm + " (" + category + ')"');
+          getFacility.data.listFacilities.items.length +
+            ' facilities found for "' +
+            searchTerm +
+            " (" +
+            category +
+            ')"'
+        );
       } else {
         const getFacility = await API.graphql({
           query: queries.listFacilities,
         });
         setFacilityList(getFacility.data.listFacilities.items);
-        setSearchResultText('Showing ' + getFacility.data.listFacilities.items.length + ' results');
+        setSearchResultText(
+          getFacility.data.listFacilities.items.length + " facilities found"
+        );
       }
     }
     getFacilityList();
   }, [category, searchTerm]);
+
+  // Pagination
+  const indexOfLastFacility = currentPage * facilitiesPerPage;
+  const indexOfFirstFacility = indexOfLastFacility - facilitiesPerPage;
+  const currentFacilityList = facilityList.slice(
+    indexOfFirstFacility,
+    indexOfLastFacility
+  );
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -137,11 +166,16 @@ export default function FacilitiesList(props) {
             {searchResultsText}
           </div>
           <div className="grid auto-rows-auto gap-y-2">
-            {facilityList.map((facility) => (
+            {currentFacilityList.map((facility) => (
               <FacilityListItem key={facility.id} facility={facility} />
             ))}
           </div>
-          <Pagination />
+          <Pagination
+            recordsPerPage={facilitiesPerPage}
+            totalRecords={facilityList.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
       <Footer />
