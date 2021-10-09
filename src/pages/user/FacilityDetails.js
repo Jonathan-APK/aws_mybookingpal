@@ -178,10 +178,10 @@ export default function FacilityDetails(props) {
             type="button"
             className="h-14 px-6 py-2 font-semibold rounded-xl bg-gray-600 text-white"
           >
-            <a>
+            <div>
               <span aria-hidden="true" />
               Checkout
-            </a>
+            </div>
           </button>
         );
       } else {
@@ -207,10 +207,10 @@ export default function FacilityDetails(props) {
                 duration: 1,
               }}
             >
-              <a>
+              <div>
                 <span aria-hidden="true" />
                 Checkout
-              </a>
+              </div>
             </Link>
           </button>
         );

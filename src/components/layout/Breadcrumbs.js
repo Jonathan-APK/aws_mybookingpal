@@ -33,7 +33,7 @@ export default function Breadcrumbs(props) {
     <div className="max-w-7xl mx-auto mt-4 px-4 sm:px-6 lg:px-8">
       <div className="flex items-center space-x-2 text-gray-400 text-sm">
         <Link to="/userdashboard">
-          <a className="hover:underline hover:text-gray-600">Home</a>
+          <div className="hover:underline hover:text-gray-600">Home</div>
         </Link>
         <span>
           <svg
@@ -52,11 +52,11 @@ export default function Breadcrumbs(props) {
           </svg>
         </span>
         <Link to="/facilitieslist">
-        <a 
+        <div
         className={`${showSearchResult ? "hover:underline hover:text-gray-600" : ""}`}
         >
           Browse Facilities
-        </a>
+        </div>
         </Link>
         <span className={`${showSearchResult ? "" : "hidden"}`}>
           <svg

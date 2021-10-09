@@ -7,7 +7,7 @@ export default function SearchBox() {
   const history = useHistory();
 
   function isValidCategory(category) {
-    if (category && category != "Select Category") {
+    if (category && category !== "Select Category") {
       return true;
     }
     return false;

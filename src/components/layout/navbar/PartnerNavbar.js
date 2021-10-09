@@ -45,13 +45,13 @@ function PartnerNavbar() {
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex-shrink-0 flex items-center">
                     <div className="text-white font-black text-xl flex items-center">
-                      <a className="pb-1 mr-2" href="#">
-                      <img
-                        className="h-auto w-auto sm:h-8 mr-2"
-                        src="/logo_white.svg"
-                        alt=""
-                      />
-                      </a>
+                    <Link to="/dashboard">
+                        <img
+                          className="h-auto w-auto sm:h-8 mr-2"
+                          src="/logo_white.svg"
+                          alt=""
+                        />
+                      </Link>
                     </div>
                   </div>
                   <div className="hidden sm:block sm:ml-6">
@@ -109,21 +109,21 @@ function PartnerNavbar() {
                         <Menu.Item>
                           {({ active }) => (
                             <Link to = "/userprofile">
-                            <a
-                              
+                            <div
+                            
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Your Profile
-                            </a>
+                            </div>
                             </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
+                            <div
                               onClick={signOut}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
@@ -131,7 +131,7 @@ function PartnerNavbar() {
                               )}
                             >
                               Sign out
-                            </a>
+                            </div>
                           )}
                         </Menu.Item>
                       </Menu.Items>

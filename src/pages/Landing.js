@@ -44,12 +44,11 @@ function Landing() {
               <strong className="font-black">Book Facility.</strong>{" "}
               Effortlessly.
             </h1>
-            <a
-              href="#"
-              className="font-semibold text-lg bg-blue-500 hover:bg-blue-400 text-white py-3 px-10 rounded-full"
+            <div
+              className="font-semibold text-lg bg-blue-500 hover:bg-blue-400 text-white py-3 px-10 rounded-full cursor-pointer"
             >
               Learn more
-            </a>
+            </div>
           </div>
           <div className="sm:w-3/5">
             <svg
@@ -615,7 +614,7 @@ function Landing() {
                 Facility Booking / Renting
               </h2>
               <p className="mt-2 pb-5 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Feature-packed, Simple to use. Facility at your fingertips.
+                Feature-packed, Simple to use.
               </p>
             </div>
 

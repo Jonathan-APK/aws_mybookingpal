@@ -6,13 +6,13 @@ function Landingnavbar() {
       <header className="h-24 sm:h-32 flex items-center">
         <div className="container mx-auto px-6 sm:px-12 flex items-center justify-between">
           <div className="text-black font-black text-2xl flex items-center">
-            <a href="#" className="pb-1">
-            <img
-              className="h-8 w-auto sm:h-9 mr-2"
-              src="/logo_darkblue.svg"
-              alt=""
-            />
-            </a>
+            <Link to="/">
+              <img
+                className="h-8 w-auto sm:h-9 mr-2"
+                src="/logo_darkblue.svg"
+                alt=""
+              />
+            </Link>
           </div>
           <div className="flex items-center">
             <nav className="text-black text-lg hidden lg:flex items-center">

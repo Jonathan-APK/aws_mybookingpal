@@ -66,7 +66,7 @@ function UserNavbar(props) {
                         to="/userdashboard"
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
-                        <a key="Dashboard">Dashboard</a>
+                        <div key="Dashboard">Dashboard</div>
                       </NavLink>
                       {/* Browse Facilities */}
                       <NavLink
@@ -74,7 +74,7 @@ function UserNavbar(props) {
                         to="/facilitieslist"
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
-                        <a key="Browse Facilities">Browse Facilities</a>
+                        <div key="Browse Facilities">Browse Facilities</div>
                       </NavLink>
                       {/* Manage Booking */}
                       <NavLink
@@ -82,7 +82,7 @@ function UserNavbar(props) {
                         to="/managebooking"
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                       >
-                        <a key="Manage Booking">Manage Booking</a>
+                        <div key="Manage Booking">Manage Booking</div>
                       </NavLink>
                     </div>
                   </div>
@@ -120,21 +120,20 @@ function UserNavbar(props) {
                         <Menu.Item>
                           {({ active }) => (
                             <Link to = "/userprofile">
-                            <a
-                              href="#"
+                            <div
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               Your Profile
-                            </a>
+                            </div>
                             </Link>
                           )}
                         </Menu.Item>
                         <Menu.Item>
                           {({ active }) => (
-                            <a
+                            <div
                               onClick={signOut}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
@@ -142,7 +141,7 @@ function UserNavbar(props) {
                               )}
                             >
                               Sign out
-                            </a>
+                            </div>
                           )}
                         </Menu.Item>
                       </Menu.Items>
@@ -161,7 +160,7 @@ function UserNavbar(props) {
                   to="/userdashboard"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  <a key="Dashboard">Dashboard</a>
+                  <div key="Dashboard">Dashboard</div>
                 </NavLink>
                 {/* Browse Facilities */}
                 <NavLink
@@ -169,7 +168,7 @@ function UserNavbar(props) {
                   to="/facilitieslist"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  <a key="Browse Facilities">Browse Facilities</a>
+                  <div key="Browse Facilities">Browse Facilities</div>
                 </NavLink>
                 {/* Manage Booking */}
                 <NavLink
@@ -177,7 +176,7 @@ function UserNavbar(props) {
                   to="/managebooking"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  <a key="Manage Booking">Manage Booking</a>
+                  <div key="Manage Booking">Manage Booking</div>
                 </NavLink>
               </div>
             </Disclosure.Panel>

@@ -260,18 +260,19 @@ export default function ManageFacility() {
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             ${facility.rate}/Hr
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a
+                          <td className="py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div
                               onClick={() => {
                                 setEditFacilityModalOpen(true);
                                 setSelectedFacility(facility);
                               }}
-                              className="text-indigo-600 hover:text-indigo-900 mr-7 cursor-pointer"
+                              className="text-indigo-600 hover:text-indigo-900 mr-3 cursor-pointer"
                             >
                               Edit
-                            </a>
-
-                            <a
+                            </div>
+                          </td>
+                          <td className="pr-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div
                               onClick={() => {
                                 setDeleteFacilityModalOpen(true);
                                 setDeleteID(facility.id);
@@ -279,7 +280,7 @@ export default function ManageFacility() {
                               className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
                             >
                               Delete
-                            </a>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -306,6 +307,12 @@ export default function ManageFacility() {
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                         >
                           Booking ID
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                          Facility Name
                         </th>
                         <th
                           scope="col"
@@ -340,6 +347,11 @@ export default function ManageFacility() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">
+                              {booking.facility_name}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm text-gray-900">
                               {booking.booking_date.substring(0, 10)}
                             </div>
                             <div className="text-sm text-gray-500">
@@ -359,7 +371,7 @@ export default function ManageFacility() {
                             {booking.customer.email}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a
+                            <div
                               onClick={() => {
                                 setViewBookingModalOpen(true);
                                 setSelectedBooking(booking);
@@ -367,7 +379,7 @@ export default function ManageFacility() {
                               className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
                             >
                               View
-                            </a>
+                            </div>
                           </td>
                         </tr>
                       ))}

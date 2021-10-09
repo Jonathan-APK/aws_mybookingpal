@@ -147,7 +147,7 @@ export default function Payment(props) {
           {/* Cancel Button */}
           <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8 items-center space-x-2 text-gray-400 text-sm">
             <Link to="/userdashboard">
-              <a className="hover:underline hover:text-gray-600">&lt; Cancel</a>
+              <div className="hover:underline hover:text-gray-600">&lt; Cancel</div>
             </Link>
           </div>
           {/* Payment Section */}
