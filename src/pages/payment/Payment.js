@@ -9,6 +9,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -32,20 +33,41 @@ const CARD_ELEMENT_OPTIONS = {
   hidePostalCode: true,
 };
 
-export default function Payment() {
+const convertTime12to24 = (time12h) => {
+  const [time, modifier] = time12h.split(" ");
+
+  let [hours, minutes] = time.split(":");
+
+  if (hours === "12") {
+    hours = "00";
+  }
+
+  if (modifier === "PM") {
+    hours = parseInt(hours, 10) + 12;
+  }
+
+  return `${hours}:${minutes}:00.000`;
+};
+
+export default function Payment(props) {
+  console.log("Booking/Payment Details:", props.bookingProps.location);
+
   const [bookingDetails, setBookingDetails] = useState({
-    totalAmt: 12,
+    totalAmt: props.bookingProps.location.totalAmt,
     token: null,
-    facility_id: "4e9ddd82-9553-4fbc-b6b4-f121df5ef2ca",
-    facility_name: "Capcom",
-    rate: "111",
-    address: "12 Sengkang Link",
-    area: "jurong",
-    cust_id: "braveducky",
-    facilityowner_id: "darksky21",
-    start_time: "11:00:00.000",
-    end_time: "12:00:00.000",
-    duration: 1,
+    booking_date: props.bookingProps.location.booking_date
+      .toISOString()
+      .substring(0, 10),
+    facility_id: props.bookingProps.location.facility_id,
+    facility_name: props.bookingProps.location.facility_name,
+    rate: props.bookingProps.location.rate,
+    address: props.bookingProps.location.address,
+    area: props.bookingProps.location.area,
+    cust_id: props.bookingProps.location.cust_id,
+    facilityowner_id: props.bookingProps.location.facilityowner_id,
+    start_time: convertTime12to24(props.bookingProps.location.start_time),
+    end_time: convertTime12to24(props.bookingProps.location.end_time),
+    duration: props.bookingProps.location.duration,
   });
   const [isProcessing, setProcessing] = useState(false);
   const [paymentModal, setPaymentModalOpen] = useState(false);
@@ -66,7 +88,9 @@ export default function Payment() {
       setPaymentModalOpen(true);
     } catch (err) {
       console.log("Error processing payment: ", err.errors[0].message);
-      setCardValidationError(err.errors[0].message);
+      setCardValidationError(
+        "Error processing payment. Please contact administrator."
+      );
     }
     setProcessing(false);
   };
@@ -119,8 +143,15 @@ export default function Payment() {
 
       <div className="bg-gray-50 mt-1">
         <div className="pb-56">
-          {/* Payment section */}
-          <div className="max-w-2xl mx-auto pt-10 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-10 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
+
+          {/* Cancel Button */}
+          <div className="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8 items-center space-x-2 text-gray-400 text-sm">
+            <Link to="/userdashboard">
+              <a className="hover:underline hover:text-gray-600">&lt; Cancel</a>
+            </Link>
+          </div>
+          {/* Payment Section */}
+          <div className="max-w-2xl mx-auto pt-5 pb-16 px-4 sm:px-6 lg:max-w-7xl lg:pt-5 lg:pb-24 lg:px-8 lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8">
             <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
                 Pay with Card
@@ -129,28 +160,45 @@ export default function Payment() {
 
             {/* Booking Summary */}
             <div className="mt-4 lg:mt-0 lg:row-span-3">
-              <p className="text-3xl text-gray-900">Total: $12</p>
+              <span className="font-bold text-gray-800 text-2xl md:text-2xl">
+                Total:{" "}
+              </span>
+              <span className="text-indigo-400 mr-1">$</span>
+              <span className="font-bold text-blue-600 text-3xl">
+                {props.bookingProps.location.totalAmt}
+              </span>
+
               <div className="mt-5">
                 <p className="text-gray-900 font-medium text-base">
                   Facility Name:{" "}
                 </p>
-                <p className="text-base text-gray-900">abc Room</p>
+                <p className="text-base text-gray-900">
+                  {props.bookingProps.location.facility_name}
+                </p>
               </div>
               <div className="mt-5">
                 <p className="text-base text-gray-900 font-medium">
                   Booking Date:
                 </p>
-                <p className="text-base text-gray-900">12/04/2021</p>
+                <p className="text-base text-gray-900">
+                  {props.bookingProps.location.booking_date
+                    .toISOString()
+                    .substring(0, 10)}
+                </p>
               </div>
               <div className="mt-5">
                 <p className="text-base text-gray-900 font-medium">Timeslot:</p>
-                <p className="text-base text-gray-900">14:00 - 15:00</p>
+                <p className="text-base text-gray-900">
+                  {props.bookingProps.location.start_time} -{" "}
+                  {props.bookingProps.location.end_time}
+                </p>
               </div>
             </div>
 
             {/* Card Section */}
             <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
               <img
+                alt=""
                 src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png"
                 className="h-5 mb-4"
               />

@@ -8,70 +8,70 @@ import { useState, useEffect } from "react";
 import * as queries from "../../graphql/queries";
 import { API } from "@aws-amplify/api";
 
-const facilityList = [
-  {
-    id: 1,
-    name: "EnergyOne (SAFRA Punggol)",
-    address: "9 Sentul Cres, Level 4, Singapore 828654",
-    opening_hrs: "10am",
-    closing_hrs: "10pm",
-    description:
-      "Offering the best of resistance training equipment and cardio machines, EnergyOne Gyms also come equipped with free weights, personal training and spacious changing rooms. What's more, SAFRA members can cross train in other sports facilityList located within our SAFRA clubs! Ask about fitness assessments & consultations, and corporate services. Our personal training services are also highly effective and our personal trainers are qualified fitness professionals who specialise in various areas, such as weight management, injury rehabilitation, sports specifics and nutrition.",
-    rate: "5",
-    href: "/facilitydetails",
-    imageSrc:
-      "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-  },
-  {
-    id: 2,
-    name: "EnergyOne (SAFRA Tampines)",
-    address: "Singapore",
-    opening_hrs: "10am",
-    closing_hrs: "10pm",
-    description: "Gym",
-    rate: "5",
-    href: "#",
-    imageSrc:
-      "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-  },
-  {
-    id: 3,
-    name: "EnergyOne (SAFRA Yishun)",
-    address: "Singapore",
-    opening_hrs: "10am",
-    closing_hrs: "10pm",
-    description: "Gym",
-    rate: "5",
-    href: "#",
-    imageSrc:
-      "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-  },
-  {
-    id: 4,
-    name: "Anytime Fitness (Buangkok Green)",
-    address: "Singapore",
-    opening_hrs: "10am",
-    closing_hrs: "10pm",
-    description: "Gym",
-    rate: "5",
-    href: "#",
-    imageSrc:
-      "https://www.anytimefitness.my/wp-content/uploads/2016/02/AnytimeFitnessLogo-with-Tag.png",
-  },
-  {
-    id: 5,
-    name: "Anytime Fitness (Rivervale Mall)",
-    address: "Singapore",
-    opening_hrs: "10am",
-    closing_hrs: "10pm",
-    description: "Gym",
-    rate: "5",
-    href: "#",
-    imageSrc:
-      "https://www.anytimefitness.my/wp-content/uploads/2016/02/AnytimeFitnessLogo-with-Tag.png",
-  },
-  // More facilityList...
-];
+// const facilityList = [
+//   {
+//     id: 1,
+//     name: "EnergyOne (SAFRA Punggol)",
+//     address: "9 Sentul Cres, Level 4, Singapore 828654",
+//     opening_hrs: "10am",
+//     closing_hrs: "10pm",
+//     description:
+//       "Offering the best of resistance training equipment and cardio machines, EnergyOne Gyms also come equipped with free weights, personal training and spacious changing rooms. What's more, SAFRA members can cross train in other sports facilityList located within our SAFRA clubs! Ask about fitness assessments & consultations, and corporate services. Our personal training services are also highly effective and our personal trainers are qualified fitness professionals who specialise in various areas, such as weight management, injury rehabilitation, sports specifics and nutrition.",
+//     rate: "5",
+//     href: "/facilitydetails",
+//     imageSrc:
+//       "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
+//   },
+//   {
+//     id: 2,
+//     name: "EnergyOne (SAFRA Tampines)",
+//     address: "Singapore",
+//     opening_hrs: "10am",
+//     closing_hrs: "10pm",
+//     description: "Gym",
+//     rate: "5",
+//     href: "#",
+//     imageSrc:
+//       "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
+//   },
+//   {
+//     id: 3,
+//     name: "EnergyOne (SAFRA Yishun)",
+//     address: "Singapore",
+//     opening_hrs: "10am",
+//     closing_hrs: "10pm",
+//     description: "Gym",
+//     rate: "5",
+//     href: "#",
+//     imageSrc:
+//       "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
+//   },
+//   {
+//     id: 4,
+//     name: "Anytime Fitness (Buangkok Green)",
+//     address: "Singapore",
+//     opening_hrs: "10am",
+//     closing_hrs: "10pm",
+//     description: "Gym",
+//     rate: "5",
+//     href: "#",
+//     imageSrc:
+//       "https://www.anytimefitness.my/wp-content/uploads/2016/02/AnytimeFitnessLogo-with-Tag.png",
+//   },
+//   {
+//     id: 5,
+//     name: "Anytime Fitness (Rivervale Mall)",
+//     address: "Singapore",
+//     opening_hrs: "10am",
+//     closing_hrs: "10pm",
+//     description: "Gym",
+//     rate: "5",
+//     href: "#",
+//     imageSrc:
+//       "https://www.anytimefitness.my/wp-content/uploads/2016/02/AnytimeFitnessLogo-with-Tag.png",
+//   },
+//   // More facilityList...
+// ];
 
 export default function FacilitiesList(props) {
   const category = props.location.category;

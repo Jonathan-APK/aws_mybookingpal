@@ -5,27 +5,27 @@ import { useState, useEffect } from "react";
 import * as queries from "../../graphql/queries";
 import { API } from "@aws-amplify/api";
 
-const bookings = [
-  {
-    image:
-      "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-    facility_name: "EnergyOne (Punggol)",
-    area:"Punggol",
-    address: "9 Sentul Cres, Level 4, Singapore 828654",
-    dateTime: "20 September 2021 7:30PM",
-    status: "Booked",
-  },
-  {
-    image:
-      "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
-    facility_name: "Anytime Fitness (Buangkok)",
-    area:"Buangkok",
-    address: "Hougang Green Shopping Mall, 21 Hougang Street 51 #02-13A Singapore, Central Singapore",
-    dateTime: "22 September 2021 7:30PM",
-    status: "Booked",
-  },
-  // More booking...
-];
+// const bookings = [
+//   {
+//     image:
+//       "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
+//     facility_name: "EnergyOne (Punggol)",
+//     area:"Punggol",
+//     address: "9 Sentul Cres, Level 4, Singapore 828654",
+//     dateTime: "20 September 2021 7:30PM",
+//     status: "Booked",
+//   },
+//   {
+//     image:
+//       "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
+//     facility_name: "Anytime Fitness (Buangkok)",
+//     area:"Buangkok",
+//     address: "Hougang Green Shopping Mall, 21 Hougang Street 51 #02-13A Singapore, Central Singapore",
+//     dateTime: "22 September 2021 7:30PM",
+//     status: "Booked",
+//   },
+//   // More booking...
+// ];
 
 export default function ManageBooking() {
 
