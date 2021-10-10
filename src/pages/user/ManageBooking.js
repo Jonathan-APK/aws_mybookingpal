@@ -146,15 +146,15 @@ export default function ManageBooking() {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a
+                            <div
                               onClick={() => {
                                 setViewBookingModalOpen(true);
                                 setSelectedBooking(booking);
                               }}
-                              className="text-indigo-600 hover:text-indigo-900"
+                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
                             >
                               View
-                            </a>
+                            </div>
                           </td>
                         </tr>
                       ))}
