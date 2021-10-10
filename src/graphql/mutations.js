@@ -24,6 +24,7 @@ export const createFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -65,6 +66,7 @@ export const updateFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -106,6 +108,7 @@ export const deleteFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -159,6 +162,7 @@ export const createUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          img_src
           createdAt
           updatedAt
         }
@@ -216,6 +220,7 @@ export const updateUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          img_src
           createdAt
           updatedAt
         }
@@ -273,6 +278,7 @@ export const deleteUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          img_src
           createdAt
           updatedAt
         }

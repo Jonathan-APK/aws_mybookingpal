@@ -95,6 +95,7 @@ export default function FacilityDetails(props) {
           let existingBookinEnd = new Date(slotDate);
           setTime(existingBookinEnd, existingBooking.slot.end_time);
           // console.log(existingBookinEnd,existingBookinEnd);
+          
           if (
             tempStartTime >= existingBookingStart &&
             tempStartTime < existingBookinEnd
@@ -107,10 +108,13 @@ export default function FacilityDetails(props) {
           ) {
             // console.log("Is not available");
             isAvailable = false;
-          } else if (tempStartTime < new Date()) {
-            // console.log("Cannot book past timings.");
-            isAvailable = false;
-          }
+          } 
+        }
+        console.log("starttime ");
+        console.log(tempStartTime,new Date());
+        if (tempStartTime < new Date()) {
+          // console.log("Cannot book past timings.");
+          isAvailable = false;
         }
 
         let tempSlot = {
@@ -164,7 +168,7 @@ export default function FacilityDetails(props) {
               }}
               className={getSlotButtonClass(slot.selected, slot.available)}
             >
-              {slot.startTime}
+              {slot.startTime} - {slot.endTime}
             </button>
           ))}
         </ul>
@@ -219,9 +223,9 @@ export default function FacilityDetails(props) {
       setCheckoutButton(tempjsx);
     }
     function checkDisableCheckout() {
-      console.log("Check Disable Checkout");
+      //console.log("Check Disable Checkout");
       for (const tempSlot of filteredSlots) {
-        console.log(tempSlot);
+        //console.log(tempSlot);
         if (tempSlot.selected) {
           return false;
         }
@@ -266,6 +270,14 @@ export default function FacilityDetails(props) {
     return { Message: "No Slot Selected" };
   }
 
+  const disablePastDate = () => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    const yyyy = today.getFullYear();
+    return yyyy + "-" + mm + "-" + dd;
+};
+
   return (
     <div>
       <UserNavbar />
@@ -279,7 +291,8 @@ export default function FacilityDetails(props) {
             <h2 className="mb-5 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
               {facility.name}
             </h2>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <img alt="" src={facility.img_src}  className="rounded w-30 h-auto" />
+            <label className="block text-sm font-medium text-gray-700 my-4 mb-1">
               Address
             </label>
             <p className="text-gray-500 text-sm mb-5">{facility.address}</p>
@@ -300,7 +313,21 @@ export default function FacilityDetails(props) {
               Description
             </label>
             <p className="text-gray-500">{facility.description}</p>
-            <div className="flex py-4 space-x-4">
+            <label className="block text-sm font-medium my-3 text-gray-700">
+              Operating Days
+            </label>
+            <div className="flex items-center space-x-2 my-1">
+
+              {facility.operating_days.map((day, i) => (
+                
+                <div className="rounded-lg bg-gray-100 flex py-2 px-3 mb-2">
+                  <span className="font-bold text-blue-600 text-1xl">
+                    {day}
+                  </span>
+                  </div>
+              ))}
+            </div>
+            <div className="flex py-2 space-x-4">
               <div className="col-span-6 sm:col-span-3">
                 <label className="block text-sm font-medium text-gray-700">
                   Select Booking Date
@@ -308,6 +335,7 @@ export default function FacilityDetails(props) {
                 <input
                   type="date"
                   required
+                  min={disablePastDate()}
                   onChange={(e) => setSlotDate(new Date(e.target.value))}
                   name="booking-date"
                   id="booking-date"

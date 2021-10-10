@@ -16,6 +16,7 @@ export const onCreateFacilityByUserId = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -54,6 +55,7 @@ export const onDeleteFacilityByUserId = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -92,6 +94,7 @@ export const onUpdateFacilityByUserId = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -130,6 +133,7 @@ export const onCreateFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -168,6 +172,7 @@ export const onUpdateFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -206,6 +211,7 @@ export const onDeleteFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -256,6 +262,7 @@ export const onCreateUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          img_src
           createdAt
           updatedAt
         }
@@ -310,6 +317,7 @@ export const onUpdateUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          img_src
           createdAt
           updatedAt
         }
@@ -364,6 +372,7 @@ export const onDeleteUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          img_src
           createdAt
           updatedAt
         }

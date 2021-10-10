@@ -73,6 +73,7 @@ function AddFacilityModal(props) {
           opening_hrs: operatingFrom,
           closing_hrs: operatingTo,
           operating_days: operatingDays,
+          img_src: "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
           userID: sessionStorage.getItem("username"),
         };
 
@@ -92,6 +93,7 @@ function AddFacilityModal(props) {
       }
     } catch (error) {
       setErrorMsg("Error encounterd. Please contact administrator.");
+      console.log(error);
     }
   };
 
