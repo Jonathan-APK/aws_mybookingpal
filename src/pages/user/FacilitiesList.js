@@ -80,7 +80,8 @@ export default function FacilitiesList(props) {
   const [facilityList, setFacilityList] = useState([]);
   const [searchResultsText, setSearchResultText] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [facilitiesPerPage] = useState(3);
+  // Show number of records per page
+  const [facilitiesPerPage] = useState(20);
 
   useEffect(() => {
     async function getFacilityList() {

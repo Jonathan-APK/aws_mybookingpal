@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import * as queries from "../../graphql/queries";
 import { API } from "@aws-amplify/api";
 import * as subscriptions from "../../graphql/subscriptions";
+import Pagination from "../../components/layout/Pagination";
 
 export default function ManageFacility() {
   const [isAddFacilityModalOpen, setAddFacilityModalOpen] = useState(false);
@@ -21,6 +22,10 @@ export default function ManageFacility() {
   const [bookingList, setBookingList] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState([]);
   let addSubscription, delSubscription, editSubscription;
+  // Show number of records per page
+  const [recordsPerPage] = useState(10);
+  const [currentFacilityPage, setCurrentFacilityPage] = useState(1);
+  const [currentBookingPage, setCurrentBookingPage] = useState(1);
 
   //Retrieve user's facility and booking list when page onload
   useEffect(() => {
@@ -119,6 +124,24 @@ export default function ManageFacility() {
       error: (error) => console.warn(error),
     });
   }
+
+  // Facility Table Pagination
+  const indexOfLastFacility = currentFacilityPage * recordsPerPage;
+  const indexOfFirstFacility = indexOfLastFacility - recordsPerPage;
+  const currentFacilityList = facilityList.slice(
+    indexOfFirstFacility,
+    indexOfLastFacility
+  );
+  const paginateFacility = (pageNumber) => setCurrentFacilityPage(pageNumber);
+
+  // Booking Table Pagination
+  const indexOfLastBooking = currentBookingPage * recordsPerPage;
+  const indexOfFirstBooking = indexOfLastBooking - recordsPerPage;
+  const currentBookingList = bookingList.slice(
+    indexOfFirstBooking,
+    indexOfLastBooking
+  );
+  const paginateBooking = (pageNumber) => setCurrentBookingPage(pageNumber);
 
   return (
     <div>
@@ -222,7 +245,7 @@ export default function ManageFacility() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {facilityList.map((facility) => (
+                      {currentFacilityList.map((facility) => (
                         <tr key={facility.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
@@ -290,6 +313,12 @@ export default function ManageFacility() {
               </div>
             </div>
           </div>
+          <Pagination
+            recordsPerPage={recordsPerPage}
+            totalRecords={facilityList.length}
+            paginate={paginateFacility}
+            currentPage={currentFacilityPage}
+          />
 
           {/* Booking Table */}
           <div className="flex flex-col">
@@ -338,7 +367,7 @@ export default function ManageFacility() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {bookingList.map((booking) => (
+                      {currentBookingList.map((booking) => (
                         <tr key={booking.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm font-medium text-gray-900">
@@ -389,6 +418,12 @@ export default function ManageFacility() {
               </div>
             </div>
           </div>
+          <Pagination
+            recordsPerPage={recordsPerPage}
+            totalRecords={bookingList.length}
+            paginate={paginateBooking}
+            currentPage={currentBookingPage}
+          />
         </div>
       </div>
       <Footer />

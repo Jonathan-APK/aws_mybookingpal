@@ -7,7 +7,10 @@ export default function FacilityListItem(props) {
       <div className="max-w-xl w-full px-5">
         <h1 className="text-2xl text-gray-800 font-semibold">{props.facility.name}</h1>
         <h2 className="text-gray-700 font-medium">{props.facility.address}</h2>
-        <h3 className="text-gray-700 font-medium -mt-1.5 mb-2">
+        <h3 className="text-gray-700 -mt-1.5">
+          Operating Days: {props.facility.operating_days.join(", ")}
+        </h3>
+        <h3 className="text-gray-700 -mt-1.5 mb-2">
           Operating Hours: {props.facility.opening_hrs} - {props.facility.closing_hrs}
         </h3>
         <p className="truncate text-gray-600 text-sm leading-tight tracking-normal">
