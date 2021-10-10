@@ -15,11 +15,10 @@ type Facility
   operating_days: [String]!
   userID: ID!
   user: User! @connection(fields: ["userID"])
+  img_src: String
 }
 
-type User
-  @model
-  @auth(rules: [{ allow: private }]) {
+type User @model @auth(rules: [{ allow: private }]) {
   id: ID!
   email: String!
   username: String!
@@ -75,12 +74,14 @@ type Subscription {
     @aws_subscribe(mutations: ["deleteFacility"])
   onUpdateFacilityByUserId(userID: ID!): Facility
     @aws_subscribe(mutations: ["updateFacility"])
+  onUpdateUserByUserId(username: ID!): User
+    @aws_subscribe(mutations: ["updateUser"])
 }
 
 type Mutation {
-   processBooking(input: ProcessBookingInput!): BookingStatus
-     @function(name: "processPayment-${env}")
-     @function(name: "createBookingDetails-${env}")
+  processBooking(input: ProcessBookingInput!): BookingStatus
+    @function(name: "processPayment-${env}")
+    @function(name: "createBookingDetails-${env}")
 }
 
 input ProcessBookingInput {

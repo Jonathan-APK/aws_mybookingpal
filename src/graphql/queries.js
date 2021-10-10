@@ -16,6 +16,7 @@ export const getFacility = /* GraphQL */ `
       closing_hrs
       operating_days
       userID
+      img_src
       createdAt
       updatedAt
       user {
@@ -59,6 +60,7 @@ export const listFacilities = /* GraphQL */ `
         closing_hrs
         operating_days
         userID
+        img_src
         createdAt
         updatedAt
         user {
@@ -105,6 +107,7 @@ export const getUser = /* GraphQL */ `
           closing_hrs
           operating_days
           userID
+          img_src
           createdAt
           updatedAt
         }

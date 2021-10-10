@@ -16,7 +16,7 @@ import UserDashboard from "./pages/user/UserDashboard";
 import FacilitiesList from "./pages/user/FacilitiesList";
 import ManageBooking from "./pages/user/ManageBooking";
 import FacilityDetails from "./pages/user/FacilityDetails";
-import UserProfile from "./pages/UserProfile";
+import UserProfile from "./pages/user/UserProfile";
 import Payment from "./pages/payment/StripeContainer"
 
 Amplify.configure(awsconfig);
