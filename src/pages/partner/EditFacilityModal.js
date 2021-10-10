@@ -105,7 +105,7 @@ function EditFacilityModal(props) {
         }, 1000);
       }
     } catch (error) {
-      setErrorMsg("Error encounterd. Please contact administrator.");
+      setErrorMsg("Error encountered. Please contact administrator.");
     }
   };
 

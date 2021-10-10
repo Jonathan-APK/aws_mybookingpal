@@ -291,7 +291,7 @@ export default function FacilityDetails(props) {
             <h2 className="mb-5 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
               {facility.name}
             </h2>
-            <img alt="" src={facility.img_src}  className="rounded w-30 h-auto" />
+            <img alt="" src={facility.img_src}  className="rounded w-2/5 h-auto" />
             <label className="block text-sm font-medium text-gray-700 my-4 mb-1">
               Address
             </label>
