@@ -56,7 +56,7 @@ export default function FacilityDetails(props) {
       //console.log(weekday);
       //console.log("Facility operatin days.", facility.operating_days);
       for (const operatingDay of facility.operating_days) {
-        if (weekday === operatingDay) {
+        if (weekday === operatingDay.substring(0,3)) {
           results = generateSlots(facility.opening_hrs, facility.closing_hrs);
           break;
         }
