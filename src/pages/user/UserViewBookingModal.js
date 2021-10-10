@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { useState, useEffect } from "react";
 import "rc-time-picker/assets/index.css";
 import React from "react";
+import CancelBookingModal from "../user/CancelBookingModal";
 
 function ViewBookingModal(props) {
   const [id, setBookingID] = useState("");
@@ -14,6 +15,7 @@ function ViewBookingModal(props) {
   const [endTime, setEndTime] = useState("00:00");
   const [paidAmount, setPaidAmount] = useState("");
   const [status, setStatus] = useState("");
+  const [isCancelBookingModalOpen, setCancelBookingModalOpen] = useState(false);
 
   useEffect(() => {
     setBookingID(props.booking.id);
@@ -36,6 +38,11 @@ function ViewBookingModal(props) {
           className="fixed z-10 inset-0 overflow-y-auto"
           onClose={() => props.setModalOpen(true)}
         >
+          <CancelBookingModal
+            isOpen={isCancelBookingModalOpen}
+            setModalOpen={setCancelBookingModalOpen}
+            id={id}
+          />
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <Transition.Child
               as={Fragment}
@@ -253,15 +260,17 @@ function ViewBookingModal(props) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-between px-4 py-3 bg-gray-50 sm:px-6">
-                    <button
-                        onClick={() => {
-                          props.setModalOpen(false);
-                        }}
-                        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      >
-                        Cancel Booking
-                      </button>
+                    <div className="flex justify-evenly px-4 py-3 bg-gray-50 sm:px-6">
+                      {status === "Confirmed" && (
+                        <button
+                          onClick={() => {
+                            setCancelBookingModalOpen(true);
+                          }}
+                          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                          Cancel Booking
+                        </button>
+                      )}
                       <button
                         onClick={() => {
                           props.setModalOpen(false);

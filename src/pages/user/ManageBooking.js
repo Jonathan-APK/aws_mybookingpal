@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import * as queries from "../../graphql/queries";
 import { API } from "@aws-amplify/api";
 import UserViewBookingModal from "../user/UserViewBookingModal";
+import * as subscriptions from "../../graphql/subscriptions";
 
 // const bookings = [
 //   {
@@ -37,6 +38,26 @@ export default function ManageBooking() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
+    let cancelSubscription;
+    // Subscribe to booking cancelled by user
+    function cancelBookingSubscription() {
+      cancelSubscription = API.graphql({
+        query: subscriptions.onUpdateBooking,
+        variables: { cust_id: sessionStorage.getItem("username") },
+      }).subscribe({
+        //update modified facility from existing facility list
+        next: (response) =>
+          setBookingList((oldArray) => {
+            const index = oldArray.findIndex(
+              (item) => item.id === response.value.data.onUpdateBooking.id
+            );
+            oldArray[index] = response.value.data.onUpdateBooking;
+            return [...oldArray];
+          }),
+        error: (error) => console.warn(error),
+      });
+    }
+
     async function getBookingList() {
       const getBooking = await API.graphql({
         query: queries.listBookings,
@@ -52,6 +73,11 @@ export default function ManageBooking() {
     }
     getBookingList();
     setCurrentPage(1);
+    cancelBookingSubscription();
+
+    return () => {
+      cancelSubscription.unsubscribe();
+    };
   }, []);
 
   // Pagination
@@ -72,12 +98,13 @@ export default function ManageBooking() {
         </div>
       </header>
       <div className="bg-gray-50 py-6">
-      {selectedBooking.id && (
+        {selectedBooking.id && (
           <UserViewBookingModal
             isOpen={isViewBookingModalOpen}
             setModalOpen={setViewBookingModalOpen}
             booking={selectedBooking}
-          />)}
+          />
+        )}
         {/* Mini Cards */}
         <div className="container mx-auto px-6 sm:px-12 py-6">
           {/* table */}
@@ -141,7 +168,13 @@ export default function ManageBooking() {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            <span
+                              className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                booking.status === "Confirmed"
+                                  ? "bg-green-100 text-green-800"
+                                  : "bg-red-100 text-red-800"
+                              }`}
+                            >
                               {booking.status}
                             </span>
                           </td>
