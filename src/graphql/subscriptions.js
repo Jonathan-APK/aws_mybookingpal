@@ -118,6 +118,61 @@ export const onUpdateFacilityByUserId = /* GraphQL */ `
     }
   }
 `;
+export const onUpdateUserByUserId = /* GraphQL */ `
+  subscription OnUpdateUserByUserId($username: ID!) {
+    onUpdateUserByUserId(username: $username) {
+      id
+      email
+      username
+      firstname
+      lastname
+      contact
+      address
+      role
+      createdAt
+      updatedAt
+      Facilities {
+        items {
+          id
+          name
+          type
+          address
+          area
+          size
+          rate
+          description
+          opening_hrs
+          closing_hrs
+          operating_days
+          userID
+          img_src
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      booking {
+        items {
+          id
+          booking_date
+          facility_id
+          facility_name
+          rate
+          address
+          area
+          status
+          cust_id
+          facilityowner_id
+          slot_id
+          payment_id
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
 export const onCreateFacility = /* GraphQL */ `
   subscription OnCreateFacility {
     onCreateFacility {

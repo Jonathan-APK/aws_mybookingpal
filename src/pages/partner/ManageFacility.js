@@ -21,7 +21,6 @@ export default function ManageFacility() {
   const [facilityList, setFacilityList] = useState([]);
   const [bookingList, setBookingList] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState([]);
-  let addSubscription, delSubscription, editSubscription;
   // Show number of records per page
   const [recordsPerPage] = useState(10);
   const [currentFacilityPage, setCurrentFacilityPage] = useState(1);
@@ -29,6 +28,63 @@ export default function ManageFacility() {
 
   //Retrieve user's facility and booking list when page onload
   useEffect(() => {
+    let addSubscription, delSubscription, editSubscription;
+
+    // Subscribe to facility creation created by user
+    function addFacilitySubscription() {
+      addSubscription = API.graphql({
+        query: subscriptions.onCreateFacilityByUserId,
+        variables: { userID: sessionStorage.getItem("username") },
+      }).subscribe({
+        //Add newly added facility to existing facility list array for display
+        next: (response) =>
+          setFacilityList((oldArray) => [
+            ...oldArray,
+            response.value.data.onCreateFacilityByUserId,
+          ]),
+        error: (error) => console.warn(error),
+      });
+    }
+
+    // Subscribe to facility deletion by user
+    function delFacilitySubscription() {
+      delSubscription = API.graphql({
+        query: subscriptions.onDeleteFacilityByUserId,
+        variables: { userID: sessionStorage.getItem("username") },
+      }).subscribe({
+        //Remove deleted facility from existing facility list
+        next: (response) => {
+          setFacilityList((array) =>
+            array.filter(
+              (item) =>
+                item.id !== response.value.data.onDeleteFacilityByUserId.id
+            )
+          );
+        },
+        error: (error) => console.warn(error),
+      });
+    }
+
+    // Subscribe to facility edited by user
+    function editFacilitySubscription() {
+      editSubscription = API.graphql({
+        query: subscriptions.onUpdateFacilityByUserId,
+        variables: { userID: sessionStorage.getItem("username") },
+      }).subscribe({
+        //update modified facility from existing facility list
+        next: (response) =>
+          setFacilityList((oldArray) => {
+            const index = oldArray.findIndex(
+              (item) =>
+                item.id === response.value.data.onUpdateFacilityByUserId.id
+            );
+            oldArray[index] = response.value.data.onUpdateFacilityByUserId;
+            return [...oldArray];
+          }),
+        error: (error) => console.warn(error),
+      });
+    }
+    
     async function getFacilityList() {
       const getFacility = await API.graphql({
         query: queries.listFacilities,
@@ -69,61 +125,6 @@ export default function ManageFacility() {
       editSubscription.unsubscribe();
     };
   }, []);
-
-  // Subscribe to facility creation created by user
-  function addFacilitySubscription() {
-    addSubscription = API.graphql({
-      query: subscriptions.onCreateFacilityByUserId,
-      variables: { userID: sessionStorage.getItem("username") },
-    }).subscribe({
-      //Add newly added facility to existing facility list array for display
-      next: (response) =>
-        setFacilityList((oldArray) => [
-          ...oldArray,
-          response.value.data.onCreateFacilityByUserId,
-        ]),
-      error: (error) => console.warn(error),
-    });
-  }
-
-  // Subscribe to facility deletion by user
-  function delFacilitySubscription() {
-    delSubscription = API.graphql({
-      query: subscriptions.onDeleteFacilityByUserId,
-      variables: { userID: sessionStorage.getItem("username") },
-    }).subscribe({
-      //Remove deleted facility from existing facility list
-      next: (response) => {
-        setFacilityList((array) =>
-          array.filter(
-            (item) =>
-              item.id !== response.value.data.onDeleteFacilityByUserId.id
-          )
-        );
-      },
-      error: (error) => console.warn(error),
-    });
-  }
-
-  // Subscribe to facility edited by user
-  function editFacilitySubscription() {
-    editSubscription = API.graphql({
-      query: subscriptions.onUpdateFacilityByUserId,
-      variables: { userID: sessionStorage.getItem("username") },
-    }).subscribe({
-      //update modified facility from existing facility list
-      next: (response) =>
-        setFacilityList((oldArray) => {
-          const index = oldArray.findIndex(
-            (item) =>
-              item.id === response.value.data.onUpdateFacilityByUserId.id
-          );
-          oldArray[index] = response.value.data.onUpdateFacilityByUserId;
-          return [...oldArray];
-        }),
-      error: (error) => console.warn(error),
-    });
-  }
 
   // Facility Table Pagination
   const indexOfLastFacility = currentFacilityPage * recordsPerPage;
