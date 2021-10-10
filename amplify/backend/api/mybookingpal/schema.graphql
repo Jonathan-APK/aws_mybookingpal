@@ -87,6 +87,7 @@ input ProcessBookingInput {
   id: ID!
   totalAmt: Float!
   token: String!
+  booking_date: AWSDate!
   facility_id: ID!
   facility_name: String!
   rate: Float!

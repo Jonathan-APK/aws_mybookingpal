@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function FacilityListItem(props) {
   return (
     <div className="flex border bg-white h-48 p-5 rounded-lg shadow-lg relative hover:shadow-2xl hover:bg-blue-200 transition duration-500">
-      <img src={props.imageSrc} className="rounded w-40 h-auto" />
+      <img alt="" src={props.imageSrc} className="rounded w-40 h-auto" />
       <div className="max-w-xl w-full px-5">
         <h1 className="text-2xl text-gray-800 font-semibold">{props.facility.name}</h1>
         <h2 className="text-gray-700 font-medium">{props.facility.address}</h2>
@@ -28,10 +28,10 @@ export default function FacilityListItem(props) {
               facility: props.facility,
             }}
           >
-            <a>
+            <div>
               <span aria-hidden="true" />
               Check Availability
-            </a>
+            </div>
           </Link>
         </button>
       </div>

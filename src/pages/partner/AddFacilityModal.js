@@ -321,7 +321,7 @@ function AddFacilityModal(props) {
                               }}
                               defaultValue={moment().hour(0).minute(0)}
                               showSecond={false}
-                              minuteStep={30}
+                              minuteStep={60}
                             />
                           </div>
 
@@ -343,7 +343,7 @@ function AddFacilityModal(props) {
                               }}
                               defaultValue={moment().hour(0).minute(0)}
                               showSecond={false}
-                              minuteStep={30}
+                              minuteStep={60}
                             />
                           </div>
 

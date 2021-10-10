@@ -46,7 +46,7 @@ const createSlot = async (payload) => {
 };
 
 const createBooking = async (payload) => {
-  const { payment_id, slot_id, facility_id, facility_name, rate, address, area, cust_id, facilityowner_id } = payload;
+  const { payment_id, booking_date, slot_id, facility_id, facility_name, rate, address, area, cust_id, facilityowner_id } = payload;
   var params = {
     TableName: BOOKING_TABLE,
     Item: {
@@ -54,7 +54,7 @@ const createBooking = async (payload) => {
       __typename: BOOKING_TYPE,
       payment_id: payment_id,
       slot_id: slot_id,
-      booking_date: new Date().toISOString().substring(0,10),
+      booking_date: booking_date,
       facility_id: facility_id,
       facility_name: facility_name,
       rate: rate,

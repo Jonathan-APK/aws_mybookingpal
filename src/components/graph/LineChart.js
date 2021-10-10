@@ -34,7 +34,7 @@ export const LineChart = () => {
       });
       const freqArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       getBooking.data.listBookings.items.map((data) => {
-        freqArr[data.booking_date.substr(5,2)-1]++;
+        return freqArr[data.booking_date.substr(5,2)-1]++;
       });
       setBookingList(freqArr);
     }
