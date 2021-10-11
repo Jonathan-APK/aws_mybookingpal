@@ -46,14 +46,16 @@ export default function ManageBooking() {
         variables: { cust_id: sessionStorage.getItem("username") },
       }).subscribe({
         //update modified facility from existing facility list
-        next: (response) =>
+        next: (response) => {
           setBookingList((oldArray) => {
             const index = oldArray.findIndex(
               (item) => item.id === response.value.data.onUpdateBooking.id
             );
             oldArray[index] = response.value.data.onUpdateBooking;
             return [...oldArray];
-          }),
+          });
+          setSelectedBooking(response.value.data.onUpdateBooking);
+        },
         error: (error) => console.warn(error),
       });
     }
