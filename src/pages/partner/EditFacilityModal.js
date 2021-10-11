@@ -22,6 +22,7 @@ function EditFacilityModal(props) {
   const [description, setDescription] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [updatedModal, setUpdatedModalOpen] = useState(false);
+  const [isDoneLoading, setDoneLoading] = useState(false);
 
   useEffect(() => {
     setName(props.facility.name);
@@ -31,10 +32,34 @@ function EditFacilityModal(props) {
     setSize(props.facility.size);
     setOperatingFrom(props.facility.opening_hrs);
     setOperatingTo(props.facility.closing_hrs);
-    setOperatingDays(props.facility.operating_days ? props.facility.operating_days : []);
+    setOperatingDays(
+      props.facility.operating_days ? props.facility.operating_days : []
+    );
     setRate(props.facility.rate);
     setDescription(props.facility.description);
+    setDoneLoading(true);
   }, [props]);
+
+  //Sort operating days array based on days
+  const sortOperatingDays = () => {
+    const sorter = {
+      Mon: 1,
+      Tue: 2,
+      Wed: 3,
+      Thur: 4,
+      Fri: 5,
+      Sat: 6,
+      Sun: 7,
+    };
+    setOperatingDays((oldArray) => {
+      const sortedArray = oldArray.sort(function sortByDay(a, b) {
+        let day1 = a;
+        let day2 = b;
+        return sorter[day1] - sorter[day2];
+      });
+      return sortedArray;
+    });
+  };
 
   //Change event for operating days checkboxes
   const onChangeCheckbox = (event) => {
@@ -74,6 +99,9 @@ function EditFacilityModal(props) {
 
       //If pass input validation
       if (inputValidation()) {
+        //Sort operating days array
+        sortOperatingDays();
+
         //Object to update into DB
         const facilityDetails = {
           id: props.facility.id,
@@ -90,7 +118,7 @@ function EditFacilityModal(props) {
           userID: sessionStorage.getItem("username"),
         };
 
-        console.log("Facility details " + JSON.stringify(facilityDetails));
+        console.log("Facility details ",facilityDetails);
 
         //Call api to update facility
         const response = await API.graphql({
@@ -98,7 +126,7 @@ function EditFacilityModal(props) {
           variables: { input: facilityDetails },
         });
 
-        console.log("Update facility response " + JSON.stringify(response));
+        console.log("Update facility response ",response);
         props.setModalOpen(false); //close update facility modal
         setTimeout(() => {
           setUpdatedModalOpen(true); //open updated modal
@@ -183,8 +211,9 @@ function EditFacilityModal(props) {
                   <form onSubmit={handleSubmit}>
                     <div className="shadow overflow-hidden sm:rounded-md">
                       <div className="px-4 py-5 bg-white sm:p-6">
-                        <div className="grid grid-cols-6 gap-6">
-                          {/* <div className="col-span-6">
+                        {isDoneLoading && (
+                          <div className="grid grid-cols-6 gap-6">
+                            {/* <div className="col-span-6">
                           <label className="block text-sm font-medium text-gray-700">
                             Facility photo
                           </label>
@@ -226,319 +255,323 @@ function EditFacilityModal(props) {
                           </div>
                         </div> */}
 
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="facility-name"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Facility Name
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                              name="facility-name"
-                              id="facility-name"
-                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="facility-type"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Facility Type
-                            </label>
-                            <select
-                              id="facility-type"
-                              value={type}
-                              onChange={(e) => setType(e.target.value)}
-                              name="facility-type"
-                              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            >
-                              <option>Meeting Room</option>
-                              <option>Sport Venues</option>
-                              <option>Desk Booking</option>
-                              <option>Professional Studios</option>
-                              <option>Coworking spaces</option>
-                              <option>Community Facilities</option>
-                            </select>
-                          </div>
-
-                          <div className="col-span-6">
-                            <label
-                              htmlFor="street-address"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Address
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              value={address}
-                              onChange={(e) => setAddress(e.target.value)}
-                              name="street-address"
-                              id="street-address"
-                              autoComplete="street-address"
-                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="area-name"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Area
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              value={area}
-                              onChange={(e) => setArea(e.target.value)}
-                              name="area-name"
-                              id="area-name"
-                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="rate-hr"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Estimated Room Size (Pax)
-                            </label>
-                            <input
-                              type="number"
-                              required
-                              value={size}
-                              onChange={(e) => setSize(e.target.value)}
-                              name="rate-hr"
-                              id="rate-hr"
-                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="operating-from"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Operating Hours (From)
-                            </label>
-                            <TimePicker
-                              className="mt-1"
-                              onChange={(value) => {
-                                if (value == null) {
-                                  setOperatingFrom("");
-                                } else {
-                                  setOperatingFrom(value.format("HH:mm"));
-                                }
-                              }}
-                              value={moment(operatingFrom, "HH:mm")}
-                              showSecond={false}
-                              minuteStep={30}
-                            />
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="operating-to"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Operating Hours (To)
-                            </label>
-                            <TimePicker
-                              className="mt-1"
-                              onChange={(value) => {
-                                if (value == null) {
-                                  setOperatingTo("");
-                                } else {
-                                  setOperatingTo(value.format("HH:mm"));
-                                }
-                              }}
-                              value={moment(operatingTo, "HH:mm")}
-                              showSecond={false}
-                              minuteStep={30}
-                            />
-                          </div>
-
-                          <div className="col-span-6">
-                            <label className="block text-sm font-medium text-gray-700">
-                              Operating Days
-                            </label>
-
-                            <div className="flex mt-2 justify-evenly">
+                            <div className="col-span-6 sm:col-span-3">
                               <label
-                                htmlFor="mon"
+                                htmlFor="facility-name"
                                 className="block text-sm font-medium text-gray-700"
                               >
-                                Mon
+                                Facility Name
                               </label>
                               <input
-                                type="checkbox"
-                                name="mon"
-                                value="Mon"
-                                defaultChecked={
-                                  operatingDays.includes("Mon") ? true : false
-                                }
-                                onChange={onChangeCheckbox}
-                                id="mon"
-                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              />
-
-                              <label
-                                htmlFor="tue"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Tue
-                              </label>
-                              <input
-                                type="checkbox"
-                                value="Tue"
-                                defaultChecked={
-                                  operatingDays.includes("Tue") ? true : false
-                                }
-                                onChange={onChangeCheckbox}
-                                name="tue"
-                                id="tue"
-                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              />
-
-                              <label
-                                htmlFor="wed"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Wed
-                              </label>
-                              <input
-                                type="checkbox"
-                                value="Wed"
-                                defaultChecked={
-                                  operatingDays.includes("Wed") ? true : false
-                                }
-                                onChange={onChangeCheckbox}
-                                name="wed"
-                                id="wed"
-                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              />
-
-                              <label
-                                htmlFor="thur"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Thur
-                              </label>
-                              <input
-                                type="checkbox"
-                                value="Thur"
-                                defaultChecked={
-                                  operatingDays.includes("Thur") ? true : false
-                                }
-                                onChange={onChangeCheckbox}
-                                name="thur"
-                                id="thur"
-                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              />
-
-                              <label
-                                htmlFor="fri"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Fri
-                              </label>
-                              <input
-                                type="checkbox"
-                                value="Fri"
-                                defaultChecked={
-                                  operatingDays.includes("Fri") ? true : false
-                                }
-                                onChange={onChangeCheckbox}
-                                name="fri"
-                                id="fri"
-                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              />
-
-                              <label
-                                htmlFor="sat"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Sat
-                              </label>
-                              <input
-                                type="checkbox"
-                                value="Sat"
-                                defaultChecked={
-                                  operatingDays.includes("Sat") ? true : false
-                                }
-                                onChange={onChangeCheckbox}
-                                name="sat"
-                                id="sat"
-                                className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              />
-
-                              <label
-                                htmlFor="sun"
-                                className="block text-sm font-medium text-gray-700"
-                              >
-                                Sun
-                              </label>
-                              <input
-                                type="checkbox"
-                                value="Sun"
-                                defaultChecked={
-                                  operatingDays.includes("Sun") ? true : false
-                                }
-                                onChange={onChangeCheckbox}
-                                name="sun"
-                                id="sun"
-                                className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                              />
-                            </div>
-                          </div>
-
-                          <div className="col-span-6 sm:col-span-3">
-                            <label
-                              htmlFor="rate-hr"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Rate/Hr
-                            </label>
-                            <input
-                              type="number"
-                              required
-                              value={rate}
-                              onChange={(e) => setRate(e.target.value)}
-                              name="rate-hr"
-                              id="rate-hr"
-                              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            />
-                          </div>
-
-                          <div className="col-span-6">
-                            <label
-                              htmlFor="about"
-                              className="block text-sm font-medium text-gray-700"
-                            >
-                              Description
-                            </label>
-                            <div className="mt-1">
-                              <textarea
-                                id="about"
+                                type="text"
                                 required
-                                value={description}
-                                name="about"
-                                onChange={(e) => setDescription(e.target.value)}
-                                rows={3}
-                                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-                                placeholder="Brief description about the facility."
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                name="facility-name"
+                                id="facility-name"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                               />
                             </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="facility-type"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Facility Type
+                              </label>
+                              <select
+                                id="facility-type"
+                                value={type}
+                                onChange={(e) => setType(e.target.value)}
+                                name="facility-type"
+                                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                              >
+                                <option>Meeting Room</option>
+                                <option>Sport Venues</option>
+                                <option>Desk Booking</option>
+                                <option>Professional Studios</option>
+                                <option>Coworking spaces</option>
+                                <option>Community Facilities</option>
+                              </select>
+                            </div>
+
+                            <div className="col-span-6">
+                              <label
+                                htmlFor="street-address"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Address
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                name="street-address"
+                                id="street-address"
+                                autoComplete="street-address"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="area-name"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Area
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={area}
+                                onChange={(e) => setArea(e.target.value)}
+                                name="area-name"
+                                id="area-name"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="rate-hr"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Estimated Room Size (Pax)
+                              </label>
+                              <input
+                                type="number"
+                                required
+                                value={size}
+                                onChange={(e) => setSize(e.target.value)}
+                                name="rate-hr"
+                                id="rate-hr"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="operating-from"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Operating Hours (From)
+                              </label>
+                              <TimePicker
+                                className="mt-1"
+                                onChange={(value) => {
+                                  if (value == null) {
+                                    setOperatingFrom("");
+                                  } else {
+                                    setOperatingFrom(value.format("HH:mm"));
+                                  }
+                                }}
+                                value={moment(operatingFrom, "HH:mm")}
+                                showSecond={false}
+                                minuteStep={30}
+                              />
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="operating-to"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Operating Hours (To)
+                              </label>
+                              <TimePicker
+                                className="mt-1"
+                                onChange={(value) => {
+                                  if (value == null) {
+                                    setOperatingTo("");
+                                  } else {
+                                    setOperatingTo(value.format("HH:mm"));
+                                  }
+                                }}
+                                value={moment(operatingTo, "HH:mm")}
+                                showSecond={false}
+                                minuteStep={30}
+                              />
+                            </div>
+                            <div className="col-span-6">
+                              <label className="block text-sm font-medium text-gray-700">
+                                Operating Days
+                              </label>
+
+                              <div className="flex mt-2 justify-evenly">
+                                <label
+                                  htmlFor="mon"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Mon
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  name="mon"
+                                  value="Mon"
+                                  defaultChecked={
+                                    operatingDays.includes("Mon") ? true : false
+                                  }
+                                  onChange={onChangeCheckbox}
+                                  id="mon"
+                                  className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+
+                                <label
+                                  htmlFor="tue"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Tue
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  value="Tue"
+                                  defaultChecked={
+                                    operatingDays.includes("Tue") ? true : false
+                                  }
+                                  onChange={onChangeCheckbox}
+                                  name="tue"
+                                  id="tue"
+                                  className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+
+                                <label
+                                  htmlFor="wed"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Wed
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  value="Wed"
+                                  defaultChecked={
+                                    operatingDays.includes("Wed") ? true : false
+                                  }
+                                  onChange={onChangeCheckbox}
+                                  name="wed"
+                                  id="wed"
+                                  className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+
+                                <label
+                                  htmlFor="thur"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Thur
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  value="Thur"
+                                  defaultChecked={
+                                    operatingDays.includes("Thur")
+                                      ? true
+                                      : false
+                                  }
+                                  onChange={onChangeCheckbox}
+                                  name="thur"
+                                  id="thur"
+                                  className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+
+                                <label
+                                  htmlFor="fri"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Fri
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  value="Fri"
+                                  defaultChecked={
+                                    operatingDays.includes("Fri") ? true : false
+                                  }
+                                  onChange={onChangeCheckbox}
+                                  name="fri"
+                                  id="fri"
+                                  className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+
+                                <label
+                                  htmlFor="sat"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Sat
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  value="Sat"
+                                  defaultChecked={
+                                    operatingDays.includes("Sat") ? true : false
+                                  }
+                                  onChange={onChangeCheckbox}
+                                  name="sat"
+                                  id="sat"
+                                  className="mr-4 rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+
+                                <label
+                                  htmlFor="sun"
+                                  className="block text-sm font-medium text-gray-700"
+                                >
+                                  Sun
+                                </label>
+                                <input
+                                  type="checkbox"
+                                  value="Sun"
+                                  defaultChecked={
+                                    operatingDays.includes("Sun") ? true : false
+                                  }
+                                  onChange={onChangeCheckbox}
+                                  name="sun"
+                                  id="sun"
+                                  className="rounded-md block shadow-sm border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="rate-hr"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Rate/Hr
+                              </label>
+                              <input
+                                type="number"
+                                required
+                                value={rate}
+                                onChange={(e) => setRate(e.target.value)}
+                                name="rate-hr"
+                                id="rate-hr"
+                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                              />
+                            </div>
+
+                            <div className="col-span-6">
+                              <label
+                                htmlFor="about"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Description
+                              </label>
+                              <div className="mt-1">
+                                <textarea
+                                  id="about"
+                                  required
+                                  value={description}
+                                  name="about"
+                                  onChange={(e) =>
+                                    setDescription(e.target.value)
+                                  }
+                                  rows={3}
+                                  className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                                  placeholder="Brief description about the facility."
+                                />
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
                       <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                         <button

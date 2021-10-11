@@ -23,6 +23,27 @@ function AddFacilityModal(props) {
   const [errorMsg, setErrorMsg] = useState("");
   const [addedModal, setAddedModalOpen] = useState(false);
 
+  //Sort operating days array based on days
+  const sortOperatingDays = () => {
+    const sorter = {
+      Mon: 1,
+      Tue: 2,
+      Wed: 3,
+      Thur: 4,
+      Fri: 5,
+      Sat: 6,
+      Sun: 7,
+    };
+    setOperatingDays((oldArray) => {
+      const sortedArray = oldArray.sort(function sortByDay(a, b) {
+        let day1 = a;
+        let day2 = b;
+        return sorter[day1] - sorter[day2];
+      });
+      return sortedArray;
+    });
+  };
+
   //Change event for operating days checkboxes
   const onChangeCheckbox = (event) => {
     const isChecked = event.target.checked;
@@ -61,6 +82,9 @@ function AddFacilityModal(props) {
 
       //If pass input validation
       if (inputValidation()) {
+        //Sort operating days array
+        sortOperatingDays();
+
         //Object to insert into DB
         const facilityDetails = {
           name: name,
@@ -73,7 +97,8 @@ function AddFacilityModal(props) {
           opening_hrs: operatingFrom,
           closing_hrs: operatingTo,
           operating_days: operatingDays,
-          img_src: "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
+          img_src:
+            "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
           userID: sessionStorage.getItem("username"),
         };
 
