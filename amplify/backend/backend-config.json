@@ -63,5 +63,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
+  },
+  "storage": {
+    "FacilityImage": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

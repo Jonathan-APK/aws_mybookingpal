@@ -250,13 +250,13 @@ export default function ManageFacility() {
                         <tr key={facility.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
-                              {/* <div className="flex-shrink-0 h-10 w-10">
+                              <div className="flex-shrink-0 h-10 w-10 mr-4">
                                 <img
                                   className="h-10 w-10 rounded-full"
-                                  src={facility.image}
+                                  src={facility.img_src}
                                   alt=""
                                 />
-                              </div> */}
+                              </div>
                               <div>
                                 <div className="text-sm font-medium text-gray-900">
                                   {facility.name}

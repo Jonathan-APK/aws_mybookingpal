@@ -1,6 +1,6 @@
 {
     "identityPoolName": "mybookingpal3a515a31_identitypool_3a515a31",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "mybook3a515a31",
     "userPoolName": "mybookingpal3a515a31_userpool_3a515a31",
     "autoVerifiedAttributes": [

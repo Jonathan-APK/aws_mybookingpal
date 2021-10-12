@@ -96,7 +96,7 @@ function AddFacilityModal(props) {
       const url = `https://${bucket}.s3.${region}.amazonaws.com/public/${key}`;
       // Upload the file to s3 with public access level.
       await Storage.put(key, imageFile, {
-        level: "protected",
+        level: "public",
         contentType: imageFile.type,
       });
 
