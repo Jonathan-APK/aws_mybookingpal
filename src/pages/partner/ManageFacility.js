@@ -84,7 +84,7 @@ export default function ManageFacility() {
         error: (error) => console.warn(error),
       });
     }
-    
+
     async function getFacilityList() {
       const getFacility = await API.graphql({
         query: queries.listFacilities,

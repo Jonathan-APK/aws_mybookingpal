@@ -335,6 +335,7 @@ export default function FacilityDetails(props) {
                 <input
                   type="date"
                   required
+                  defaultValue={new Date().toISOString().substr(0,10)}
                   min={disablePastDate()}
                   onChange={(e) => setSlotDate(new Date(e.target.value))}
                   name="booking-date"
