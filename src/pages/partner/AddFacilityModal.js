@@ -8,6 +8,9 @@ import "rc-time-picker/assets/index.css";
 import React from "react";
 import moment from "moment";
 import TimePicker from "rc-time-picker";
+import { v4 as uuidv4 } from "uuid";
+import config from "../../aws-exports";
+import { Storage } from "aws-amplify";
 
 function AddFacilityModal(props) {
   const [name, setName] = useState("");
@@ -22,6 +25,12 @@ function AddFacilityModal(props) {
   const [description, setDescription] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [addedModal, setAddedModalOpen] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const {
+    aws_user_files_s3_bucket_region: region,
+    aws_user_files_s3_bucket: bucket,
+  } = config;
 
   //Change event for operating days checkboxes
   const onChangeCheckbox = (event) => {
@@ -59,6 +68,17 @@ function AddFacilityModal(props) {
       e.preventDefault();
       setErrorMsg("");
 
+      // Image Upload
+      const extension = imageFile.name.split(".")[1];
+      const fileName = imageFile.name.split(".")[0];
+      const key = `images/${uuidv4()}${fileName}.${extension}`;
+      const url = `https://${bucket}.s3.${region}.amazonaws.com/public/${key}`;
+      // Upload the file to s3 with public access level.
+      await Storage.put(key, imageFile, {
+        level: "protected",
+        contentType: imageFile.type,
+      });
+
       //If pass input validation
       if (inputValidation()) {
         //Object to insert into DB
@@ -73,7 +93,7 @@ function AddFacilityModal(props) {
           opening_hrs: operatingFrom,
           closing_hrs: operatingTo,
           operating_days: operatingDays,
-          img_src: "https://safra-resources.azureedge.net/media-library/images/default-source/default-album/e1-logoce03035769364db7ac44e7aca458b33f.png?sfvrsn=40354edf_0",
+          img_src: url,
           userID: sessionStorage.getItem("username"),
         };
 
@@ -94,6 +114,16 @@ function AddFacilityModal(props) {
     } catch (error) {
       setErrorMsg("Error encounterd. Please contact administrator.");
       console.log(error);
+    }
+  };
+
+  //Event for image upload (preview)
+  const handleImageUpload = async (e) => {
+    e.preventDefault();
+    if (e.target.files.length !== 0) {
+      const file = e.target.files[0];
+      setPreviewImage(URL.createObjectURL(file));
+      setImageFile(file);
     }
   };
 
@@ -139,8 +169,11 @@ function AddFacilityModal(props) {
                 <div className="flex flex-row justify-between p-4 bg-gray-100 border-b  rounded-tl-lg rounded-tr-lg">
                   <p className="font-semibold text-gray-800">Add Facility</p>
                   <svg
-                    onClick={() => props.setModalOpen(false)}
-                    className="w-6 h-6 cursor-pointer"
+                    onClick={() => {
+                      props.setModalOpen(false);
+                      setPreviewImage(null);
+                    }}
+                    className="w-6 }h-6 cursor-pointer"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -172,37 +205,48 @@ function AddFacilityModal(props) {
                     <div className="shadow overflow-hidden sm:rounded-md">
                       <div className="px-4 py-5 bg-white sm:p-6">
                         <div className="grid grid-cols-6 gap-6">
-                          {/* <div className="col-span-6">
+                          <div className="col-span-6">
                             <label className="block text-sm font-medium text-gray-700">
                               Facility photo
                             </label>
                             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                               <div className="space-y-1 text-center">
-                                <svg
-                                  className="mx-auto h-12 w-12 text-gray-400"
-                                  stroke="currentColor"
-                                  fill="none"
-                                  viewBox="0 0 48 48"
-                                  aria-hidden="true"
-                                >
-                                  <path
-                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                    strokeWidth={2}
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
+                                {previewImage ? (
+                                  <img
+                                    className="image-preview"
+                                    src={previewImage}
+                                    alt=""
                                   />
-                                </svg>
-                                <div className="flex text-sm text-gray-600">
+                                ) : (
+                                  <svg
+                                    className="mx-auto h-12 w-12 text-gray-400"
+                                    stroke="currentColor"
+                                    fill="none"
+                                    viewBox="0 0 48 48"
+                                    aria-hidden="true"
+                                  >
+                                    <path
+                                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                      strokeWidth={2}
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                  </svg>
+                                )}
+                                <div className="flex justify-center text-sm text-gray-600">
                                   <label
                                     htmlFor="file-upload"
                                     className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500"
                                   >
                                     <span>Upload a file</span>
+
                                     <input
                                       id="file-upload"
                                       name="file-upload"
                                       type="file"
                                       className="sr-only"
+                                      accept="image/png, image/gif, image/jpeg"
+                                      onChange={(e) => handleImageUpload(e)}
                                     />
                                   </label>
                                   <p className="pl-1">or drag and drop</p>
@@ -212,7 +256,7 @@ function AddFacilityModal(props) {
                                 </p>
                               </div>
                             </div>
-                          </div> */}
+                          </div>
 
                           <div className="col-span-6 sm:col-span-3">
                             <label
