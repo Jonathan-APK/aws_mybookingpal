@@ -246,68 +246,79 @@ export default function ManageFacility() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {currentFacilityList.map((facility) => (
-                        <tr key={facility.id}>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <div className="flex-shrink-0 h-10 w-10 mr-4">
-                                <img
-                                  className="h-10 w-10 rounded-full"
-                                  src={facility.img_src}
-                                  alt=""
-                                />
-                              </div>
-                              <div>
-                                <div className="text-sm font-medium text-gray-900">
-                                  {facility.name}
+                      {currentFacilityList.length > 0 ? (
+                        currentFacilityList.map((facility) => (
+                          <tr key={facility.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="flex items-center">
+                                <div className="flex-shrink-0 h-10 w-10 mr-4">
+                                  <img
+                                    className="h-10 w-10 rounded-full"
+                                    src={facility.img_src}
+                                    alt=""
+                                  />
+                                </div>
+                                <div>
+                                  <div className="text-sm font-medium text-gray-900">
+                                    {facility.name}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">
-                              {facility.area}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {facility.address}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <div className="text-sm text-gray-900">
-                              {facility.operating_days.join(", ")}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {facility.opening_hrs} - {facility.closing_hrs}
-                            </div>
-                          </td>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">
+                                {facility.area}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {facility.address}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              <div className="text-sm text-gray-900">
+                                {facility.operating_days.join(", ")}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {facility.opening_hrs} - {facility.closing_hrs}
+                              </div>
+                            </td>
 
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            ${facility.rate}/Hr
-                          </td>
-                          <td className="py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div
-                              onClick={() => {
-                                setEditFacilityModalOpen(true);
-                                setSelectedFacility(facility);
-                              }}
-                              className="text-indigo-600 hover:text-indigo-900 mr-3 cursor-pointer"
-                            >
-                              Edit
-                            </div>
-                          </td>
-                          <td className="pr-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div
-                              onClick={() => {
-                                setDeleteFacilityModalOpen(true);
-                                setDeleteID(facility.id);
-                              }}
-                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
-                            >
-                              Delete
-                            </div>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              ${facility.rate}/Hr
+                            </td>
+                            <td className="py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <div
+                                onClick={() => {
+                                  setEditFacilityModalOpen(true);
+                                  setSelectedFacility(facility);
+                                }}
+                                className="text-indigo-600 hover:text-indigo-900 mr-3 cursor-pointer"
+                              >
+                                Edit
+                              </div>
+                            </td>
+                            <td className="pr-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <div
+                                onClick={() => {
+                                  setDeleteFacilityModalOpen(true);
+                                  setDeleteID(facility.id);
+                                }}
+                                className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+                              >
+                                Delete
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr key="no_data">
+                          <td
+                            colSpan="5"
+                            className="py-4 text-sm text-gray-500 text-center"
+                          >
+                            No data
                           </td>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -368,51 +379,62 @@ export default function ManageFacility() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {currentBookingList.map((booking) => (
-                        <tr key={booking.id}>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">
-                              {booking.id.substring(0, 13)}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">
-                              {booking.facility_name}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">
-                              {booking.booking_date.substring(0, 10)}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {booking.slot.start_time.substring(0, 5)} -{" "}
-                              {booking.slot.end_time.substring(0, 5)}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <div className="text-sm text-gray-900">
-                              ${booking.rate}/Hr
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              ${booking.payment.paid_amt}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {booking.customer.email}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div
-                              onClick={() => {
-                                setViewBookingModalOpen(true);
-                                setSelectedBooking(booking);
-                              }}
-                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
-                            >
-                              View
-                            </div>
+                      {currentBookingList.length > 0 ? (
+                        currentBookingList.map((booking) => (
+                          <tr key={booking.id}>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm font-medium text-gray-900">
+                                {booking.id.substring(0, 13)}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">
+                                {booking.facility_name}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">
+                                {booking.booking_date.substring(0, 10)}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {booking.slot.start_time.substring(0, 5)} -{" "}
+                                {booking.slot.end_time.substring(0, 5)}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              <div className="text-sm text-gray-900">
+                                ${booking.rate}/Hr
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                ${booking.payment.paid_amt}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {booking.customer.email}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <div
+                                onClick={() => {
+                                  setViewBookingModalOpen(true);
+                                  setSelectedBooking(booking);
+                                }}
+                                className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+                              >
+                                View
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr key="no_data">
+                          <td
+                            colSpan="6"
+                            className="py-4 text-sm text-gray-500 text-center"
+                          >
+                            No data
                           </td>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>

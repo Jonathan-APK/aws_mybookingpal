@@ -147,52 +147,63 @@ export default function ManageBooking() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {currentBookingList.map((booking) => (
-                        <tr key={booking.id}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {booking.facility_name}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">
-                              {booking.area}
-                            </div>
-                            <div className="text-sm text-gray-500 truncate">
-                              {booking.address}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm text-gray-900">
-                              {booking.booking_date.substring(0, 10)}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {booking.slot.start_time.substring(0, 5)} -{" "}
-                              {booking.slot.end_time.substring(0, 5)}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span
-                              className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                                booking.status === "Confirmed"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-red-100 text-red-800"
-                              }`}
-                            >
-                              {booking.status}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div
-                              onClick={() => {
-                                setViewBookingModalOpen(true);
-                                setSelectedBooking(booking);
-                              }}
-                              className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
-                            >
-                              View
-                            </div>
+                      {currentBookingList.length > 0 ? (
+                        currentBookingList.map((booking) => (
+                          <tr key={booking.id}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {booking.facility_name}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">
+                                {booking.area}
+                              </div>
+                              <div className="text-sm text-gray-500 truncate">
+                                {booking.address}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <div className="text-sm text-gray-900">
+                                {booking.booking_date.substring(0, 10)}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {booking.slot.start_time.substring(0, 5)} -{" "}
+                                {booking.slot.end_time.substring(0, 5)}
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span
+                                className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                  booking.status === "Confirmed"
+                                    ? "bg-green-100 text-green-800"
+                                    : "bg-red-100 text-red-800"
+                                }`}
+                              >
+                                {booking.status}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                              <div
+                                onClick={() => {
+                                  setViewBookingModalOpen(true);
+                                  setSelectedBooking(booking);
+                                }}
+                                className="text-indigo-600 hover:text-indigo-900 cursor-pointer"
+                              >
+                                View
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr key="no_data">
+                          <td
+                            colSpan="5"
+                            className="py-4 text-sm text-gray-500 text-center"
+                          >
+                            No data
                           </td>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>
