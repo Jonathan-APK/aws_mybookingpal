@@ -614,7 +614,7 @@ function Landing() {
                 Facility Booking / Renting
               </h2>
               <p className="mt-2 pb-5 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Feature-packed and Simple to use.
+                Feature-packed, Simple to use.
               </p>
             </div>
 
